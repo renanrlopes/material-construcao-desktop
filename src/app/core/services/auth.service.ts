@@ -120,8 +120,6 @@ export class AuthService {
 
   // EXCLUIR USUÁRIO
   // exclui o documento no Firestore. 
-  // Para excluir do Auth do Firebase, seria necessário uma Cloud Function, 
-  // mas para o controle de estoque, remover o documento já bloqueia o acesso via Guard.
   deleteUser(uid: string) {
     return this.firestore.collection('usuarios').doc(uid).delete();
   }
