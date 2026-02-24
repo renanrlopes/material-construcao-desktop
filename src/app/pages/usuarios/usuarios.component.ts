@@ -32,4 +32,39 @@ export class UsuariosComponent implements OnInit {
       this.authService.deleteUser(uid);
     }
   }
+
+  // Adicione estas propriedades na classe UsuariosComponent
+  novoUser = {
+    name: '',
+    email: '',
+    password: '',
+    role: 'LEITOR' as UserRole
+  };
+
+  // ... no construtor e ngOnInit você já tem o authService
+
+  async adicionarUsuario() {
+    const { name, email, password, role } = this.novoUser;
+
+    if (!name || !email || !password) {
+      alert('Preencha todos os campos!');
+      return;
+    }
+
+    try {
+      // Chamamos o método cadastrar que você já tem no AuthService
+      // Mas precisamos de um pequeno ajuste nele para aceitar o 'role' escolhido
+      await this.authService.cadastrarComRole(name, email, password, role);
+
+      alert('Funcionário cadastrado com sucesso!');
+
+      // Limpa o formulário
+      this.novoUser = { name: '', email: '', password: '', role: 'LEITOR' };
+
+    } catch (error) {
+      console.error('Erro ao cadastrar:', error);
+      alert('Erro ao cadastrar funcionário. Verifique se o e-mail já existe.');
+    }
+  }
+
 }

@@ -123,4 +123,31 @@ export class AuthService {
   deleteUser(uid: string) {
     return this.firestore.collection('usuarios').doc(uid).delete();
   }
+
+  async cadastrarComRole(name: string, email: string, password: string, role: UserRole) {
+    const cred = await this.afAuth.createUserWithEmailAndPassword(email, password);
+    if (!cred.user) return;
+
+    const uid = cred.user.uid;
+
+    await this.firestore.firestore.runTransaction(async (transaction) => {
+      const counterRef = this.firestore.collection('config').doc('employeeCounter').ref;
+      const counterSnap = await transaction.get(counterRef);
+
+      if (!counterSnap.exists) throw new Error('Contador não existe.');
+
+      const novoCodigo = (counterSnap.data() as any).ultimoCodigo + 1;
+
+      transaction.update(counterRef, { ultimoCodigo: novoCodigo });
+
+      transaction.set(this.firestore.collection('usuarios').doc(uid).ref, {
+        name: name,
+        email: email,
+        role: role, //Aqui usamos o role que o Admin escolheu
+        employeeCode: novoCodigo,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        isActive: true
+      });
+    });
+  }
 }

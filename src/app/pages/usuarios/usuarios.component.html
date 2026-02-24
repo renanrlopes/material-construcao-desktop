@@ -1,5 +1,24 @@
 <div class="admin-container">
     <button routerLink="/dashboard" class="btn-back">← Voltar ao Painel</button>
+
+    <section class="add-user-section">
+        <h3>Novo Funcionário</h3>
+        <form (submit)="adicionarUsuario()" class="add-form">
+            <input type="text" [(ngModel)]="novoUser.name" name="name" placeholder="Nome Completo" required>
+            <input type="email" [(ngModel)]="novoUser.email" name="email" placeholder="E-mail" required>
+            <input type="password" [(ngModel)]="novoUser.password" name="password" placeholder="Senha Provisória"
+                required>
+
+            <select [(ngModel)]="novoUser.role" name="role">
+                <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+            </select>
+
+            <button type="submit" class="btn-save">Cadastrar Funcionário</button>
+        </form>
+    </section>
+
+    <hr>
+    
     <h2>Gestão de Funcionários</h2>
     <table class="user-table">
         <thead>
