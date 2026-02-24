@@ -1,0 +1,21 @@
+.cadastro-container {
+    max-width: 400px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input {
+    padding: 10px;
+    font-size: 14px;
+}
+
+button {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+}
