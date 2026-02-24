@@ -1,0 +1,30 @@
+<div class="admin-container">
+    <button routerLink="/dashboard" class="btn-back">← Voltar ao Painel</button>
+    <h2>Gestão de Funcionários</h2>
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Cargo/Nível</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of usuarios">
+                <td>{{ user.employeeCode }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <select [(ngModel)]="user.role" (change)="alterarRole(user.uid, $event)">
+                        <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+                    </select>
+                </td>
+                <td>
+                    <button (click)="deletar(user.uid)" class="btn-delete">Excluir</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

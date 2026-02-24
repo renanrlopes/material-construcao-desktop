@@ -14,13 +14,15 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { CadastroComponent } from './pages/cadastro/cadastro.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CadastroComponent,
     ForgotPasswordComponent,
-    DashboardComponent
+    DashboardComponent,
+    UsuariosComponent
   ],
   imports: [
     BrowserModule,

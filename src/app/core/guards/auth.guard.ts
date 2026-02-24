@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, take } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AppUser, UserRole } from '../models/user.model';
 
@@ -33,6 +33,7 @@ export class RoleGuard implements CanActivate {
           .doc(user.uid)
           .valueChanges()
           .pipe(
+            take(1),
             map((userData) => {
 
               if (!userData) {

@@ -1,1 +1,40 @@
-<p>dashboard works!</p>
+<div class="dashboard-wrapper">
+    <header class="dash-header">
+        <h1>Bem-vindo, {{ userName || 'Funcionário' }}</h1>
+        <button (click)="onLogout()" class="btn-logout">Sair</button>
+    </header>
+
+    <div *ngIf="loading" class="loader">Carregando painel...</div>
+
+    <div class="grid-container" *ngIf="!loading">
+        <div class="card" routerLink="/perfil">
+            <div class="icon">👤</div>
+            <h3>Meu Perfil</h3>
+            <p>Gerencie seus dados e senha.</p>
+        </div>
+
+        <div class="card admin-card" *ngIf="userRole === 'ADMIN'" routerLink="/usuarios">
+            <div class="icon">👥</div>
+            <h3>Usuários</h3>
+            <p>Gerenciar permissões e funcionários.</p>
+        </div>
+
+        <div class="card" routerLink="/produtos">
+            <div class="icon">📦</div>
+            <h3>Produtos</h3>
+            <p>Catálogo de materiais de construção.</p>
+        </div>
+
+        <div class="card" routerLink="/estoque">
+            <div class="icon">📊</div>
+            <h3>Estoque</h3>
+            <p>Controle de quantidades e avisos.</p>
+        </div>
+
+        <div class="card" routerLink="/baixas">
+            <div class="icon">📉</div>
+            <h3>Registro de Baixas</h3>
+            <p>Histórico de saídas de material.</p>
+        </div>
+    </div>
+</div>

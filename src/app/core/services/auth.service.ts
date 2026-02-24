@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 import firebase from 'firebase/compat/app';
+import { AppUser, UserRole } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -103,5 +104,25 @@ export class AuthService {
           .valueChanges();
       })
     );
+  }
+
+  // LISTAR TODOS OS USUÁRIOS
+  getAllUsers() {
+    return this.firestore
+      .collection<AppUser>('usuarios', ref => ref.orderBy('name'))
+      .valueChanges({ idField: 'uid' }); // O 'uid' aqui deve ser igual ao nome na interface
+  }
+
+  // ATUALIZAR ROLE (NÍVEL DE ACESSO)
+  updateUserRole(uid: string, newRole: UserRole) {
+    return this.firestore.collection('usuarios').doc(uid).update({ role: newRole });
+  }
+
+  // EXCLUIR USUÁRIO
+  // exclui o documento no Firestore. 
+  // Para excluir do Auth do Firebase, seria necessário uma Cloud Function, 
+  // mas para o controle de estoque, remover o documento já bloqueia o acesso via Guard.
+  deleteUser(uid: string) {
+    return this.firestore.collection('usuarios').doc(uid).delete();
   }
 }
