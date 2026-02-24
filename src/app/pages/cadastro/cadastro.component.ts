@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./cadastro.component.scss']
 })
 export class CadastroComponent {
-
   name: string = '';
   email: string = '';
   password: string = '';
@@ -16,6 +15,7 @@ export class CadastroComponent {
 
   loading: boolean = false;
   errorMessage: string = '';
+  successMessage: string = '';
 
   constructor(
     private authService: AuthService,
@@ -23,6 +23,16 @@ export class CadastroComponent {
   ) { }
 
   async cadastrar() {
+
+    if (!this.name || !this.email || !this.password) {
+      this.errorMessage = 'Preencha todos os campos.';
+      return;
+    }
+
+    if (this.name.trim().length < 3) {
+      this.errorMessage = 'Nome deve ter pelo menos 3 caracteres.';
+      return;
+    }
 
     if (this.password !== this.confirmPassword) {
       this.errorMessage = 'As senhas não coincidem.';
@@ -34,12 +44,16 @@ export class CadastroComponent {
 
     try {
       await this.authService.cadastrar(
-        this.name,
-        this.email,
+        this.name.trim(),
+        this.email.trim(),
         this.password
       );
 
-      this.router.navigate(['/dashboard']);
+      this.successMessage = 'Cadastro realizado com sucesso! Faça login.';
+
+      setTimeout(() => {
+        this.router.navigate(['/']);
+      }, 1500);
 
     } catch (error: any) {
       this.errorMessage = this.tratarErro(error.code);
@@ -59,5 +73,9 @@ export class CadastroComponent {
       default:
         return 'Erro ao cadastrar. Tente novamente.';
     }
+  }
+
+  goToLogin() {
+    this.router.navigate(['/']);
   }
 }

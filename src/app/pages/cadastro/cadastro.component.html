@@ -18,4 +18,13 @@
         {{ errorMessage }}
     </p>
 
+    <div *ngIf="successMessage" class="success">
+        {{ successMessage }}
+    </div>
+
+    <div class="login-link">
+        <p>Já tem conta?</p>
+        <a (click)="goToLogin()">Voltar para Login</a>
+    </div>
+
 </div>

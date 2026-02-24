@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { switchMap, map } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { AppUser, UserRole } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class RoleGuard implements CanActivate {
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot) {
-    const allowedRoles = route.data['roles'] as Array<string> || [];
+
+    const allowedRoles = (route.data['roles'] as UserRole[]) || [];
 
     return this.afAuth.authState.pipe(
       switchMap(user => {
@@ -27,23 +29,27 @@ export class RoleGuard implements CanActivate {
           return of(false);
         }
 
-        return this.firestore.collection('usuarios')
+        return this.firestore.collection<AppUser>('usuarios')
           .doc(user.uid)
           .valueChanges()
           .pipe(
-            map((data: any) => {
+            map((userData) => {
 
-              if (!data) {
+              if (!userData) {
                 this.router.navigate(['/']);
                 return false;
               }
 
-              if (allowedRoles.includes(data.role)) {
-                return true;
-              } else {
-                this.router.navigate(['/dashboard']);
-                return false;
+              if (allowedRoles.length === 0) {
+                return true; // rota sem restrição
               }
+
+              if (allowedRoles.includes(userData.role)) {
+                return true;
+              }
+
+              this.router.navigate(['/dashboard']);
+              return false;
 
             })
           );

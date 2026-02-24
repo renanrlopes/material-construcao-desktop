@@ -1,4 +1,4 @@
-import { Timestamp } from '@angular/fire/firestore';
+import firebase from 'firebase/compat/app';
 
 export type UserRole = 'ADMIN' | 'ESTOQUISTA' | 'LEITOR';
 
@@ -6,6 +6,7 @@ export interface AppUser {
     name: string;
     email: string;
     role: UserRole;
-    criadoEm: Timestamp;
-    ativo: boolean;
+    employeeCode: number;
+    createdAt: firebase.firestore.Timestamp;
+    isActive: boolean;
 }

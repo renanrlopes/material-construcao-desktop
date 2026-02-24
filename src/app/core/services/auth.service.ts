@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ControleConfig } from '../models/config.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { of, switchMap } from 'rxjs';
+import firebase from 'firebase/compat/app';
 
 @Injectable({
   providedIn: 'root'
@@ -22,20 +24,52 @@ export class AuthService {
 
   //  CADASTRO
   async cadastrar(name: string, email: string, password: string) {
+
     const cred = await this.afAuth.createUserWithEmailAndPassword(email, password);
 
-    if (cred.user) {
-      await this.firestore.collection('usuarios').doc(cred.user.uid).set({
-        name: name,
-        email: email,
-        role: 'LEITOR', // padrão
-        criadoEm: new Date(),
-        ativo: true
+    if (!cred.user) return;
+
+    const uid = cred.user.uid;
+
+    await this.firestore.firestore.runTransaction(async (transaction) => {
+
+      const counterRef = this.firestore
+        .collection<ControleConfig>('config')
+        .doc('employeeCounter').ref;
+
+      const counterSnap = await transaction.get(counterRef);
+
+      if (!counterSnap.exists) {
+        throw new Error('Documento employeeCounter não existe.');
+      }
+
+      const counterData = counterSnap.data() as ControleConfig;
+
+      const novoCodigo = counterData.ultimoCodigo + 1;
+
+      // Atualiza contador
+      transaction.update(counterRef, {
+        ultimoCodigo: novoCodigo
       });
-    }
+
+      // Cria usuário
+      transaction.set(
+        this.firestore.collection('usuarios').doc(uid).ref,
+        {
+          name: name,
+          email: email,
+          role: 'LEITOR',
+          employeeCode: novoCodigo,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          isActive: true
+        }
+      );
+
+    });
 
     return cred;
   }
+
   //  LOGOUT
   logout() {
     this.afAuth.signOut().then(() => {

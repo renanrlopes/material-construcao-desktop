@@ -19,3 +19,19 @@ button {
 .error {
     color: red;
 }
+
+.login-link {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.login-link a {
+    cursor: pointer;
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
