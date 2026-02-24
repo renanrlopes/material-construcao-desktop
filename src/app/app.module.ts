@@ -12,11 +12,13 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { FormsModule } from '@angular/forms';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { CadastroComponent } from './pages/cadastro/cadastro.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CadastroComponent
+    CadastroComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,

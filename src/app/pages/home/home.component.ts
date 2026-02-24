@@ -32,4 +32,7 @@ export class HomeComponent {
   irParaCadastro() {
     this.router.navigate(['/cadastro']);
   }
+  irParaEsqueceuSenha() {
+    this.router.navigate(['/forgot-password']);
+  }
 }
