@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;700&display=swap');
+:root {
+  /* === TIPOGRAFIA === */
+  --fonte-principal: 'Public Sans', sans-serif;
+
+  /* === PALETA DE CORES (MODO CLARO E GERAL) === */
+  --cor-vermelho-tijolo: #AC4430;
+  --cor-off-white-01: #F4F0E5;
+  --cor-off-white-02: #E7DECF;
+  --cor-branco: #FFFFFF;
+  --cor-azul-escuro-02: #172027;
+  --cor-azul-ardosia: #3E505B;
+  --cor-perola: #EAE9E4;
+  --cor-grafite-profundo: #121212;
+}
+
+/* === CONFIGURAÇÕES GLOBAIS === */
+/* Isso garante que a fonte e margens padrões se apliquem ao projeto inteiro */
+* {
+  box-sizing: border-box;
+  font-family: var(--fonte-principal);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--cor-perola); 
+  color: var(--cor-grafite-profundo); 
+}

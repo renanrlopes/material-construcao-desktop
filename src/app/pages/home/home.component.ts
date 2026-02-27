@@ -9,9 +9,13 @@ import { AuthService } from '../../core/services/auth.service';
 })
 export class HomeComponent {
 
+  // Variáveis do seu parceiro
   email: string = '';
   senha: string = '';
   erro: string = '';
+  
+  // Nossa nova variável para o Modo Escuro
+  isDarkMode: boolean = false; 
 
   constructor(
     private authService: AuthService,
@@ -29,10 +33,17 @@ export class HomeComponent {
       console.error(error);
     }
   }
+
   irParaCadastro() {
     this.router.navigate(['/cadastro']);
   }
+
   irParaEsqueceuSenha() {
     this.router.navigate(['/forgot-password']);
+  }
+
+  // Nossa nova função que inverte o tema
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
   }
 }
