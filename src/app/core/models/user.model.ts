@@ -7,7 +7,7 @@ export interface AppUser {
     name: string;
     email: string;
     role: UserRole;
-    employeeCode: number;
+    employeeCode: string;
     createdAt: firebase.firestore.Timestamp;
     isActive: boolean;
 }

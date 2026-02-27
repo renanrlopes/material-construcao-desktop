@@ -16,7 +16,8 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.getAllUsers().subscribe(data => {
-      this.usuarios = data as AppUser[];
+      // Filtra a lista para exibir apenas quem está com isActive: true
+      this.usuarios = data.filter(user => user.isActive !== false);
     });
   }
 
@@ -27,9 +28,11 @@ export class UsuariosComponent implements OnInit {
       .catch(err => alert('Erro ao atualizar: ' + err));
   }
 
-  deletar(uid: string) {
-    if (confirm('Tem certeza que deseja remover este funcionário?')) {
-      this.authService.deleteUser(uid);
+  desativar(uid: string) {
+    if (confirm('Tem certeza que deseja desativar este funcionário? ele perderá o acesso ao sistema.')) {
+      this.authService.updateUserStatus(uid, false)
+        .then(() => alert('Funcionário desativado com sucesso!'))
+        .catch(err => alert('Erro ao desativar: ' + err));
     }
   }
 

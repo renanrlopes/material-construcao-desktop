@@ -36,49 +36,30 @@ export class AuthService {
 
   //  CADASTRO
   async cadastrar(name: string, email: string, password: string) {
-
     const cred = await this.afAuth.createUserWithEmailAndPassword(email, password);
-
     if (!cred.user) return;
-
     const uid = cred.user.uid;
 
     await this.firestore.firestore.runTransaction(async (transaction) => {
-
-      const counterRef = this.firestore
-        .collection<ControleConfig>('config')
-        .doc('employeeCounter').ref;
-
+      const counterRef = this.firestore.collection('config').doc('employeeCounter').ref;
       const counterSnap = await transaction.get(counterRef);
 
-      if (!counterSnap.exists) {
-        throw new Error('Documento employeeCounter não existe.');
-      }
+      if (!counterSnap.exists) throw new Error('Documento employeeCounter não existe.');
 
-      const counterData = counterSnap.data() as ControleConfig;
+      const ultimo = (counterSnap.data() as any).ultimoCodigo || 0;
+      const proximo = ultimo + 1;
 
-      const novoCodigo = counterData.ultimoCodigo + 1;
+      transaction.update(counterRef, { ultimoCodigo: proximo });
 
-      // Atualiza contador
-      transaction.update(counterRef, {
-        ultimoCodigo: novoCodigo
+      transaction.set(this.firestore.collection('usuarios').doc(uid).ref, {
+        name,
+        email,
+        role: 'LEITOR',
+        employeeCode: this.formatarCodigo(proximo), // Salvando como String formatada
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        isActive: true
       });
-
-      // Cria usuário
-      transaction.set(
-        this.firestore.collection('usuarios').doc(uid).ref,
-        {
-          name: name,
-          email: email,
-          role: 'LEITOR',
-          employeeCode: novoCodigo,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-          isActive: true
-        }
-      );
-
     });
-
     return cred;
   }
 
@@ -120,14 +101,15 @@ export class AuthService {
 
   // EXCLUIR USUÁRIO
   // exclui o documento no Firestore. 
-  deleteUser(uid: string) {
-    return this.firestore.collection('usuarios').doc(uid).delete();
+  updateUserStatus(uid: string, status: boolean) {
+    return this.firestore.collection('usuarios').doc(uid).update({
+      isActive: status
+    });
   }
 
   async cadastrarComRole(name: string, email: string, password: string, role: UserRole) {
     const cred = await this.afAuth.createUserWithEmailAndPassword(email, password);
     if (!cred.user) return;
-
     const uid = cred.user.uid;
 
     await this.firestore.firestore.runTransaction(async (transaction) => {
@@ -136,18 +118,23 @@ export class AuthService {
 
       if (!counterSnap.exists) throw new Error('Contador não existe.');
 
-      const novoCodigo = (counterSnap.data() as any).ultimoCodigo + 1;
+      const ultimo = (counterSnap.data() as any).ultimoCodigo || 0;
+      const proximo = ultimo + 1;
 
-      transaction.update(counterRef, { ultimoCodigo: novoCodigo });
+      transaction.update(counterRef, { ultimoCodigo: proximo });
 
       transaction.set(this.firestore.collection('usuarios').doc(uid).ref, {
-        name: name,
-        email: email,
-        role: role, //Aqui usamos o role que o Admin escolheu
-        employeeCode: novoCodigo,
+        name,
+        email,
+        role,
+        employeeCode: this.formatarCodigo(proximo), // Sincronizado com Flutter
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         isActive: true
       });
     });
+  }
+
+  private formatarCodigo(proximo: number): string {
+    return `AO${proximo.toString().padStart(4, '0')}`;
   }
 }
