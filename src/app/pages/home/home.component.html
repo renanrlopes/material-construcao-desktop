@@ -1,7 +1,8 @@
 <main class="login-container" [class.dark-theme]="isDarkMode">
 
   <button class="theme-toggle-btn" (click)="toggleTheme()">
-    {{ isDarkMode ? '☀️ Modo Claro' : '🌙 Modo Escuro' }}
+    <lucide-icon [name]="isDarkMode ? 'sun' : 'moon'" size="20">
+    </lucide-icon>
   </button>
 
   <section class="form-section">
