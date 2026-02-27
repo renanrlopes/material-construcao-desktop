@@ -36,7 +36,6 @@ export class UsuariosComponent implements OnInit {
     }
   }
 
-  // Adicione estas propriedades na classe UsuariosComponent
   novoUser = {
     name: '',
     email: '',
@@ -44,7 +43,6 @@ export class UsuariosComponent implements OnInit {
     role: 'LEITOR' as UserRole
   };
 
-  // ... no construtor e ngOnInit você já tem o authService
 
   async adicionarUsuario() {
     const { name, email, password, role } = this.novoUser;
@@ -55,13 +53,10 @@ export class UsuariosComponent implements OnInit {
     }
 
     try {
-      // Chamamos o método cadastrar que você já tem no AuthService
-      // Mas precisamos de um pequeno ajuste nele para aceitar o 'role' escolhido
       await this.authService.cadastrarComRole(name, email, password, role);
 
       alert('Funcionário cadastrado com sucesso!');
 
-      // Limpa o formulário
       this.novoUser = { name: '', email: '', password: '', role: 'LEITOR' };
 
     } catch (error) {

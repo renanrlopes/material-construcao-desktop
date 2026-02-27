@@ -16,7 +16,6 @@
       <span class="brand-name">Asi & Obra!</span>
     </h1>
 
-    <!-- IMPORTANTE: adicionar (ngSubmit) -->
     <form class="login-form" (ngSubmit)="fazerLogin()">
 
       <div class="input-group">
@@ -32,18 +31,15 @@
       <div class="actions-group">
         <button type="submit" class="btn-primary">Login</button>
 
-        <!-- Chama método correto -->
         <button type="button" class="btn-secondary" (click)="irParaCadastro()">
           Cadastrar
         </button>
       </div>
 
-      <!-- Remove href e usa click -->
       <a class="forgot-password" (click)="irParaEsqueceuSenha()" style="cursor: pointer;">
         Esqueci minha senha
       </a>
 
-      <!-- Exibir erro se existir -->
       <p *ngIf="erro" class="error-message">
         {{ erro }}
       </p>
