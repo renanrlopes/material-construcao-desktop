@@ -1,4 +1,4 @@
-<main class="login-container" [class.dark-theme]="isDarkMode">
+<main class="auth-container" [class.dark-theme]="isDarkMode">
 
   <button class="theme-toggle-btn" (click)="toggleTheme()">
     <lucide-icon [name]="isDarkMode ? 'sun' : 'moon'" size="20">
@@ -17,7 +17,7 @@
     </h1>
 
     <!-- IMPORTANTE: adicionar (ngSubmit) -->
-    <form class="login-form" (ngSubmit)="fazerLogin()">
+    <form class="auth-form" (ngSubmit)="fazerLogin()">
 
       <div class="input-group">
         <input type="email" name="email" placeholder="Insira seu e-mail" [(ngModel)]="email" required>

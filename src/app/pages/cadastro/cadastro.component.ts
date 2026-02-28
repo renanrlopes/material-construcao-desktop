@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; // 1. Adicionado o OnInit aqui
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.scss']
 })
-export class CadastroComponent {
+export class CadastroComponent implements OnInit { // 2. Adicionado o implements OnInit
   name: string = '';
   email: string = '';
   password: string = '';
@@ -16,11 +16,22 @@ export class CadastroComponent {
   loading: boolean = false;
   errorMessage: string = '';
   successMessage: string = '';
+  
+  // Variável do tema
+  isDarkMode: boolean = false;
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) { }
+
+  // 3. O Angular roda isso sozinho quando a tela abre
+  ngOnInit(): void {
+    const temaSalvo = localStorage.getItem('theme');
+    if (temaSalvo === 'dark') {
+      this.isDarkMode = true; // Se o "caderninho" diz que é dark, já inicia dark
+    }
+  }
 
   async cadastrar() {
 
@@ -78,4 +89,17 @@ export class CadastroComponent {
   goToLogin() {
     this.router.navigate(['/']);
   }
+
+  // 4. Atualizamos o botão para salvar a escolha
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+    
+    // Salva a nova escolha no navegador
+    if (this.isDarkMode) {
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+    }
+  }
+  
 }

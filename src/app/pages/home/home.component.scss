@@ -1,274 +1,30 @@
-/* O contêiner principal ocupa 100% da tela */
-.login-container {
-  display: flex;
-  height: 100vh;
-  width: 100%;
-  background-color: var(--cor-perola); /* Cor de fundo global que definimos */
+@import '../auth-shared';
+
+.auth-container .form-section {
+  justify-content: center; /* Centraliza verticalmente */
+  padding: 5rem 5rem 2rem 2rem; /* Mantém o espaçamento original do Login */
 }
 
-/* === LADO ESQUERDO: Formulário === */
-/* === LADO ESQUERDO: Formulário === */
-.form-section {
-  flex: 0 0 40%; 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; 
-  
-  /* AJUSTES DE POSIÇÃO: */
-  /* padding-top: empurra o bloco todo mais para baixo */
-  /* padding-right: cria um espaço "fantasma" na direita, empurrando tudo para a esquerda */
-  padding-top: 5rem;
-  padding-right: 5rem; 
-  padding-left: 2rem;
-  padding-bottom: 2rem;
-  z-index: 2; 
 
-  .logo-container {
-    /* Diminuímos de 2rem para 1rem para aproximar a logo do texto */
-    margin-bottom: 1rem;
-    
-    img {
-      width: 120px; 
-      filter: drop-shadow(0px 8px 16px rgba(172, 68, 48, 0.4)); 
-    }
-  }
-
-  .welcome-title {
-    text-align: center;
-    font-size: 2.5rem;
-    color: var(--cor-grafite-profundo);
-    font-weight: 500;
-    /* Diminuímos de 3rem para 2rem para aproximar o texto das caixinhas */
-    margin-bottom: 2rem;
-
-    .brand-name {
-      color: var(--cor-vermelho-tijolo);
-      font-weight: 700;
-    }
-  }
-}
-
-  /* Deixaremos o CSS do formulário (inputs e botões) para o próximo passo! */
-  .login-form {
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-
-/* === LADO DIREITO: Imagem de Tijolos === */
-.image-section {
-  flex: 1; /* Ocupa os outros 50% do espaço */
-  position: relative;
-}
-
-.brick-background {
-  width: 100%;
-  height: 100%;
-  /* O degradê começa na esquerda (0%) e já fica 100% transparente logo nos 20% da imagem */
-  background-image: 
-    linear-gradient(to right, var(--cor-perola) 0%, transparent 35%),
-    url('/assets/images/backgroundTijolo.png');
-  background-size: cover; 
-  background-position: center;
-  background-repeat: no-repeat;
-}
-/* === EFEITO DE BRILHO NO LOGÓTIPO === */
-.logo-container img {
-  width: 120px;
-  /* Cria o brilho alaranjado em volta do logótipo */
-  filter: drop-shadow(0px 8px 16px rgba(172, 68, 48, 0.4)); 
-}
-
-/* === ESTILIZAÇÃO DO FORMULÁRIO === */
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem; /* Espaçamento entre os campos */
-  width: 100%;
-  max-width: 380px;
-
-  /* Estilo base para os campos de texto e ícones */
-  .input-group {
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center; /* Centraliza o ícone verticalmente */
-
-    input {
-      width: 100%;
-      padding: 1rem 3rem 1rem 1rem; /* O "3rem" cria espaço na direita para o ícone */
-      border: 1px solid transparent;
-      border-radius: 8px; /* O valor do Figma aplicado aqui! */
-      background-color: var(--cor-branco);
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05); /* Sombra suave do Figma */
-      font-family: var(--fonte-principal);
-      font-size: 1rem;
-      color: var(--cor-grafite-profundo);
-      outline: none;
-      transition: all 0.3s ease;
-
-      &::placeholder {
-        color: #A0A0A0;
-      }
-      
-      /* Efeito quando o utilizador clica para digitar */
-      &:focus {
-        box-shadow: 0px 4px 12px rgba(172, 68, 48, 0.2);
-        border: 1px solid var(--cor-vermelho-tijolo);
-      }
-    }
-
-    /* Posicionamento do ícone */
-    .input-icon {
-      position: absolute;
-      right: 1.2rem;
-      width: 20px;
-      height: auto;
-      pointer-events: none; /* Para não bloquear o clique no campo */
-    }
-  }
-
-  /* Grupo dos botões */
-  .actions-group {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 0.5rem;
-
-    button {
-      width: 100%;
-      padding: 1rem;
-      border-radius: 8px; /* O valor do Figma aplicado aqui! */
-      font-size: 1rem;
-      font-weight: 700;
-      font-family: var(--fonte-principal);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    /* Botão Principal (Login) */
-    .btn-primary {
-      background-color: var(--cor-vermelho-tijolo);
-      color: var(--cor-branco);
-      border: none;
-      /* Sombra do botão principal */
-      box-shadow: 0px 4px 10px rgba(172, 68, 48, 0.3);
-
-      &:hover {
-        background-color: #8E3625; 
-      }
-    }
-
-    /* Botão Secundário (Cadastrar) */
-    .btn-secondary {
-      background-color: transparent;
-      color: var(--cor-vermelho-tijolo);
-      border: 1px solid var(--cor-vermelho-tijolo);
-
-      &:hover {
-        background-color: rgba(172, 68, 48, 0.05);
-      }
-    }
-  }
-
-  /* Link Esqueci a Senha */
-  .forgot-password {
-    text-align: center;
-    margin-top: 1rem;
-    color: var(--cor-grafite-profundo);
-    font-size: 0.9rem;
-    text-decoration: underline;
-    font-weight: 500;
-    
-    &:hover {
-      color: var(--cor-vermelho-tijolo);
-    }
-  }
-}
-
-/* =========================================
-   3. MODO ESCURO
-========================================= */
-/* Quando a classe 'dark-theme' for ativada no HTML, estas regras substituem as cores claras */
-
-.login-container.dark-theme {
-  /* Fundo principal (Lado Esquerdo) */
-  background-color: #172027; /* Azul Escuro 02 */
-
-  .form-section {
-    .welcome-title {
-      color: #EAE9E4; /* Muda o texto para Pérola */
-      /* O span da marca continua pegando a cor Vermelho Tijolo do código principal */
-    }
-  }
-
-  /* Lado Direito - Imagem Escurecida */
-  .brick-background {
-    /* 1º Degradê: Transição da fumaça usando o Azul Escuro 02 */
-    /* 2º Degradê: Uma camada de "Efeito Sombra" (03021B) com 70% de opacidade para escurecer os tijolos */
-    background-image: 
-      linear-gradient(to right, #172027 0%, transparent 35%),
-      linear-gradient(rgba(3, 2, 27, 0.7), rgba(3, 2, 27, 0.7)),
-      url('/assets/images/backgroundTijolo.png');
-  }
-
-  /* Cores do Formulário */
-  .login-form {
-    .input-group input {
-      background-color: #EAE9E4; /* Fundo do input na cor Pérola */
-      color: #172027; /* Letra escura ao digitar para dar contraste */
-      
-      &::placeholder {
-        color: #7A8B99; /* Um cinza para o placeholder */
-      }
-      
-      &:focus {
-        box-shadow: 0px 4px 12px rgba(172, 68, 48, 0.4);
-      }
-    }
-
-    .actions-group {
-      .btn-secondary {
-        background-color: #1B242B; /* Azul Escuro 01 */
-        border: 1px solid #1B242B;
-        color: #EAE9E4; /* Pérola */
-
+.forgot-password {
+        text-align: center;
+        margin-top: 1rem;
+        color: var(--cor-grafite-profundo);
+        font-size: 0.9rem;
+        text-decoration: underline;
+        font-weight: 500;
+        
         &:hover {
-          border: 1px solid #EAE9E4; /* Revela uma borda clara ao passar o mouse */
+          color: var(--cor-vermelho-tijolo);
         }
       }
-    }
 
-    .forgot-password {
-      color: #EAE9E4; /* Pérola */
+    
+.dark-theme .forgot-password {
+      color: var(--cor-off-white-01); 
+      &:hover {
+      color:var(--cor-vermelho-tijolo);
     }
   }
-}  
-  /* =========================================
-   4. BOTÃO DE TEMA (DARK/LIGHT MODE)
-========================================= */
-.theme-toggle-btn {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  padding: 0.6rem 1.2rem;
-  border-radius: 20px;
-  border: none;
-  background-color: var(--cor-vermelho-tijolo);
-  color: var(--cor-branco);
-  font-family: var(--fonte-principal);
-  font-weight: 500;
-  cursor: pointer;
-  z-index: 10; /* Garante que fique por cima da imagem de fundo */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
 
-  &:hover {
-    transform: scale(1.05); /* Efeito de crescer um pouquinho ao passar o mouse */
-    background-color: #8E3625;
-  }
-}
+  

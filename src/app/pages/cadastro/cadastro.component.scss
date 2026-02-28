@@ -1,37 +1,21 @@
-.cadastro-container {
-    max-width: 400px;
-    margin: 50px auto;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+@import '../auth-shared';
+
+.auth-container .form-section {
+  justify-content: flex-start; /* Faz os itens começarem do topo em vez do centro */
+  padding: 2rem 5rem 2rem 2rem; /* Diminuí o padding-top de 5rem para 3rem para subir tudo */
+
+  .logo-container {
+    margin-bottom: 0.5rem; /* Diminui o espaço debaixo da logo */
+  }
+
+  .welcome-title {
+    margin-top: 0; /* Remove qualquer margem que empurre o título para baixo */
+    margin-bottom: 2rem; /* Mantém um espaço saudável entre o título e o primeiro input */
+  }
+
 }
 
-input {
-    padding: 10px;
-    font-size: 14px;
-}
 
-button {
-    padding: 10px;
-    cursor: pointer;
-}
 
-.error {
-    color: red;
-}
 
-.login-link {
-    margin-top: 20px;
-    text-align: center;
-}
 
-.login-link a {
-    cursor: pointer;
-    color: #1976d2;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.login-link a:hover {
-    text-decoration: underline;
-}

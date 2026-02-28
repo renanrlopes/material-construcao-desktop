@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; // 1. Adicionado o OnInit
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
@@ -7,7 +7,7 @@ import { AuthService } from '../../core/services/auth.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit { // 2. Adicionado implements OnInit
 
   // Variáveis do seu parceiro
   email: string = '';
@@ -21,6 +21,14 @@ export class HomeComponent {
     private authService: AuthService,
     private router: Router
   ) { }
+
+  // 3. Lê o caderninho do navegador quando a tela de login carrega
+  ngOnInit(): void {
+    const temaSalvo = localStorage.getItem('theme');
+    if (temaSalvo === 'dark') {
+      this.isDarkMode = true; // Se estiver dark lá, liga o modo escuro aqui
+    }
+  }
 
   async fazerLogin() {
     this.erro = '';
@@ -42,8 +50,15 @@ export class HomeComponent {
     this.router.navigate(['/forgot-password']);
   }
 
-  // Nossa nova função que inverte o tema
+  // 4. Inverte o tema E salva a escolha no navegador
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
+    
+    // Salva a nova escolha no caderninho
+    if (this.isDarkMode) {
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+    }
   }
 }
