@@ -16,12 +16,7 @@
       <span class="brand-name">Asi & Obra!</span>
     </h1>
 
-<<<<<<< HEAD
-    <form class="login-form" (ngSubmit)="fazerLogin()">
-=======
-    <!-- IMPORTANTE: adicionar (ngSubmit) -->
     <form class="auth-form" (ngSubmit)="fazerLogin()">
->>>>>>> 2291ffc41086e3eb268f4f008b45e510a70726e9
 
       <div class="input-group">
         <input type="email" name="email" placeholder="Insira seu e-mail" [(ngModel)]="email" required>
@@ -36,15 +31,18 @@
       <div class="actions-group">
         <button type="submit" class="btn-primary">Login</button>
 
+        <!-- Chama método correto -->
         <button type="button" class="btn-secondary" (click)="irParaCadastro()">
           Cadastrar
         </button>
       </div>
 
+      <!-- Remove href e usa click -->
       <a class="forgot-password" (click)="irParaEsqueceuSenha()" style="cursor: pointer;">
         Esqueci minha senha
       </a>
 
+      <!-- Exibir erro se existir -->
       <p *ngIf="erro" class="error-message">
         {{ erro }}
       </p>
