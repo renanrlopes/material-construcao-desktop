@@ -9,10 +9,11 @@
 .forgot-password {
         text-align: center;
         margin-top: 1rem;
-        color: var(--cor-grafite-profundo);
+        color: #172027;
         font-size: 0.9rem;
         text-decoration: underline;
         font-weight: 500;
+        margin-bottom: 120px;
         
         &:hover {
           color: var(--cor-vermelho-tijolo);
