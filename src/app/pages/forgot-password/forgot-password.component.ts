@@ -1,21 +1,35 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../../core/services/auth.service'; // Ajuste o caminho se necessário
+import { Component, OnInit } from '@angular/core'; // 1. Adicionado OnInit
+import { AuthService } from '../../core/services/auth.service'; 
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrl: './forgot-password.component.scss'
+  styleUrls: ['./forgot-password.component.scss'] 
 })
-export class ForgotPasswordComponent {
+export class ForgotPasswordComponent implements OnInit { // 2. Adicionado implements OnInit
   email: string = '';
+
+  // --- VARIÁVEIS ADICIONADAS APENAS PARA O HTML/CSS NÃO DAR ERRO ---
+  isDarkMode: boolean = false;
+  loading: boolean = false;
+  errorMessage: string = '';
+  successMessage: string = '';
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) { }
 
+  // --- LÓGICA DO MODO ESCURO (Lê o localStorage) ---
+  ngOnInit(): void {
+    const temaSalvo = localStorage.getItem('theme');
+    if (temaSalvo === 'dark') {
+      this.isDarkMode = true;
+    }
+  }
+
+  // --- LÓGICA DO SEU COLEGA (INTACTA!) ---
   async enviarEmail() {
     if (!this.email) {
       alert('Por favor, digite seu e-mail.');
@@ -38,6 +52,21 @@ export class ForgotPasswordComponent {
     } catch (error) {
       console.error('Erro ao processar recuperação:', error);
       alert('Ocorreu um erro técnico. Tente novamente mais tarde.');
+    }
+  }
+
+  // Botão "Voltar para o login"
+  voltarLogin() {
+    this.router.navigate(['/']);
+  }
+
+  // Botão de trocar o tema
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+    if (this.isDarkMode) {
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.setItem('theme', 'light');
     }
   }
 }
