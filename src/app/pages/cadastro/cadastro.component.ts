@@ -90,7 +90,7 @@ export class CadastroComponent implements OnInit { // 2. Adicionado o implements
     this.router.navigate(['/']);
   }
 
-  // 4. Atualizamos o botão para salvar a escolha
+ // 4. Atualizamos o botão para salvar a escolha
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
     
@@ -101,5 +101,14 @@ export class CadastroComponent implements OnInit { // 2. Adicionado o implements
       localStorage.setItem('theme', 'light');
     }
   }
+
+  // =========================================
+  // FECHAR MODAL DE AVISO
+  // =========================================
+  fecharAviso() {
+    this.errorMessage = '';
+    this.successMessage = '';
+  }
   
-}
+} // <-- Essa é a última chave do arquivo
+  

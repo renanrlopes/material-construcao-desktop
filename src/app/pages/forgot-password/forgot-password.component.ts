@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'; // 1. Adicionado OnInit
+import { Component, OnInit } from '@angular/core'; 
 import { AuthService } from '../../core/services/auth.service'; 
 import { Router } from '@angular/router';
 
@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss'] 
 })
-export class ForgotPasswordComponent implements OnInit { // 2. Adicionado implements OnInit
+export class ForgotPasswordComponent implements OnInit {
   email: string = '';
 
-  // --- VARIÁVEIS ADICIONADAS APENAS PARA O HTML/CSS NÃO DAR ERRO ---
+  // Variáveis que controlam o aparecimento do aviso no seu HTML
   isDarkMode: boolean = false;
   loading: boolean = false;
   errorMessage: string = '';
@@ -21,7 +21,6 @@ export class ForgotPasswordComponent implements OnInit { // 2. Adicionado implem
     private router: Router
   ) { }
 
-  // --- LÓGICA DO MODO ESCURO (Lê o localStorage) ---
   ngOnInit(): void {
     const temaSalvo = localStorage.getItem('theme');
     if (temaSalvo === 'dark') {
@@ -29,44 +28,56 @@ export class ForgotPasswordComponent implements OnInit { // 2. Adicionado implem
     }
   }
 
-  // --- LÓGICA DO SEU COLEGA (INTACTA!) ---
+  // --- LÓGICA ATUALIZADA: SAI O ALERT(), ENTRA O AVISO NO HTML ---
   async enviarEmail() {
+    // Limpa avisos anteriores antes de começar
+    this.errorMessage = '';
+    this.successMessage = '';
+
     if (!this.email) {
-      alert('Por favor, digite seu e-mail.');
+      this.errorMessage = 'Por favor, digite seu e-mail.'; // Substitui alert
       return;
     }
 
+    this.loading = true;
+
     try {
-      // 1. Verifica se o funcionário existe no banco de dados (Firestore)
-      const existe = await this.authService.verificarEmailExiste(this.email);
+      // 1. Verifica se o funcionário existe no banco conforme a modelagem
+      const existe = await this.authService.verificarEmailExiste(this.email.trim());
 
       if (existe) {
-        // 2. Se existe, envia o e-mail de recuperação
-        await this.authService.resetPassword(this.email);
-        alert('Link de recuperação enviado para o e-mail informado!');
-        this.router.navigate(['/']);
+        // 2. Se existe, dispara o processo de passwordReset
+        await this.authService.resetPassword(this.email.trim());
+        this.successMessage = 'Link de recuperação enviado com sucesso!';
+        
+        // Redireciona após 3 segundos para o usuário conseguir ler o aviso
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 3000);
       } else {
-        // 3. Se não existe, avisa o usuário
-        alert('Este e-mail não está cadastrado no sistema de funcionários.');
+        // 3. Erro de e-mail não encontrado na tabela de funcionários
+        this.errorMessage = 'Este e-mail não está cadastrado no sistema de funcionários.';
       }
     } catch (error) {
       console.error('Erro ao processar recuperação:', error);
-      alert('Ocorreu um erro técnico. Tente novamente mais tarde.');
+      this.errorMessage = 'Ocorreu um erro técnico. Tente novamente mais tarde.';
+    } finally {
+      this.loading = false;
     }
   }
 
-  // Botão "Voltar para o login"
   voltarLogin() {
     this.router.navigate(['/']);
   }
 
-  // Botão de trocar o tema
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
-    if (this.isDarkMode) {
-      localStorage.setItem('theme', 'dark');
-    } else {
-      localStorage.setItem('theme', 'light');
-    }
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+  }
+
+  // Função para limpar o aviso (usada no botão "Ok" ou fechar)
+  fecharAviso() {
+    this.errorMessage = '';
+    this.successMessage = '';
   }
 }

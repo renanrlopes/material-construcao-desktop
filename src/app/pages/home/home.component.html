@@ -1,14 +1,13 @@
 <main class="auth-container" [class.dark-theme]="isDarkMode">
 
-  <button class="theme-toggle-btn" (click)="toggleTheme()">
-    <lucide-icon [name]="isDarkMode ? 'sun' : 'moon'" size="20">
-    </lucide-icon>
+  <button type="button" class="theme-toggle-btn" (click)="toggleTheme()" aria-label="Alternar tema">
+    <lucide-icon [name]="isDarkMode ? 'sun' : 'moon'" size="20"></lucide-icon>
   </button>
 
   <section class="form-section">
 
     <div class="logo-container">
-      <img src="/assets/icons/logo-carriola.png" alt="Logo Asi & Obra" />
+      <img src="assets/icons/logo-carriola.png" alt="Logo Asi & Obra" />
     </div>
 
     <h1 class="welcome-title">
@@ -29,29 +28,31 @@
       </div>
 
       <div class="actions-group">
-        <button type="submit" class="btn-primary">Login</button>
+        <button type="submit" class="btn-primary" [disabled]="loading">
+          {{ loading ? 'Entrando...' : 'Login' }}
+        </button>
 
-        <!-- Chama método correto -->
-        <button type="button" class="btn-secondary" (click)="irParaCadastro()">
+        <button type="button" class="btn-secondary" (click)="irParaCadastro()" [disabled]="loading">
           Cadastrar
         </button>
       </div>
 
-      <!-- Remove href e usa click -->
-      <a class="forgot-password" (click)="irParaEsqueceuSenha()" style="cursor: pointer;">
+      <a class="forgot-password" (click)="irParaEsqueceuSenha()" role="button" translate="no">
         Esqueci minha senha
       </a>
-
-      <!-- Exibir erro se existir -->
-      <p *ngIf="erro" class="error-message">
-        {{ erro }}
-      </p>
 
     </form>
   </section>
 
-  <section class="image-section">
+  <section class="image-section" aria-hidden="true">
     <div class="brick-background"></div>
   </section>
+
+  <div class="overlay" *ngIf="erro" (click)="fecharAviso()"></div>
+  
+  <div class="error-message" *ngIf="erro" role="alert">
+    <p>{{ erro }}</p>
+    <button type="button" class="close-btn" (click)="fecharAviso()">Ok, entendi</button>
+  </div>
 
 </main>

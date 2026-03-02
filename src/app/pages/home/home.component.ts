@@ -1,47 +1,60 @@
-import { Component, OnInit } from '@angular/core'; // 1. Adicionado o OnInit
+import { Component, OnInit, Renderer2, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit { // 2. Adicionado implements OnInit
+export class HomeComponent implements OnInit {
 
-  // Variáveis do seu parceiro
   email: string = '';
   senha: string = '';
-  erro: string = '';
+  erro: string = ''; // Esta variável controla o pop-up no HTML
+  loading: boolean = false;
   
-  // Nossa nova variável para o Modo Escuro
   isDarkMode: boolean = false; 
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private document: Document
   ) { }
 
-  // 3. Lê o caderninho do navegador quando a tela de login carrega
   ngOnInit(): void {
     const temaSalvo = localStorage.getItem('theme');
-    if (temaSalvo === 'dark') {
-      this.isDarkMode = true; // Se estiver dark lá, liga o modo escuro aqui
-    }
+    this.isDarkMode = temaSalvo === 'dark';
+    this.applyTheme();
   }
 
   async fazerLogin() {
+    // 1. Limpa o erro para permitir que o pop-up "suba" novamente em um novo clique
     this.erro = '';
+
+    // 2. VALIDAÇÃO MANUAL: Se clicar sem preencher, o pop-up aparece aqui
+    if (!this.email || !this.senha) {
+      this.erro = 'Por favor, preencha todos os campos.';
+      return;
+    }
+
+    this.loading = true;
 
     try {
       await this.authService.login(this.email, this.senha);
       this.router.navigate(['/dashboard']);
     } catch (error: any) {
-      this.erro = 'Email ou senha inválidos';
+      // Trata erros vindos do Firebase
+      this.erro = 'E-mail ou senha inválidos.';
       console.error(error);
+    } finally {
+      this.loading = false;
     }
   }
 
+  // --- Navegação e Tema ---
   irParaCadastro() {
     this.router.navigate(['/cadastro']);
   }
@@ -50,15 +63,22 @@ export class HomeComponent implements OnInit { // 2. Adicionado implements OnIni
     this.router.navigate(['/forgot-password']);
   }
 
-  // 4. Inverte o tema E salva a escolha no navegador
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
-    
-    // Salva a nova escolha no caderninho
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+    this.applyTheme();
+  }
+
+  private applyTheme() {
     if (this.isDarkMode) {
-      localStorage.setItem('theme', 'dark');
+      this.renderer.addClass(this.document.body, 'dark-theme');
     } else {
-      localStorage.setItem('theme', 'light');
+      this.renderer.removeClass(this.document.body, 'dark-theme');
     }
+  }
+
+  // Função para o botão "Ok, entendi" do pop-up
+  fecharAviso() {
+    this.erro = '';
   }
 }
