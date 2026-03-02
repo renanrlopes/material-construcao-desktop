@@ -196,8 +196,19 @@
         .brand {
             color: var(--cor-azul-ardosia);
             font-size: 0.95rem;
-            line-height: 1.6;
+            line-height: 1.5;
             margin-bottom: 1.2rem;
+
+            /* Limite de 2 linhas com reticências */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            /* Número de linhas visíveis */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            /* Garante altura mínima para manter o alinhamento dos cards */
+            min-height: 2.8rem;
         }
 
         .card-footer {
@@ -241,6 +252,7 @@
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
     position: relative;
     animation: modalSlideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
 
     .modal-header {
         display: flex;
@@ -305,6 +317,10 @@
             color: var(--cor-azul-ardosia);
             font-size: 1rem;
             line-height: 1.6;
+
+            max-height: 250px;
+            overflow-y: auto;
+            white-space: pre-wrap;
         }
     }
 
