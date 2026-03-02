@@ -1,134 +1,193 @@
+/* =========================================
+   VARIÁVEIS DE CORES (PALETA TIJOLO)
+========================================= */
+:root {
+    --fonte-principal: 'Public Sans', sans-serif;
+    --cor-vermelho-tijolo: #AC4430;
+    --cor-off-white-01: #F4F0E5;
+    --cor-off-white-02: #E7DECF;
+    --cor-branco: #FFFFFF;
+    --cor-azul-escuro-02: #172027;
+    --cor-azul-ardosia: #3E505B;
+    --cor-perola: #EAE9E4;
+    --cor-grafite-profundo: #121212;
+}
+
 .admin-container {
-    padding: 2rem;
+    padding: 2.5rem;
     max-width: 1200px;
     margin: 0 auto;
+    font-family: var(--fonte-principal);
 
     h2 {
-        color: #333;
+        color: var(--cor-vermelho-tijolo);
         margin-bottom: 1.5rem;
-        font-weight: 600;
+        font-weight: 700;
+        font-size: 2rem;
     }
 
+    /* === TABELA DE USUÁRIOS === */
     .user-table {
         width: 100%;
         border-collapse: collapse;
-        background: #fff;
-        border-radius: 8px;
+        background: var(--cor-branco);
+        border-radius: 12px;
         overflow: hidden;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--cor-off-white-02);
 
         thead {
-            background-color: #f8f9fa;
+            background-color: var(--cor-off-white-01);
 
             th {
-                padding: 1rem;
+                padding: 1.2rem;
                 text-align: left;
-                color: #495057;
-                font-weight: 600;
-                border-bottom: 2px solid #dee2e6;
+                color: var(--cor-azul-ardosia);
+                font-weight: 700;
+                text-transform: uppercase;
+                font-size: 0.85rem;
+                letter-spacing: 0.5px;
+                border-bottom: 2px solid var(--cor-off-white-02);
             }
         }
 
         tbody {
             tr {
-                border-bottom: 1px solid #eee;
-                transition: background 0.2s;
+                border-bottom: 1px solid var(--cor-off-white-01);
+                transition: background 0.2s ease;
 
                 &:hover {
-                    background-color: #fcfcfc;
+                    background-color: #FAF9F6;
                 }
 
                 td {
-                    padding: 1rem;
-                    color: #555;
+                    padding: 1rem 1.2rem;
+                    color: var(--cor-grafite-profundo);
                     vertical-align: middle;
+                    font-size: 0.95rem;
                 }
             }
         }
 
+        /* Estilização dos Selects dentro da tabela */
         select {
             padding: 0.5rem;
-            border-radius: 4px;
-            border: 1px solid #ced4da;
-            background-color: #fff;
+            border-radius: 6px;
+            border: 1px solid var(--cor-off-white-02);
+            background-color: var(--cor-branco);
+            color: var(--cor-azul-ardosia);
+            font-family: var(--fonte-principal);
             cursor: pointer;
+            transition: all 0.3s ease;
 
             &:focus {
                 outline: none;
-                border-color: #80bdff;
-                box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+                border-color: var(--cor-vermelho-tijolo);
+                box-shadow: 0 0 0 2px rgba(172, 68, 48, 0.1);
             }
         }
 
         .btn-delete {
-            padding: 0.5rem 0.8rem;
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            background-color: transparent;
+            color: var(--cor-vermelho-tijolo);
+            border: 1px solid var(--cor-vermelho-tijolo);
+            border-radius: 6px;
             cursor: pointer;
             font-size: 0.85rem;
-            transition: background 0.2s;
+            font-weight: 700;
+            transition: all 0.2s ease;
 
             &:hover {
-                background-color: #c82333;
+                background-color: var(--cor-vermelho-tijolo);
+                color: var(--cor-branco);
             }
         }
     }
 }
 
+/* === BOTÃO VOLTAR === */
 .btn-back {
     background: none;
     border: none;
-    color: #007bff;
+    color: var(--cor-azul-ardosia);
     cursor: pointer;
-    font-weight: 600;
-    margin-bottom: 1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
     padding: 0;
     display: flex;
     align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
 
     &:hover {
-        text-decoration: underline;
+        color: var(--cor-vermelho-tijolo);
+        text-decoration: none;
     }
 }
 
+/* === SEÇÃO ADICIONAR USUÁRIO === */
 .add-user-section {
-    background: #f1f3f5;
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-bottom: 2rem;
+    background: var(--cor-perola);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 3rem;
+    border: 1px solid var(--cor-off-white-02);
 
     h3 {
-        margin-bottom: 1rem;
-        color: #444;
+        margin-bottom: 1.5rem;
+        color: var(--cor-grafite-profundo);
+        font-weight: 700;
+        font-size: 1.25rem;
     }
-                       
+
     .add-form {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 15px;
 
         input,
         select {
-            padding: 0.6rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--cor-off-white-02);
+            border-radius: 8px;
             flex: 1;
-            min-width: 150px;
+            min-width: 200px;
+            background-color: var(--cor-branco);
+            font-family: var(--fonte-principal);
+            font-size: 0.95rem;
+            color: var(--cor-grafite-profundo);
+            transition: all 0.3s ease;
+
+            &::placeholder {
+                color: #A0A0A0;
+            }
+
+            &:focus {
+                outline: none;
+                border-color: var(--cor-vermelho-tijolo);
+                box-shadow: 0 4px 12px rgba(172, 68, 48, 0.1);
+            }
         }
 
         .btn-save {
-            background-color: #28a745;
-            color: white;
+            background-color: var(--cor-vermelho-tijolo);
+            color: var(--cor-branco);
             border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 4px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 700;
+            box-shadow: 0px 4px 10px rgba(172, 68, 48, 0.3);
+            transition: all 0.3s ease;
 
             &:hover {
-                background-color: #218838;
+                background-color: #8E3625;
+                transform: translateY(-2px);
+            }
+
+            &:active {
+                transform: translateY(0);
             }
         }
     }

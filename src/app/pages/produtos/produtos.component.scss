@@ -1,31 +1,38 @@
 /* ============================================================
-   VARIÁVEIS DE CORES (PALETA DARK DO MOBILE)
+   VARIÁVEIS DE CORES (PALETA TIJOLO / LIGHT MODE)
    ============================================================ */
-$bg-dark: #121d24;
-$card-bg: #1c2c35;
-$border-color: #2d3e48;
-$text-primary: #e1e1e1;
-$text-secondary: #8899a6;
-$accent-color: #ff7043;
+:root {
+    --fonte-principal: 'Public Sans', sans-serif;
+    --cor-vermelho-tijolo: #AC4430;
+    --cor-off-white-01: #F4F0E5;
+    --cor-off-white-02: #E7DECF;
+    --cor-branco: #FFFFFF;
+    --cor-azul-escuro-02: #172027;
+    --cor-azul-ardosia: #3E505B;
+    --cor-perola: #EAE9E4;
+    --cor-grafite-profundo: #121212;
+}
 
-/* Seletor flexível para reutilização em Produtos e Estoque */
+/* Seletor flexível para reutilização */
 .produtos-wrapper,
 .estoque-wrapper {
-    padding: 2rem;
-    background-color: $bg-dark;
+    padding: 2.5rem;
+    background-color: var(--cor-perola);
     min-height: 100vh;
-    color: $text-primary;
-    font-family: 'Segoe UI', Roboto, sans-serif;
+    color: var(--cor-grafite-profundo);
+    font-family: var(--fonte-principal);
 
     .header-section {
         display: flex;
         align-items: center;
         gap: 1.5rem;
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
 
         h2 {
             margin: 0;
-            font-size: 1.8rem;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--cor-vermelho-tijolo);
         }
     }
 
@@ -34,7 +41,7 @@ $accent-color: #ff7043;
         display: flex;
         flex-wrap: wrap;
         gap: 1rem;
-        margin-bottom: 2.5rem;
+        margin-bottom: 3rem;
 
         .search-box {
             flex: 2;
@@ -43,24 +50,27 @@ $accent-color: #ff7043;
 
             input {
                 width: 100%;
-                padding: 0.8rem 1rem 0.8rem 2.5rem;
-                background: $card-bg;
-                border: 1px solid $border-color;
-                border-radius: 10px;
-                color: white;
+                padding: 1rem 1rem 1rem 3rem;
+                background: var(--cor-branco);
+                border: 1px solid var(--cor-off-white-02);
+                border-radius: 12px;
+                color: var(--cor-grafite-profundo);
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+                transition: all 0.3s ease;
 
                 &:focus {
-                    border-color: $accent-color;
+                    border-color: var(--cor-vermelho-tijolo);
+                    box-shadow: 0px 4px 12px rgba(172, 68, 48, 0.15);
                     outline: none;
                 }
             }
 
             .search-icon {
                 position: absolute;
-                left: 0.8rem;
+                left: 1.2rem;
                 top: 50%;
                 transform: translateY(-50%);
-                opacity: 0.5;
+                color: var(--cor-azul-ardosia);
             }
         }
 
@@ -72,40 +82,56 @@ $accent-color: #ff7043;
             input,
             select {
                 padding: 0.8rem;
-                background: $card-bg;
-                border: 1px solid $border-color;
-                border-radius: 8px;
-                color: white;
+                background: var(--cor-branco);
+                border: 1px solid var(--cor-off-white-02);
+                border-radius: 10px;
+                color: var(--cor-azul-ardosia);
+                font-weight: 500;
+                cursor: pointer;
 
                 &:focus {
-                    border-color: $accent-color;
+                    border-color: var(--cor-vermelho-tijolo);
                     outline: none;
                 }
             }
         }
     }
 
-    /* GRID DE CARDS (PRODUTOS E ESTOQUE) */
+    /* GRID DE CARDS */
     .product-grid,
     .stock-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 1.5rem;
+        gap: 2rem;
     }
 
-    /* ESTILO DO CARD */
+    /* ESTILO DO CARD "TIJOLO" */
     .product-card,
     .stock-card {
-        background: $card-bg;
-        border: 1px solid $border-color;
-        border-radius: 15px;
-        padding: 1.5rem;
+        background: var(--cor-branco);
+        border: 1px solid var(--cor-off-white-02);
+        border-radius: 16px;
+        padding: 1.8rem;
         cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+
+        /* Detalhe lateral simulando um tijolo */
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 6px;
+            background-color: var(--cor-vermelho-tijolo);
+            opacity: 0.8;
+        }
 
         &:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(172, 68, 48, 0.12);
         }
 
         .card-header,
@@ -113,30 +139,32 @@ $accent-color: #ff7043;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 1.2rem;
 
             h3 {
                 margin: 0;
-                font-size: 1.2rem;
-                color: white;
+                font-size: 1.3rem;
+                font-weight: 700;
+                color: var(--cor-grafite-profundo);
             }
 
-            /* Badges específicas do estoque */
             .lote-badge {
-                background: #263843;
-                color: $text-secondary;
-                padding: 4px 8px;
-                border-radius: 4px;
+                background: var(--cor-off-white-01);
+                color: var(--cor-vermelho-tijolo);
+                padding: 5px 10px;
+                border-radius: 6px;
                 font-size: 0.75rem;
-                font-weight: bold;
+                font-weight: 700;
+                border: 1px solid var(--cor-off-white-02);
             }
 
             .qty-display {
-                font-size: 1.2rem;
-                font-weight: bold;
+                font-size: 1.4rem;
+                font-weight: 700;
                 color: #28a745;
 
                 &.low-stock {
-                    color: #ff4d4d;
+                    color: var(--cor-vermelho-tijolo);
                 }
             }
         }
@@ -144,49 +172,49 @@ $accent-color: #ff7043;
         .tags {
             display: flex;
             gap: 0.6rem;
-            margin: 1rem 0;
+            margin-bottom: 1.2rem;
 
             span {
-                font-size: 0.7rem;
-                padding: 0.3rem 0.7rem;
-                border-radius: 6px;
-                font-weight: 700;
-                text-transform: uppercase;
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+                border-radius: 20px;
+                font-weight: 600;
             }
 
             .tag-type {
-                background: rgba($text-secondary, 0.1);
-                color: $text-secondary;
+                background: var(--cor-perola);
+                color: var(--cor-azul-ardosia);
             }
 
             .tag-brand {
-                background: rgba($accent-color, 0.1);
-                color: $accent-color;
+                background: rgba(172, 68, 48, 0.1);
+                color: var(--cor-vermelho-tijolo);
             }
         }
 
         .description,
         .brand {
-            color: $text-secondary;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 1rem;
+            color: var(--cor-azul-ardosia);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
         }
 
         .card-footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba($border-color, 0.5);
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--cor-off-white-01);
             font-size: 0.8rem;
-            color: $text-secondary;
+            color: var(--cor-azul-ardosia);
+            font-weight: 500;
         }
     }
 }
 
 /* ============================================================
-   ESTILOS DO MODAL (POP-UP) - GLOBAIS
+   ESTILOS DO MODAL (POP-UP) - LIGHT THEME
    ============================================================ */
 .modal-overlay {
     position: fixed !important;
@@ -194,101 +222,111 @@ $accent-color: #ff7043;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.85) !important;
+    background: rgba(23, 32, 39, 0.6) !important;
     display: flex !important;
     align-items: center;
     justify-content: center;
     z-index: 9999 !important;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(4px);
 }
 
 .modal-content {
-    background: #1c2c35 !important;
+    background: var(--cor-branco) !important;
     width: 95%;
-    max-width: 500px;
-    border-radius: 20px;
-    border: 1px solid #2d3e48;
-    padding: 2.5rem;
-    color: white !important;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    max-width: 550px;
+    border-radius: 24px;
+    border: none;
+    padding: 3rem;
+    color: var(--cor-grafite-profundo) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
     position: relative;
-    animation: modalSlideUp 0.3s ease-out;
+    animation: modalSlideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 
     .modal-header {
         display: flex;
         justify-content: space-between;
-        border-bottom: 1px solid #2d3e48;
-        margin-bottom: 1.5rem;
-        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--cor-off-white-01);
+        margin-bottom: 2rem;
+        padding-bottom: 1.2rem;
 
         .header-title {
             small {
-                color: $accent-color;
-                font-weight: bold;
-                font-size: 0.7rem;
-                letter-spacing: 1px;
+                color: var(--cor-vermelho-tijolo);
+                font-weight: 700;
+                font-size: 0.8rem;
+                letter-spacing: 1.5px;
+                text-transform: uppercase;
             }
 
             h2 {
-                margin: 5px 0 0;
-                font-size: 1.5rem;
+                margin: 8px 0 0;
+                font-size: 1.8rem;
+                font-weight: 700;
             }
         }
 
         .close-btn {
             background: none;
             border: none;
-            color: #888;
-            font-size: 2.5rem;
+            color: var(--cor-azul-ardosia);
+            font-size: 2.8rem;
             cursor: pointer;
-            line-height: 0.8;
+            line-height: 0.5;
+
+            &:hover {
+                color: var(--cor-vermelho-tijolo);
+            }
         }
     }
 
     .info-group {
-        margin-bottom: 1.2rem;
+        margin-bottom: 1.5rem;
 
         label {
-            color: $text-secondary;
-            font-size: 0.75rem;
+            color: var(--cor-azul-ardosia);
+            font-size: 0.8rem;
+            font-weight: 700;
             text-transform: uppercase;
+            margin-bottom: 6px;
             display: block;
-            margin-bottom: 5px;
         }
 
         p {
             margin: 0;
             font-size: 1.1rem;
-            color: #fff;
+            color: var(--cor-grafite-profundo);
+            font-weight: 500;
         }
 
         .desc-box {
-            background: $bg-dark;
-            padding: 1rem;
-            border-radius: 10px;
-            color: $text-secondary;
-            font-size: 0.95rem;
+            background: var(--cor-off-white-01);
+            padding: 1.2rem;
+            border-radius: 12px;
+            color: var(--cor-azul-ardosia);
+            font-size: 1rem;
             line-height: 1.6;
         }
     }
 
     .info-row {
         display: flex;
-        gap: 2rem;
-        margin-bottom: 1rem;
+        gap: 2.5rem;
+        margin-bottom: 1.5rem;
     }
 
     .timeline-section {
         display: flex;
         justify-content: space-between;
-        background: rgba(0, 0, 0, 0.2);
-        padding: 1rem;
-        border-radius: 10px;
-        margin-top: 2rem;
+        background: var(--cor-off-white-01);
+        padding: 1.2rem;
+        border-radius: 12px;
+        margin-top: 2.5rem;
+        border-left: 4px solid var(--cor-vermelho-tijolo);
 
         p {
-            font-size: 0.85rem;
-            color: $accent-color;
+            font-size: 0.9rem;
+            color: var(--cor-vermelho-tijolo);
+            font-weight: 700;
             margin: 0;
         }
     }
@@ -297,54 +335,34 @@ $accent-color: #ff7043;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: 1.5rem;
-        padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        margin-top: 2rem;
+        padding-top: 1.2rem;
+        border-top: 1px solid var(--cor-off-white-01);
 
         .editor-badge .value {
-            color: $accent-color;
-            font-weight: bold;
+            color: var(--cor-vermelho-tijolo);
+            font-weight: 700;
         }
 
         .uid-info {
-            font-size: 0.6rem;
-            color: #444;
+            font-size: 0.65rem;
+            color: var(--cor-azul-ardosia);
         }
-    }
-}
-
-@keyframes modalSlideUp {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
     }
 }
 
 .btn-back {
     background: transparent;
-    border: 1px solid #2d3e48;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
+    border: 2px solid var(--cor-vermelho-tijolo);
+    color: var(--cor-vermelho-tijolo);
+    padding: 0.6rem 1.4rem;
+    border-radius: 10px;
+    font-weight: 700;
     cursor: pointer;
+    transition: all 0.2s ease;
 
     &:hover {
-        background: #1c2c35;
-    }
-}
-
-.empty-state {
-    text-align: center;
-    padding: 4rem;
-    color: $text-secondary;
-
-    .empty-icon {
-        font-size: 3rem;
-        opacity: 0.3;
+        background: var(--cor-vermelho-tijolo);
+        color: var(--cor-branco);
     }
 }

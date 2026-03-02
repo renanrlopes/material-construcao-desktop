@@ -1,350 +1,193 @@
-/* Variáveis de Cores (Paleta Dark do Mobile) */
-$bg-dark: #121d24;
-$card-bg: #1c2c35;
-$border-color: #2d3e48;
-$text-primary: #e1e1e1;
-$text-secondary: #8899a6;
-$accent-color: #ff7043; // Cor do botão "Novo Produto" do mobile
+/* Importação das variáveis para manter a consistência */
+:root {
+    --fonte-principal: 'Public Sans', sans-serif;
+    --cor-vermelho-tijolo: #AC4430;
+    --cor-off-white-01: #F4F0E5;
+    --cor-off-white-02: #E7DECF;
+    --cor-branco: #FFFFFF;
+    --cor-azul-escuro-02: #172027;
+    --cor-azul-ardosia: #3E505B;
+    --cor-perola: #EAE9E4;
+    --cor-grafite-profundo: #121212;
+}
 
-.produtos-wrapper {
-    padding: 2rem;
-    background-color: $bg-dark;
+.perfil-container {
+    padding: 3rem 1rem;
+    max-width: 600px;
+    margin: 0 auto;
     min-height: 100vh;
-    color: $text-primary;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    .header-section {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-
-        h2 {
-            margin: 0;
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-    }
-
-    /* Barra de Ferramentas e Filtros */
-    .toolbar {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin-bottom: 2.5rem;
-        align-items: center;
-
-        .search-box {
-            flex: 2;
-            position: relative;
-            min-width: 300px;
-
-            input {
-                width: 100%;
-                padding: 0.8rem 1rem 0.8rem 2.5rem;
-                background: $card-bg;
-                border: 1px solid $border-color;
-                border-radius: 10px;
-                color: white;
-                transition: border-color 0.3s;
-
-                &:focus {
-                    border-color: $accent-color;
-                    outline: none;
-                }
-            }
-
-            .search-icon {
-                position: absolute;
-                left: 0.8rem;
-                top: 50%;
-                transform: translateY(-50%);
-                opacity: 0.5;
-            }
-        }
-
-        .filter-group {
-            display: flex;
-            gap: 0.8rem;
-            flex: 1;
-
-            input,
-            select {
-                padding: 0.8rem;
-                background: $card-bg;
-                border: 1px solid $border-color;
-                border-radius: 8px;
-                color: white;
-                cursor: pointer;
-
-                &:focus {
-                    border-color: $accent-color;
-                    outline: none;
-                }
-            }
-        }
-    }
-
-    /* Grid de Cards */
-    .product-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 1.5rem;
-    }
-
-    .product-card {
-        background: $card-bg;
-        border: 1px solid $border-color;
-        border-radius: 15px;
-        padding: 1.5rem;
+    .btn-back {
+        align-self: flex-start;
+        background: none;
+        border: none;
+        color: var(--cor-vermelho-tijolo);
+        font-weight: 700;
         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        position: relative;
+        margin-bottom: 2rem;
+        transition: transform 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
 
         &:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            border-color: rgba($accent-color, 0.5);
+            transform: translateX(-5px);
         }
+    }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.8rem;
+    /* Cartão de Perfil Estilizado */
+    .perfil-card {
+        background-color: var(--cor-branco);
+        width: 100%;
+        border-radius: 16px;
+        padding: 2.5rem;
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.08);
+        border-bottom: 4px solid var(--cor-vermelho-tijolo);
+        text-align: center;
 
-            h3 {
-                margin: 0;
-                font-size: 1.2rem;
-                color: white;
-            }
+        .perfil-header {
+            margin-bottom: 2.5rem;
 
-            .btn-options {
-                background: none;
-                border: none;
-                color: $text-secondary;
-                font-size: 1.2rem;
-                cursor: pointer;
-            }
-        }
-
-        .tags {
-            display: flex;
-            gap: 0.6rem;
-            margin-bottom: 1.2rem;
-
-            span {
-                font-size: 0.7rem;
-                padding: 0.3rem 0.7rem;
-                border-radius: 6px;
+            .avatar-circle {
+                width: 100px;
+                height: 100px;
+                background-color: var(--cor-vermelho-tijolo);
+                color: var(--cor-branco);
+                font-size: 2.5rem;
                 font-weight: 700;
-                text-transform: uppercase;
-            }
-
-            .tag-type {
-                background: rgba($text-secondary, 0.1);
-                color: $text-secondary;
-            }
-
-            .tag-brand {
-                background: rgba($accent-color, 0.1);
-                color: $accent-color;
-            }
-        }
-
-        .description {
-            color: $text-secondary;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 1.5rem;
-            height: 2.8rem;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid rgba($border-color, 0.5);
-            font-size: 0.8rem;
-            color: $text-secondary;
-
-            .user-info {
+                border-radius: 50%;
                 display: flex;
                 align-items: center;
-                gap: 0.4rem;
+                justify-content: center;
+                margin: 0 auto 1.5rem;
+                box-shadow: 0px 8px 16px rgba(172, 68, 48, 0.3);
+            }
+
+            h2 {
+                color: var(--cor-grafite-profundo);
+                font-size: 1.8rem;
+                margin: 0 0 0.5rem;
+                font-weight: 700;
+            }
+
+            .badge {
+                background-color: var(--cor-off-white-02);
+                color: var(--cor-azul-ardosia);
+                padding: 0.4rem 1.2rem;
+                border-radius: 20px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1px;
             }
         }
-    }
 
-    /* Modal (Pop-up) */
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.85);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 2000;
-        backdrop-filter: blur(5px);
-    }
+        .perfil-details {
+            text-align: left;
+            margin-bottom: 2.5rem;
+            background-color: var(--cor-off-white-01);
+            padding: 1.5rem;
+            border-radius: 12px;
 
-    .modal-content {
-        background: $card-bg;
-        width: 95%;
-        max-width: 550px;
-        border-radius: 20px;
-        border: 1px solid $border-color;
-        padding: 2.5rem;
-        position: relative;
-        animation: modalFadeIn 0.3s ease-out;
+            .detail-item {
+                display: flex;
+                justify-content: space-between;
+                padding: 1rem 0;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-
-            .header-title {
-                small {
-                    color: $accent-color;
-                    letter-spacing: 1px;
-                    font-weight: bold;
+                &:last-child {
+                    border-bottom: none;
                 }
 
-                h2 {
-                    margin: 0.3rem 0 0;
-                    font-size: 1.6rem;
+                label {
+                    color: var(--cor-azul-ardosia);
+                    font-weight: 500;
+                    font-size: 0.95rem;
+                }
+
+                span,
+                strong {
+                    color: var(--cor-grafite-profundo);
+                    font-size: 1rem;
+                }
+
+                strong {
+                    color: var(--cor-vermelho-tijolo);
+                }
+
+                /* Status Ativo/Inativo */
+                .active {
+                    color: #28a745;
+                    font-weight: 700;
+
+                    &::before {
+                        content: '● ';
+                        font-size: 0.8rem;
+                    }
                 }
             }
+        }
 
-            .close-btn {
-                background: none;
-                border: none;
-                color: white;
-                font-size: 2.5rem;
+        .perfil-actions {
+            .btn-secondary {
+                width: 100%;
+                padding: 1rem;
+                background-color: transparent;
+                color: var(--cor-vermelho-tijolo);
+                border: 2px solid var(--cor-vermelho-tijolo);
+                border-radius: 8px;
+                font-size: 1rem;
+                font-weight: 700;
                 cursor: pointer;
-                line-height: 1;
+                transition: all 0.3s ease;
 
                 &:hover {
-                    color: $accent-color;
+                    background-color: var(--cor-vermelho-tijolo);
+                    color: var(--cor-branco);
+                    box-shadow: 0px 4px 12px rgba(172, 68, 48, 0.2);
                 }
             }
         }
+    }
 
-        .info-group {
-            margin-bottom: 1.5rem;
-
-            label {
-                display: block;
-                color: $text-secondary;
-                font-size: 0.75rem;
-                margin-bottom: 0.4rem;
-                text-transform: uppercase;
-            }
-
-            p {
-                margin: 0;
-                font-size: 1.1rem;
-            }
-
-            .desc-box {
-                background: $bg-dark;
-                padding: 1rem;
-                border-radius: 10px;
-                line-height: 1.6;
-                color: $text-secondary;
-                max-height: 150px;
-                overflow-y: auto;
-            }
-        }
-
-        .info-row {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .timeline-section {
-            display: flex;
-            gap: 2rem;
-            padding: 1.2rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-
-            .timeline-item p {
-                font-size: 0.9rem;
-            }
-        }
-
-        .modal-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid $border-color;
-
-            .editor-badge {
-                .label {
-                    color: $text-secondary;
-                    margin-right: 0.5rem;
-                }
-
-                .value {
-                    color: $accent-color;
-                    font-weight: bold;
-                }
-            }
-
-            .uid-info {
-                color: #444;
-                font-size: 0.6rem;
-            }
-        }
+    .loader {
+        color: var(--cor-vermelho-tijolo);
+        font-weight: 500;
+        margin-top: 5rem;
     }
 }
 
-@keyframes modalFadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
+/* Suporte ao Modo Escuro (se a classe estiver no container pai) */
+.dark-theme .perfil-card {
+    background-color: var(--cor-azul-escuro-02);
+    border-bottom-color: var(--cor-vermelho-tijolo);
+
+    h2 {
+        color: var(--cor-branco);
     }
 
-    to {
-        opacity: 1;
-        transform: scale(1);
+    .perfil-details {
+        background-color: rgba(255, 255, 255, 0.05);
+
+        label {
+            color: var(--cor-perola);
+        }
+
+        span {
+            color: var(--cor-branco);
+        }
     }
-}
 
-.btn-back {
-    background: transparent;
-    border: 1px solid $border-color;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
+    .perfil-actions .btn-secondary {
+        color: var(--cor-branco);
+        border-color: var(--cor-branco);
 
-    &:hover {
-        background: $card-bg;
-        border-color: $text-secondary;
-    }
-}
-
-.empty-state {
-    text-align: center;
-    padding: 5rem;
-    color: $text-secondary;
-
-    .empty-icon {
-        font-size: 4rem;
-        margin-bottom: 1rem;
-        opacity: 0.3;
+        &:hover {
+            background-color: var(--cor-branco);
+            color: var(--cor-azul-escuro-02);
+        }
     }
 }

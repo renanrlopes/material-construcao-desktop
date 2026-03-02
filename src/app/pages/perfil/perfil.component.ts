@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { AppUser } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
-  styleUrl: './perfil.component.scss'
+  styleUrl: './perfil.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class PerfilComponent implements OnInit {
   usuario: AppUser | null = null;

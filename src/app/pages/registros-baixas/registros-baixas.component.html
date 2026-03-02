@@ -1,0 +1,52 @@
+<div class="baixas-wrapper">
+    <div class="header-section">
+        <button routerLink="/dashboard" class="btn-back">← Dashboard</button>
+        <h2>Registros de Baixas</h2>
+    </div>
+
+    <div class="toolbar">
+        <div class="search-box">
+            <input type="text" [(ngModel)]="filtroUsuario" (input)="aplicarFiltros()"
+                placeholder="Filtrar por nome do funcionário...">
+        </div>
+
+        <div class="filter-group">
+            <input type="date" [(ngModel)]="filtroData" (change)="aplicarFiltros()">
+
+            <select [(ngModel)]="ordemDirecao" (change)="aplicarFiltros()">
+                <option value="desc">Mais Recentes Primeiro</option>
+                <option value="asc">Mais Antigas Primeiro</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="baixas-grid" *ngIf="baixasFiltradas.length > 0; else noData">
+        <div class="baixa-card" *ngFor="let b of baixasFiltradas">
+            <div class="baixa-header">
+                <span class="reason-tag">{{ b.reason }}</span>
+                <span class="qty-badge">-{{ b.quantity }} un</span>
+            </div>
+
+            <div class="baixa-body">
+                <h3>{{ b.inventoryItemName }}</h3>
+                <p class="lote-info">Lote: <strong>{{ b.batchNumber }}</strong></p>
+
+                <div class="footer-meta">
+                    <div class="user">
+                        <span class="icon">👤</span>
+                        {{ b.userName }}
+                    </div>
+                    <div class="date">
+                        {{ b.date?.toDate() | date:'dd/MM/yyyy HH:mm' }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #noData>
+        <div class="empty-state">
+            <p>Nenhuma movimentação de saída encontrada.</p>
+        </div>
+    </ng-template>
+</div>

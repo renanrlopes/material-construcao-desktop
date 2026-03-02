@@ -1,0 +1,227 @@
+/* ============================================================
+   VARIÁVEIS DE CORES (PALETA DARK CONSISTENTE)
+   ============================================================ */
+$bg-dark: #121d24;
+$card-bg: #1c2c35;
+$border-color: #2d3e48;
+$text-primary: #e1e1e1;
+$text-secondary: #8899a6;
+$accent-color: #ff7043;
+$danger-color: #ff4d4d; // Cor para indicar saída/baixa
+
+.baixas-wrapper {
+    padding: 2rem;
+    background-color: $bg-dark;
+    min-height: 100vh;
+    color: $text-primary;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+
+    .header-section {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+
+        h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+    }
+
+    /* BARRA DE FERRAMENTAS (FILTROS DE USUÁRIO E DATA) */
+    .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+
+        .search-box {
+            flex: 2;
+            min-width: 300px;
+
+            input {
+                width: 100%;
+                padding: 0.8rem 1rem;
+                background: $card-bg;
+                border: 1px solid $border-color;
+                border-radius: 10px;
+                color: white;
+
+                &:focus {
+                    border-color: $accent-color;
+                    outline: none;
+                }
+            }
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.8rem;
+            flex: 1;
+
+            input[type="date"],
+            select {
+                padding: 0.8rem;
+                background: $card-bg;
+                border: 1px solid $border-color;
+                border-radius: 8px;
+                color: white;
+                cursor: pointer;
+
+                &:focus {
+                    border-color: $accent-color;
+                    outline: none;
+                }
+            }
+        }
+    }
+
+    /* GRID DE CARDS DE REGISTRO */
+    .baixas-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .baixa-card {
+        background: $card-bg;
+        border: 1px solid $border-color;
+        border-radius: 15px;
+        padding: 1.5rem;
+        transition: transform 0.2s;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .baixa-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+
+            .reason-tag {
+                background: rgba($accent-color, 0.1);
+                color: $accent-color;
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                padding: 4px 10px;
+                border-radius: 6px;
+                font-weight: 800;
+                letter-spacing: 0.5px;
+            }
+
+            .qty-badge {
+                color: $danger-color;
+                font-weight: 700;
+                font-size: 1.2rem;
+                display: flex;
+                align-items: center;
+
+                &::before {
+                    content: '↓ ';
+                    font-size: 0.9rem;
+                    margin-right: 2px;
+                }
+            }
+        }
+
+        .baixa-body {
+            h3 {
+                margin: 0 0 0.4rem;
+                font-size: 1.15rem;
+                color: white;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .lote-info {
+                color: $text-secondary;
+                font-size: 0.85rem;
+                margin-bottom: 1.5rem;
+
+                strong {
+                    color: $text-primary;
+                    font-weight: 500;
+                }
+            }
+
+            .footer-meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-top: 1px solid rgba($border-color, 0.5);
+                padding-top: 1rem;
+                font-size: 0.75rem;
+                color: $text-secondary;
+
+                .user {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    font-weight: 500;
+
+                    .icon {
+                        font-size: 0.9rem;
+                        filter: grayscale(1);
+                    }
+                }
+
+                .date {
+                    font-style: italic;
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}
+
+/* BOTÃO VOLTAR */
+.btn-back {
+    background: transparent;
+    border: 1px solid $border-color;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background: $card-bg;
+        border-color: $text-secondary;
+    }
+}
+
+/* ESTADO VAZIO */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 5rem;
+    background: rgba($card-bg, 0.5);
+    border-radius: 20px;
+    border: 2px dashed $border-color;
+    color: $text-secondary;
+
+    p {
+        font-size: 1.1rem;
+    }
+}
+
+/* RESPONSIVIDADE PARA CELULARES/TABLETS */
+@media (max-width: 600px) {
+    .baixas-wrapper {
+        padding: 1rem;
+
+        .toolbar {
+            flex-direction: column;
+
+            .search-box,
+            .filter-group {
+                width: 100%;
+            }
+        }
+    }
+}

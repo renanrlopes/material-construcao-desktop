@@ -19,6 +19,7 @@ import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { ProdutosComponent } from './pages/produtos/produtos.component';
 import { EstoqueComponent } from './pages/estoque/estoque.component';
+import { RegistrosBaixasComponent } from './pages/registros-baixas/registros-baixas.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +30,8 @@ import { EstoqueComponent } from './pages/estoque/estoque.component';
     UsuariosComponent,
     PerfilComponent,
     ProdutosComponent,
-    EstoqueComponent
+    EstoqueComponent,
+    RegistrosBaixasComponent
   ],
   imports: [
     BrowserModule,

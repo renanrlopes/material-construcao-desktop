@@ -10,6 +10,7 @@ import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { ProdutosComponent } from './pages/produtos/produtos.component';
 import { EstoqueComponent } from './pages/estoque/estoque.component';
+import { RegistrosBaixasComponent } from './pages/registros-baixas/registros-baixas.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -40,7 +41,13 @@ const routes: Routes = [
     path: 'estoque',    
     component: EstoqueComponent,
     canActivate: [RoleGuard]
+  },
+  {
+    path: 'registros-baixas',    
+    component: RegistrosBaixasComponent,
+    canActivate: [RoleGuard]
   }
+
 ];
 
 @NgModule({

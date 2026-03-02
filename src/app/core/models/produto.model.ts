@@ -8,6 +8,6 @@ export interface Produto {
     updatedAt: any;        // Última edição
     lastEditedBy: string;  // ID de quem editou
     lastEditedByName: string; // Nome de quem editou
-    // O campo 'lote' não aparece na imagem, mas vamos prever para o filtro
+
     lote?: string;
 }
