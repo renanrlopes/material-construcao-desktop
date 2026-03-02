@@ -7,13 +7,16 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { RoleGuard } from './core/guards/auth.guard';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
+import { ProdutosComponent } from './pages/produtos/produtos.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'cadastro', component: CadastroComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   {
-    path: 'dashboard', component: DashboardComponent,
+    path: 'dashboard', 
+    component: DashboardComponent,
     canActivate: [RoleGuard]
   },
   {
@@ -21,6 +24,16 @@ const routes: Routes = [
     component: UsuariosComponent,
     canActivate: [RoleGuard],
     data: { roles: ['ADMIN'] } // Restrição de nível Admin
+  },
+  {
+    path: 'perfil',
+    component: PerfilComponent,
+    canActivate: [RoleGuard]
+  },
+  {
+    path: 'produtos',
+    component: ProdutosComponent,
+    canActivate: [RoleGuard]
   }
 ];
 

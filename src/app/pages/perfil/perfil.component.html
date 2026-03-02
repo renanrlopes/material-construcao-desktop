@@ -1,0 +1,43 @@
+<div class="perfil-container">
+    <button routerLink="/dashboard" class="btn-back">← Voltar ao Painel</button>
+
+    <div *ngIf="loading" class="loader">Carregando informações...</div>
+
+    <div class="perfil-card" *ngIf="!loading && usuario">
+        <div class="perfil-header">
+            <div class="avatar-circle">
+                {{ usuario.name.charAt(0).toUpperCase() }}
+            </div>
+            <h2>{{ usuario.name }}</h2>
+            <span class="badge">{{ usuario.role }}</span>
+        </div>
+
+        <div class="perfil-details">
+            <div class="detail-item">
+                <label>ID do Funcionário:</label>
+                <strong>{{ usuario.employeeCode }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <label>E-mail:</label>
+                <span>{{ usuario.email }}</span>
+            </div>
+
+            <div class="detail-item">
+                <label>Membro desde:</label>
+                <span>{{ usuario.createdAt?.toDate() | date:'dd/MM/yyyy' }}</span>
+            </div>
+
+            <div class="detail-item">
+                <label>Status da Conta:</label>
+                <span [class.active]="usuario.isActive">
+                    {{ usuario.isActive ? 'Ativa' : 'Inativa' }}
+                </span>
+            </div>
+        </div>
+
+        <div class="perfil-actions">
+            <button (click)="solicitarReset()" class="btn-secondary">Alterar Senha</button>
+        </div>
+    </div>
+</div>

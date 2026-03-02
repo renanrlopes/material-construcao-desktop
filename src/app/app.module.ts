@@ -16,6 +16,8 @@ import { CadastroComponent } from './pages/cadastro/cadastro.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
+import { ProdutosComponent } from './pages/produtos/produtos.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +25,9 @@ import { UsuariosComponent } from './pages/usuarios/usuarios.component';
     CadastroComponent,
     ForgotPasswordComponent,
     DashboardComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    PerfilComponent,
+    ProdutosComponent
   ],
   imports: [
     BrowserModule,

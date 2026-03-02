@@ -1,0 +1,119 @@
+<div class="produtos-wrapper">
+    <div class="header-section">
+        <button routerLink="/dashboard" class="btn-back">
+            <span class="icon">←</span> Dashboard
+        </button>
+        <h2>Produtos</h2>
+    </div>
+
+    <div class="toolbar">
+        <div class="search-box">
+            <i class="search-icon">🔍</i>
+            <input type="text" [(ngModel)]="filtroNome" (input)="aplicarFiltrosEOrdenacao()"
+                placeholder="Buscar por nome do produto...">
+        </div>
+
+        <div class="filter-group">
+            <input type="text" [(ngModel)]="filtroTipo" (input)="aplicarFiltrosEOrdenacao()"
+                placeholder="Filtrar tipo (ex: tinta)">
+
+            <select [(ngModel)]="ordemCampo" (change)="aplicarFiltrosEOrdenacao()">
+                <option value="updatedAt">📅 Data de Edição</option>
+                <option value="name">🔤 Ordem Alfabética</option>
+                <option value="createdAt">🆕 Data de Cadastro</option>
+            </select>
+
+            <select [(ngModel)]="ordemDirecao" (change)="aplicarFiltrosEOrdenacao()">
+                <option value="desc">Decrescente (Z-A / Novo)</option>
+                <option value="asc">Crescente (A-Z / Antigo)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="product-grid" *ngIf="produtosFiltrados.length > 0; else noData">
+        <div class="product-card" *ngFor="let p of produtosFiltrados" (click)="abrirDetalhes(p)">
+
+            <div class="card-content">
+                <div class="card-header">
+                    <h3>{{ p.name }}</h3>
+                </div>
+
+                <div class="tags">
+                    <span class="tag-type">{{ p.type }}</span>
+                    <span class="tag-brand">{{ p.brand }}</span>
+                </div>
+
+                <p class="description">{{ p.description }}</p>
+
+                <div class="card-footer">
+                    <div class="user-info">
+                        <span class="user-icon">👤</span>
+                        <small>{{ p.lastEditedByName }}</small>
+                    </div>
+                    <small class="date-info">{{ p.updatedAt?.toDate() | date:'dd/MM/yy HH:mm' }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #noData>
+        <div class="empty-state">
+            <div class="empty-icon">📦</div>
+            <p>Nenhum produto encontrado com os filtros aplicados.</p>
+        </div>
+    </ng-template>
+
+    <div class="modal-overlay" *ngIf="exibirModal" (click)="fecharModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+
+            <div class="modal-header">
+                <div class="header-title">
+                    <small>DETALHES DO ITEM</small>
+                    <h2>{{ produtoSelecionado?.name }}</h2>
+                </div>
+                <button class="close-btn" (click)="fecharModal()">&times;</button>
+            </div>
+
+            <div class="modal-body" *ngIf="produtoSelecionado">
+
+                <div class="info-row">
+                    <div class="info-group">
+                        <label>Marca</label>
+                        <p>{{ produtoSelecionado.brand }}</p>
+                    </div>
+                    <div class="info-group">
+                        <label>Tipo de Produto</label>
+                        <p>{{ produtoSelecionado.type }}</p>
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <label>Descrição Técnica</label>
+                    <div class="desc-box">
+                        {{ produtoSelecionado.description }}
+                    </div>
+                </div>
+
+                <div class="timeline-section">
+                    <div class="timeline-item">
+                        <label>Cadastrado em:</label>
+                        <p>{{ produtoSelecionado.createdAt?.toDate() | date:'dd/MM/yyyy HH:mm' }}</p>
+                    </div>
+                    <div class="timeline-item">
+                        <label>Última atualização:</label>
+                        <p>{{ produtoSelecionado.updatedAt?.toDate() | date:'dd/MM/yyyy HH:mm' }}</p>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="editor-badge">
+                        <span class="label">Editado por:</span>
+                        <span class="value">{{ produtoSelecionado.lastEditedByName }}</span>
+                    </div>
+                    <small class="uid-info">ID: {{ produtoSelecionado.id }}</small>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
