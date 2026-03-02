@@ -1,0 +1,127 @@
+<div class="estoque-wrapper">
+    <div class="header-section">
+        <button routerLink="/dashboard" class="btn-back">← Dashboard</button>
+        <h2>Controle de Estoque</h2>
+    </div>
+
+    <div class="toolbar">
+        <div class="search-box">
+            <input type="text" [(ngModel)]="filtroNome" (input)="aplicarFiltrosEOrdenacao()"
+                placeholder="Buscar por produto...">
+        </div>
+
+        <div class="filter-group">
+            <input type="text" [(ngModel)]="filtroLote" (input)="aplicarFiltrosEOrdenacao()" placeholder="Filtrar Lote">
+
+            <select [(ngModel)]="ordemCampo" (change)="aplicarFiltrosEOrdenacao()">
+                <option value="updatedAt">Última Movimentação</option>
+                <option value="currentQuantity">Quantidade</option>
+                <option value="productName">Nome do Produto</option>
+            </select>
+
+            <select [(ngModel)]="ordemDirecao" (change)="aplicarFiltrosEOrdenacao()">
+                <option value="desc">Maior/Novo</option>
+                <option value="asc">Menor/Antigo</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="stock-grid">
+        <div class="stock-card" *ngFor="let item of itensFiltrados" (click)="abrirDetalhes(item)">
+            <div class="card-content">
+                <div class="stock-header">
+                    <span class="lote-badge">Lote: {{ item.batchNumber }}</span>
+                    <div class="qty-display" [class.low-stock]="item.currentQuantity < 5">
+                        {{ item.currentQuantity }} un
+                    </div>
+                </div>
+
+                <h3>{{ item.productName }}</h3>
+                <small class="brand">{{ item.productBrand }} | {{ item.productType }}</small>
+
+                <div class="card-info">
+                    <p><strong>Cadastrado em:</strong> {{ item.createdAt?.toDate() | date:'dd/MM/yyyy' }}</p>
+                    <p *ngIf="item.expirationDate">
+                        <strong>Vencimento:</strong> {{ item.expirationDate?.toDate() | date:'dd/MM/yyyy' }}
+                    </p>
+                </div>
+
+                <div class="card-footer">
+                    <small>Atualizado em: {{ item.updatedAt?.toDate() | date:'dd/MM/yy HH:mm' }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" *ngIf="exibirModal" (click)="fecharModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+
+            <div class="modal-header">
+                <div class="header-title">
+                    <small>DETALHES TÉCNICOS DO LOTE</small>
+                    <h2>{{ itemSelecionado?.productName }}</h2>
+                </div>
+                <button class="close-btn" (click)="fecharModal()">&times;</button>
+            </div>
+
+            <div class="modal-body" *ngIf="itemSelecionado">
+
+                <div class="info-row">
+                    <div class="info-group">
+                        <label>Quantidade Atual</label>
+                        <p class="highlight-qty" [class.low-stock]="itemSelecionado.currentQuantity < 5">
+                            {{ itemSelecionado.currentQuantity }} unidades
+                        </p>
+                    </div>
+                    <div class="info-group">
+                        <label>Quantidade Inicial</label>
+                        <p>{{ itemSelecionado.initialQuantity }} unidades</p>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-group">
+                        <label>Número do Lote (Batch)</label>
+                        <p>{{ itemSelecionado.batchNumber }}</p>
+                    </div>
+                    <div class="info-group">
+                        <label>ID do Produto</label>
+                        <p style="font-size: 0.7rem; color: #8899a6;">{{ itemSelecionado.productId }}</p>
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <label>Dados do Produto</label>
+                    <div class="desc-box">
+                        <strong>Marca:</strong> {{ itemSelecionado.productBrand }} <br>
+                        <strong>Categoria:</strong> {{ itemSelecionado.productType }}
+                    </div>
+                </div>
+
+                <div class="timeline-section">
+                    <div class="timeline-item">
+                        <label>Criação do Lote:</label>
+                        <p>{{ itemSelecionado.createdAt?.toDate() | date:'dd/MM/yyyy HH:mm' }}</p>
+                    </div>
+                    <div class="timeline-item" *ngIf="itemSelecionado.expirationDate">
+                        <label>Data de Validade:</label>
+                        <p style="color: #ff7043;">
+                            {{ itemSelecionado.expirationDate?.toDate() | date:'dd/MM/yyyy' }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="editor-info">
+                        <span class="label">Última edição por:</span>
+                        <span class="value"><strong>{{ itemSelecionado.lastEditedByName }}</strong></span>
+                        <br>
+                        <small>em {{ itemSelecionado.updatedAt?.toDate() | date:'dd/MM/yyyy HH:mm' }}</small>
+                    </div>
+                    <small class="uid-info">Ref: {{ itemSelecionado.id }}</small>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

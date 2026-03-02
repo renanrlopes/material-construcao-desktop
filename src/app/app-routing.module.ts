@@ -9,6 +9,7 @@ import { RoleGuard } from './core/guards/auth.guard';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { ProdutosComponent } from './pages/produtos/produtos.component';
+import { EstoqueComponent } from './pages/estoque/estoque.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -33,6 +34,11 @@ const routes: Routes = [
   {
     path: 'produtos',
     component: ProdutosComponent,
+    canActivate: [RoleGuard]
+  },
+  {
+    path: 'estoque',    
+    component: EstoqueComponent,
     canActivate: [RoleGuard]
   }
 ];

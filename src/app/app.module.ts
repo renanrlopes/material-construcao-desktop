@@ -18,6 +18,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { ProdutosComponent } from './pages/produtos/produtos.component';
+import { EstoqueComponent } from './pages/estoque/estoque.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +28,8 @@ import { ProdutosComponent } from './pages/produtos/produtos.component';
     DashboardComponent,
     UsuariosComponent,
     PerfilComponent,
-    ProdutosComponent
+    ProdutosComponent,
+    EstoqueComponent
   ],
   imports: [
     BrowserModule,
