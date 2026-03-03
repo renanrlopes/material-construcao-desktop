@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { AppUser, UserRole } from '../../core/models/user.model';
 
-
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
@@ -10,15 +9,41 @@ import { AppUser, UserRole } from '../../core/models/user.model';
 })
 export class UsuariosComponent implements OnInit {
   usuarios: AppUser[] = [];
+  usuariosFiltrados: AppUser[] = []; // Lista que será exibida na tabela
+  termoBusca: string = '';
+
   roles: UserRole[] = ['ADMIN', 'ESTOQUISTA', 'LEITOR'];
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.authService.getAllUsers().subscribe(data => {
-      // Filtra a lista para exibir apenas quem está com isActive: true
+      // 1. Guarda a lista mestre original
       this.usuarios = data.filter(user => user.isActive !== false);
+
+      // 2. Alimenta a lista que a tela realmente usa
+      this.usuariosFiltrados = [...this.usuarios];
+
+      // 3. Executa o filtro caso já haja algo digitado (opcional)
+      this.filtrarUsuarios();
     });
+  }
+
+  // Lógica de busca multi-campo
+  filtrarUsuarios() {
+    const termo = this.termoBusca.toLowerCase().trim();
+
+    // Se o campo estiver vazio, volta a lista completa
+    if (!termo) {
+      this.usuariosFiltrados = [...this.usuarios];
+      return;
+    }
+    this.usuariosFiltrados = this.usuarios.filter(user =>
+      user.name.toLowerCase().includes(termo)
+    );
+    this.usuariosFiltrados = this.usuarios.filter(user =>
+      user.email.toLowerCase().includes(termo)
+    );
   }
 
   alterarRole(uid: string, event: any) {

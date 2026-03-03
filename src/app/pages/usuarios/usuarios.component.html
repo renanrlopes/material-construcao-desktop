@@ -8,18 +8,23 @@
             <input type="email" [(ngModel)]="novoUser.email" name="email" placeholder="E-mail" required>
             <input type="password" [(ngModel)]="novoUser.password" name="password" placeholder="Senha Provisória"
                 required>
-
             <select [(ngModel)]="novoUser.role" name="role">
                 <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
             </select>
-
             <button type="submit" class="btn-save">Cadastrar Funcionário</button>
         </form>
     </section>
 
-    <hr>
+    <div class="header-table-section">
+        <h2>Gestão de Funcionários</h2>
 
-    <h2>Gestão de Funcionários</h2>
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" [(ngModel)]="termoBusca" (input)="filtrarUsuarios()"
+                placeholder="Pesquisar por nome, e-mail ou código...">
+        </div>
+    </div>
+
     <table class="user-table">
         <thead>
             <tr>
@@ -31,8 +36,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let user of usuarios">
-                <td>{{ user.employeeCode }}</td>
+            <tr *ngFor="let user of usuariosFiltrados">
+                <td><strong>{{ user.employeeCode }}</strong></td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
                 <td>
@@ -46,4 +51,8 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="empty-results" *ngIf="usuariosFiltrados.length === 0">
+        Nenhum funcionário encontrado para "{{ termoBusca }}".
+    </div>
 </div>
