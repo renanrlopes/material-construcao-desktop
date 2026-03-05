@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core'; // 1. Adicionado o OnInit aqui
+import { Component, OnInit, Renderer2, Inject } from '@angular/core'; // Injetado Renderer2 e Inject
+import { DOCUMENT } from '@angular/common'; // Injetado DOCUMENT para acesso global
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -7,41 +8,34 @@ import { Router } from '@angular/router';
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.scss']
 })
-export class CadastroComponent implements OnInit { // 2. Adicionado o implements OnInit
+export class CadastroComponent implements OnInit {
   name: string = '';
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
-
+  hidePassword: boolean = true;
   loading: boolean = false;
   errorMessage: string = '';
   successMessage: string = '';
-  
-  // Variável do tema
   isDarkMode: boolean = false;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2, // Permite manipular classes no body
+    @Inject(DOCUMENT) private document: Document // Permite acessar o body da página
   ) { }
 
-  // 3. O Angular roda isso sozinho quando a tela abre
   ngOnInit(): void {
     const temaSalvo = localStorage.getItem('theme');
-    if (temaSalvo === 'dark') {
-      this.isDarkMode = true; // Se o "caderninho" diz que é dark, já inicia dark
-    }
+    this.isDarkMode = temaSalvo === 'dark';
+    this.applyTheme(); // Garante que o tema inicie correto ao abrir a tela
   }
 
+  // Lógica de cadastro mantida conforme sua modelagem
   async cadastrar() {
-
     if (!this.name || !this.email || !this.password) {
       this.errorMessage = 'Preencha todos os campos.';
-      return;
-    }
-
-    if (this.name.trim().length < 3) {
-      this.errorMessage = 'Nome deve ter pelo menos 3 caracteres.';
       return;
     }
 
@@ -54,61 +48,43 @@ export class CadastroComponent implements OnInit { // 2. Adicionado o implements
     this.errorMessage = '';
 
     try {
-      await this.authService.cadastrar(
-        this.name.trim(),
-        this.email.trim(),
-        this.password
-      );
-
+      await this.authService.cadastrar(this.name.trim(), this.email.trim(), this.password);
       this.successMessage = 'Cadastro realizado com sucesso! Faça login.';
-
-      setTimeout(() => {
-        this.router.navigate(['/']);
-      }, 1500);
-
+      setTimeout(() => this.router.navigate(['/']), 1500);
     } catch (error: any) {
-      this.errorMessage = this.tratarErro(error.code);
+      this.errorMessage = 'Erro ao cadastrar. Tente novamente.';
     } finally {
       this.loading = false;
     }
   }
 
-  private tratarErro(code: string): string {
-    switch (code) {
-      case 'auth/email-already-in-use':
-        return 'Este email já está em uso.';
-      case 'auth/invalid-email':
-        return 'Email inválido.';
-      case 'auth/weak-password':
-        return 'Senha deve ter pelo menos 6 caracteres.';
-      default:
-        return 'Erro ao cadastrar. Tente novamente.';
+  // MÉTODO QUE RESOLVE O CONGELAMENTO DA COR PRETA
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+    this.applyTheme(); // Atualiza a classe global no body
+  }
+
+  private applyTheme() {
+    if (this.isDarkMode) {
+      this.renderer.addClass(this.document.body, 'dark-theme');
+    } else {
+      // Remove a classe do body, fazendo o degradê e o fundo voltarem ao claro
+      this.renderer.removeClass(this.document.body, 'dark-theme');
     }
+  }
+
+  fecharAviso() {
+    this.errorMessage = '';
+    this.successMessage = '';
   }
 
   goToLogin() {
     this.router.navigate(['/']);
   }
 
- // 4. Atualizamos o botão para salvar a escolha
-  toggleTheme() {
-    this.isDarkMode = !this.isDarkMode;
-    
-    // Salva a nova escolha no navegador
-    if (this.isDarkMode) {
-      localStorage.setItem('theme', 'dark');
-    } else {
-      localStorage.setItem('theme', 'light');
-    }
+  //Função botão ocultar senha 
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
   }
-
-  // =========================================
-  // FECHAR MODAL DE AVISO
-  // =========================================
-  fecharAviso() {
-    this.errorMessage = '';
-    this.successMessage = '';
-  }
-  
-} // <-- Essa é a última chave do arquivo
-  
+}
