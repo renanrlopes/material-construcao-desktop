@@ -1,40 +1,68 @@
-<div class="dashboard-wrapper">
-    <header class="dash-header">
-        <h1>Bem-vindo, {{ userName || 'Funcionário' }}</h1>
-        <button (click)="onLogout()" class="btn-logout">Sair</button>
+<div class="page-layout">
+  
+  <aside class="sidebar-container">
+    <div class="brand-section">
+      <img src="assets/icons/logo-carriola.png" alt="Logo" class="brand-logo">
+      <h1 class="brand-name">Asi & Obra</h1>
+    </div>
+
+    <div class="user-profile-card">
+      <div class="avatar-circle"></div>
+      <span class="user-greeting">Olá, Nome!</span>
+    </div>
+
+    <nav class="nav-menu">
+      <a routerLink="/dashboard" class="menu-item active">
+        <lucide-icon name="home" size="20"></lucide-icon><span>Home</span>
+      </a>
+      <a routerLink="/usuarios" class="menu-item">
+        <lucide-icon name="users" size="20"></lucide-icon><span>Usuários</span>
+      </a>
+      <a routerLink="/produtos" class="menu-item">
+        <lucide-icon name="package" size="20"></lucide-icon><span>Produtos</span>
+      </a>
+      <a routerLink="/estoque" class="menu-item">
+        <lucide-icon name="warehouse" size="20"></lucide-icon><span>Estoque</span>
+      </a>
+      <a routerLink="/registros-baixas" class="menu-item">
+        <lucide-icon name="trending-down" size="20"></lucide-icon><span>Baixas</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="dashboard-header">
+      <h2 class="page-title">Resumo</h2>
+      <button class="theme-toggle">
+        <lucide-icon name="sun" size="28"></lucide-icon>
+      </button>
     </header>
 
-    <div *ngIf="loading" class="loader">Carregando painel...</div>
+    <div class="cards-grid">
+      <div class="summary-card">
+        <lucide-icon name="package" size="45" class="card-icon"></lucide-icon>
+        <span class="card-value">1</span>
+        <span class="card-label">Produtos</span>
+      </div>
 
-    <div class="grid-container" *ngIf="!loading">
-        <div class="card" routerLink="/perfil">
-            <div class="icon">👤</div>
-            <h3>Meu Perfil</h3>
-            <p>Gerencie seus dados e senha.</p>
-        </div>
+      <div class="summary-card">
+        <lucide-icon name="warehouse" size="45" class="card-icon"></lucide-icon>
+        <span class="card-value">0</span>
+        <span class="card-label">Lotes</span>
+      </div>
 
-        <div class="card admin-card" *ngIf="userRole === 'ADMIN'" routerLink="/usuarios">
-            <div class="icon">👥</div>
-            <h3>Usuários</h3>
-            <p>Gerenciar permissões e funcionários.</p>
-        </div>
+      <div class="summary-card">
+        <lucide-icon name="trending-down" size="45" class="card-icon"></lucide-icon>
+        <span class="card-value">0</span>
+        <span class="card-label">Baixas</span>
+      </div>
 
-        <div class="card" routerLink="/produtos">
-            <div class="icon">📦</div>
-            <h3>Produtos</h3>
-            <p>Catálogo de materiais de construção.</p>
-        </div>
-
-        <div class="card" routerLink="/estoque">
-            <div class="icon">📊</div>
-            <h3>Estoque</h3>
-            <p>Controle de quantidades e avisos.</p>
-        </div>
-
-        <div class="card" routerLink="/registros-baixas">
-            <div class="icon">📉</div>
-            <h3>Registro de Baixas</h3>
-            <p>Histórico de saídas de material.</p>
-        </div>
+      <div class="summary-card alert-card">
+        <lucide-icon name="alert-triangle" size="45" class="card-icon alert-icon"></lucide-icon>
+        <span class="card-value alert-text">0</span>
+        <span class="card-label alert-text">Alertas</span>
+      </div>
     </div>
+  </main>
+
 </div>
