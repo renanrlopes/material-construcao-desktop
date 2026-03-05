@@ -8,8 +8,8 @@
   height: 100vh;
   width: 100%;
   overflow: hidden;
-  background-color: var(--cor-of--cor-off-white-02); 
-  transition: background-color 0.3s ease;
+  background-color: var(--cor-off-white-02); 
+  transition: background-color 0.3s ease-in-out;
 
   /* === LADO ESQUERDO: Formulário === */
   .form-section {
@@ -18,7 +18,7 @@
     flex-direction: column;
     align-items: center; 
     z-index: 2; 
-
+    transition: background-color 0.3s ease-in-out;
     .logo-container {
       margin-top: 50px;
       margin-bottom: 0px;
@@ -34,6 +34,7 @@
       color: var(--cor-grafite-profundo);
       font-weight: 500;
       margin-bottom: 40px;
+      transition: color 0.3s ease-in-out;
 
       .brand-name {
         color: var(--cor-vermelho-tijolo);
@@ -57,6 +58,7 @@
         text-align: center;
         font-size: 0.9rem;
         font-weight: 500;
+        transition: background-color 0.3s ease;
       }
 
       .input-group {
@@ -76,7 +78,7 @@
           font-size: 1rem;
           color: var(--cor-grafite-profundo);
           outline: none;
-          transition: all 0.3s ease;
+          transition: background-color 0.3s ease-in-out, color 0.5s ease-in-out, border 0.3s ease;
 
           &::placeholder {
             color: #A0A0A0;
@@ -87,6 +89,21 @@
             border: 1px solid var(--cor-vermelho-tijolo);
           }
         }
+
+        .toggle-password-btn {
+    position: absolute;
+    right: 3.2rem; // Fica exatamente à esquerda do cadeado
+    background: transparent;
+    border: none;
+    padding-top: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color:var(--cor-vermelho-tijolo); 
+    z-index: 5;
+    transition: color 0.3s ease, transform 0.2s ease;
+
+  }
 
         .input-icon {
           position: absolute;
@@ -141,17 +158,19 @@
   .image-section {
     flex: 1; 
     position: relative;
+    transition: background-color 0.3s ease;
   }
 
   .brick-background {
     width: 100%;
     height: 100%;
     background-image: 
-      linear-gradient(to right, var(--cor-perola) 0%, transparent 35%),
+      linear-gradient(to right, var(--cor-off-white-02) 0%, transparent 35%),
       url('/assets/images/backgroundTijolo.png');
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
+    transition: all 0.3s ease-in-out;
   }
 }
 
@@ -159,10 +178,12 @@
    MODO ESCURO
 ========================================= */
 .auth-container.dark-theme {
-  background-color: #172027; /* Azul Escuro 02 */
+  background-color: #172027; 
+  transition: background-color 0.3s ease-in-out;
 
   .form-section .welcome-title {
     color: #EAE9E4; 
+    transition: background-color 0.3s ease-in-out;
   }
 
   .brick-background {
@@ -176,6 +197,7 @@
     .input-group input {
       background-color: #EAE9E4; 
       color: #172027; 
+      transition: background-color 0.3s ease-in-out, color 0.5s ease-in-out;
       
       &::placeholder {
         color: #7A8B99; 
@@ -189,7 +211,8 @@
     .actions-group .btn-secondary {
       background-color: transparent !important; /* Deixa o fundo transparente */
       color: #FFFFFF !important; /* Mantém o texto vermelho tijolo */
-      border: 1px solid #FFFFFF !important; /* Aplica a sua borda branca/off-white */
+      border: 1px solid #FFFFFF !important;
+      transition: all 0.3s ease-in-out; 
 
       &:hover {
         background-color: rgba(172, 68, 48, 0.05) !important; /* Mantém o hover suave que você queria */
@@ -198,7 +221,7 @@
 
   /* Cor do ícone do botão de tema no modo escuro */
   .theme-toggle-btn {
-    color: #EAE9E4; 
+    color: var(--cor-vermelho-tijolo); 
     &:hover {
       background-color: rgba(255, 255, 255, 0.1);
     }

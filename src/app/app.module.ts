@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { LucideAngularModule, Sun, Moon } from 'lucide-angular';
+import { LucideAngularModule, Sun, Moon,Eye, EyeOff, } from 'lucide-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,7 +40,7 @@ import { RegistrosBaixasComponent } from './pages/registros-baixas/registros-bai
     AngularFireAuthModule,
     AngularFirestoreModule,
     FormsModule,
-    LucideAngularModule.pick({ Sun, Moon })
+    LucideAngularModule.pick({ Sun, Moon,Eye, EyeOff, })
   ],
   providers: [],
   bootstrap: [AppComponent]

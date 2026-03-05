@@ -23,9 +23,19 @@
       </div>
 
       <div class="input-group">
-        <input type="password" name="senha" placeholder="Digite sua Senha" [(ngModel)]="senha" required>
-        <img src="assets/icons/cadeado.png" alt="Ícone de Senha" class="input-icon">
-      </div>
+  <input [type]="hidePassword ? 'password' : 'text'" name="senha" 
+    placeholder="Digite sua Senha" 
+    [(ngModel)]="password" 
+    required>
+  
+  <button type="button" class="toggle-password-btn"
+    (click)="hidePassword = !hidePassword" aria-label="hidePassword ? 'Mostrar senha' : 'Ocultar senha'">
+    <lucide-icon [name]="hidePassword ? 'eye-off' : 'eye'" size="18"></lucide-icon>
+  </button>
+
+
+  <img src="assets/icons/cadeado.png" alt="Ícone de Senha" class="input-icon">
+</div>
 
       <div class="actions-group">
         <button type="submit" class="btn-primary" [disabled]="loading">
