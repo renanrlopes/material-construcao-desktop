@@ -1,39 +1,14 @@
 /* =========================================
-   ESTRUTURA DA PÁGINA (Layout Flexbox Base)
-========================================= */
-.page-layout {
-  display: flex;
-  min-height: 100vh;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  
-}
-
-/* =========================================
    SIDEBAR (Apenas a barra lateral)
 ========================================= */
 .sidebar-container {
   width: 260px;
-  background-color: #10151A; /* Fundo da barra lateral mais escuro */
+  background-color: var(--cor-off-white-01); 
   display: flex;
   flex-direction: column;
-  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.5);
-  z-index: 10;
-  
-  .brand-section {
-    display: flex; 
-    align-items: center; 
-    padding: 1.5rem; 
-    gap: 0.8rem;
-    
-    .brand-logo { width: 50px; }
-    
-    .brand-name { 
-      font-size: 1.5rem; 
-      color: #AC4430; 
-      font-weight: bold; 
-      margin: 0; 
-    }
-  }
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05); 
+  z-index: 10; 
+  transition: background-color 0.3s ease;
 
   .user-profile-card {
     background-color: #AC4430; 
@@ -44,39 +19,64 @@
     margin-bottom: 1rem;
     
     .avatar-circle {
-      width: 70px; 
-      height: 70px; 
+      width: 70px; height: 70px; 
       background-color: #D9D9D9;
       border-radius: 50%; 
       margin-bottom: 0.8rem;
     }
-    
-    .user-greeting { 
-      font-size: 1rem; 
-      font-weight: 600; 
-      color: #FFF; 
-    }
+    .user-greeting { font-size: 1rem; font-weight: 600; color: #FFF; }
   }
 
-  .nav-menu {
-    display: flex; 
-    flex-direction: column;
+  .nav-menu .menu-item {
+    display: flex; align-items: center; 
+    padding: 1rem 1.5rem; gap: 1rem;
+    text-decoration: none; 
+    color: var(--cor-azul-escuro-01); 
+    font-weight: 500;
+    border-left: 4px solid transparent; 
+    cursor: pointer;
+    transition: all 0.3s ease;
     
-    .menu-item {
-      display: flex; 
-      align-items: center; 
-      padding: 1rem 1.5rem; 
-      gap: 1rem;
-      text-decoration: none; 
-      color: #EAE9E4; 
-      font-weight: 500;
-      border-left: 4px solid transparent; 
-      cursor: pointer;
+    .menu-icon {
+      width: 22px; height: 22px;
+      background-color: var(--cor-azul-escuro-01); 
+      transition: background-color 0.3s ease;
+      -webkit-mask-size: contain; -webkit-mask-position: center; -webkit-mask-repeat: no-repeat;
+      mask-size: contain; mask-position: center; mask-repeat: no-repeat;
+    }
+    
+    &:hover {
+      background-color: var(--cor-off-white-02); 
+      color: #AC4430;
+      border-left-color: #AC4430;
+      .menu-icon { background-color: #AC4430; }
+    }
+  }
+}
+
+/* =========================================
+   TEMA ESCURO - APENAS SIDEBAR
+========================================= */
+::ng-deep .dark-theme {
+  .sidebar-container {
+    background-color: var(--cor-azul-escuro-01); 
+    border-right: 1px solid rgba(255,255,255,0.05); /* Linha sutil pra separar */
+    
+    .nav-menu .menu-item {
+      color: #EAE9E4 !important; /* Força o texto a ficar claro */
       
-      &:hover, &.active {
-        background-color: rgba(255, 255, 255, 0.05);
-        color: #AC4430;
+      .menu-icon { 
+        background-color: #EAE9E4 !important; /* Força a máscara do ícone a ficar clara */
+      }
+
+      &:hover {
+        background-color: var(--cor-azul-escuro-01)!important;
+        color: #AC4430 !important; 
         border-left-color: #AC4430;
+        
+        .menu-icon { 
+          background-color: #AC4430 !important; 
+        }
       }
     }
   }

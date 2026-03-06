@@ -1,68 +1,88 @@
-<div class="page-layout">
+<div class="app-wrapper">
   
-  <aside class="sidebar-container">
+  <header class="global-header">
     <div class="brand-section">
       <img src="assets/icons/logo-carriola.png" alt="Logo" class="brand-logo">
       <h1 class="brand-name">Asi & Obra</h1>
     </div>
 
-    <div class="user-profile-card">
-      <div class="avatar-circle"></div>
-      <span class="user-greeting">Olá, Nome!</span>
-    </div>
+    <button class="theme-toggle" (click)="toggleTheme()">
+      <lucide-icon [name]="isDarkMode ? 'sun' : 'moon'" size="28"></lucide-icon>
+    </button>
+  </header>
 
-    <nav class="nav-menu">
-      <a routerLink="/dashboard" class="menu-item active">
-        <lucide-icon name="home" size="20"></lucide-icon><span>Home</span>
-      </a>
-      <a routerLink="/usuarios" class="menu-item">
-        <lucide-icon name="users" size="20"></lucide-icon><span>Usuários</span>
-      </a>
-      <a routerLink="/produtos" class="menu-item">
-        <lucide-icon name="package" size="20"></lucide-icon><span>Produtos</span>
-      </a>
-      <a routerLink="/estoque" class="menu-item">
-        <lucide-icon name="warehouse" size="20"></lucide-icon><span>Estoque</span>
-      </a>
-      <a routerLink="/registros-baixas" class="menu-item">
-        <lucide-icon name="trending-down" size="20"></lucide-icon><span>Baixas</span>
-      </a>
-    </nav>
-  </aside>
-
-  <main class="main-content">
-    <header class="dashboard-header">
-      <h2 class="page-title">Resumo</h2>
-      <button class="theme-toggle">
-        <lucide-icon name="sun" size="28"></lucide-icon>
-      </button>
-    </header>
-
-    <div class="cards-grid">
-      <div class="summary-card">
-        <img src="assets/icons/inventory.png" alt="Ícone Produtos" class="card-icon">
-        <span class="card-value">1</span>
-        <span class="card-label">Produtos</span>
+  <div class="page-layout">
+    
+    <aside class="sidebar-container">
+      <div class="user-profile-card">
+        <div class="avatar-circle"></div>
+        <span class="user-greeting">Olá, Nome!</span>
       </div>
 
-      <div class="summary-card">
-        <img src="assets/icons/estoque.png" alt="Ícone Lotes" class="card-icon">
-        <span class="card-value">0</span>
-        <span class="card-label">Lotes</span>
-      </div>
+      <nav class="nav-menu">
+        <a routerLink="/dashboard" class="menu-item ">
+          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/casa.png'); mask-image: url('assets/icons/casa.png');"></div>
+          <span>Home</span>
+        </a>
+        
+        <a routerLink="/usuarios" class="menu-item">
+          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');"></div>
+          <span>Usuários</span>
+        </a>
 
-      <div class="summary-card">
-        <img src="assets/icons/trending_down.png" alt="Ícone Baixas" class="card-icon">
-        <span class="card-value">0</span>
-        <span class="card-label">Baixas</span>
-      </div>
+        <a routerLink="/perfil" class="menu-item">
+          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');"></div>
+          <span>perfil</span>
+        </a>
+        
+        <a routerLink="/produtos" class="menu-item">
+          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/produtos.png'); mask-image: url('assets/icons/produtos.png');"></div>
+          <span>Produtos</span>
+        </a>
+        
+        <a routerLink="/estoque" class="menu-item">
+          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/estoque.png'); mask-image: url('assets/icons/estoque.png');"></div>
+          <span>Estoque</span>
+        </a>
+        
+        <a routerLink="/registros-baixas" class="menu-item">
+          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/grafico.png'); mask-image: url('assets/icons/grafico.png');"></div>
+          <span>Baixas</span>
+        </a>
+      </nav>
+    </aside>
 
-      <div class="summary-card alert-card">
-        <img src="assets/icons/Vector.png" alt="Ícone Alertas" class="card-icon alert-icon">
-        <span class="card-value alert-text">0</span>
-        <span class="card-label alert-text">Alertas</span>
-      </div>
-    </div>
-  </main>
+    <main class="main-content">
+      <div class="page-body">
+        <h2 class="page-title">Resumo</h2>
 
+        <div class="cards-grid">
+          <div class="summary-card">
+            <div class="card-icon" style="-webkit-mask-image: url('assets/icons/inventory.png'); mask-image: url('assets/icons/inventory.png');"></div>
+            <span class="card-value">1</span>
+            <span class="card-label">Produtos</span>
+          </div>
+
+          <div class="summary-card">
+            <div class="card-icon" style="-webkit-mask-image: url('assets/icons/estoque.png'); mask-image: url('assets/icons/estoque.png');"></div>
+            <span class="card-value">0</span>
+            <span class="card-label">Lotes</span>
+          </div>
+
+          <div class="summary-card">
+            <div class="card-icon" style="-webkit-mask-image: url('assets/icons/trending_down.png'); mask-image: url('assets/icons/trending_down.png');"></div>
+            <span class="card-value">0</span>
+            <span class="card-label">Baixas</span>
+          </div>
+
+          <div class="summary-card alert-card">
+            <div class="card-icon alert-icon" style="-webkit-mask-image: url('assets/icons/Vector.png'); mask-image: url('assets/icons/Vector.png');"></div>
+            <span class="card-value alert-text">0</span>
+            <span class="card-label alert-text">Alertas</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
 </div>

@@ -1,78 +1,160 @@
 /* 1. IMPORTA A SIDEBAR */
+/* Lembre-se: ajuste o caminho ('../' ou './') se der erro no terminal! */
 @import '../sidebar.component.scss'; 
 
 /* =========================================
-   CORES DE FUNDO DA TELA INTEIRA (Dashboard)
+   ESTRUTURA GERAL DA APLICAÇÃO
+========================================= */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* =========================================
+   HEADER GLOBAL (Logo + Botão Tema)
+========================================= */
+.global-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--cor-off-white-01); 
+  padding: 1rem 3rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); 
+  z-index: 20;
+  transition: background-color 0.3s ease;
+
+  .brand-section {
+    display: flex; 
+    align-items: center; 
+    gap: 0.8rem;
+    
+    .brand-logo { width: 50px; }
+    
+    .brand-name { 
+      font-size: 1.5rem; 
+      color: #AC4430; 
+      font-weight: bold; 
+      margin: 0; 
+    }
+  }
+
+  .theme-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--cor-azul-escuro-01); 
+    transition: color 0.3s ease;
+    padding: 0;
+  }
+}
+
+/* =========================================
+   CORPO DA PÁGINA E MAIN CONTENT
 ========================================= */
 .page-layout {
-  background-color: #172027; /* Cor de fundo principal escuro específico do Dashboard */
+  display: flex;
+  flex: 1; 
+  background-color: var(--cor-off-white-02); 
+  transition: background-color 0.3s ease;
 }
 
-/* =========================================
-   MAIN CONTENT & HEADER
-========================================= */
 .main-content {
-  flex: 1; /* Faz o conteúdo ocupar todo o resto da tela à direita */
-  padding: 3rem 4rem;
-  color: #FFF;
-  position: relative;
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  color: var(--cor-azul-escuro-01); 
+  padding-top: 3rem; 
 }
 
-.dashboard-header {
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center;
-  margin-bottom: 3rem;
+.page-body {
+  padding: 0 3rem 2rem 3rem; 
   
-  .page-title { 
-    font-size: 2rem; 
-    margin: 0; 
-    font-weight: bold; 
-  }
-  
-  .theme-toggle {
-    background: none; 
-    border: none; 
-    color: #FFF; 
-    cursor: pointer;
-    position: absolute; 
-    right: 2rem; 
-    top: 2rem;
+  .page-title {
+    font-size: 2rem; font-weight: bold;
+    margin-top: 0; margin-bottom: 2rem;
   }
 }
 
 /* =========================================
-   GRID DOS CARDS (O QUADRADO AZUL)
+   CARDS DE RESUMO
 ========================================= */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); 
-  gap: 1.5rem; 
-  max-width: 700px; 
+  grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 700px; 
 }
 
 .summary-card {
-  background-color: #1C262F; 
-  border-radius: 8px;
-  padding: 3rem 2rem;
-  display: flex; 
-  flex-direction: column; 
-  align-items: center; 
-  justify-content: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  background-color: var(--cor-off-white-01); 
+  border-radius: 8px; padding: 3rem 2rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
   .card-icon {
-    width: 45px; /* Define um limite para os ícones */
-    height: auto;
-    margin-bottom: 1rem;
-    object-fit: contain;
+    width: 45px; height: 45px; margin-bottom: 1rem;
+    background-color: var(--cor-azul-escuro-01); 
+    transition: background-color 0.3s ease; 
+    -webkit-mask-size: contain; -webkit-mask-position: center; -webkit-mask-repeat: no-repeat;
+    mask-size: contain; mask-position: center; mask-repeat: no-repeat;
   }
-  .card-value { font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem; }
-  .card-label { font-size: 0.9rem; color: #A0A0A0; }
   
-  /* Cor verde específica para o Alerta */
+  .card-value { font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem; }
+  .card-label { font-size: 0.9rem; }
+  
   &.alert-card {
-    .alert-icon { color: #4CAF50; } 
+    .alert-icon { background-color: #4CAF50; } 
     .alert-text { color: #4CAF50; }
+  }
+}
+
+/* =========================================
+   TEMA ESCURO - DASHBOARD E HEADER
+========================================= */
+::ng-deep .dark-theme {
+  
+  .global-header {
+    background-color: var(--cor-azul-escuro-02); 
+    border-bottom: 1px solid rgba(255,255,255,0.05); 
+
+    .theme-toggle {
+      color: var(--cor-perola) !important; 
+      
+      lucide-icon, svg {
+        color: var(--cor-perola) !important;
+        stroke: var(--cor-perola) !important;
+      }
+    }
+  }
+
+  .page-layout {
+    background-color: var(--cor-azul-escuro-01); 
+  }
+
+  .main-content {
+    color: var(--cor-perola);
+  }
+  
+  .page-title {
+    color: var(--cor-perola) !important;
+  }
+
+  .summary-card {
+    background-color:var(--cor-azul-escuro-01); 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); 
+
+    .card-value, .card-label { 
+      color: var(--cor-perola) !important; 
+    }
+    
+    .card-icon { 
+      background-color: var(--cor-perola) !important; 
+    }
+
+    &.alert-card {
+      .alert-icon { background-color: #4CAF50 !important; } 
+      .alert-text { color: #4CAF50 !important; }
+    }
   }
 }
