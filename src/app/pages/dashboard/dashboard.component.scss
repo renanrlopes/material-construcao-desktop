@@ -61,7 +61,12 @@
   justify-content: center;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 
-  .card-icon { color: #EAE9E4; margin-bottom: 1rem; }
+  .card-icon {
+    width: 45px; /* Define um limite para os ícones */
+    height: auto;
+    margin-bottom: 1rem;
+    object-fit: contain;
+  }
   .card-value { font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem; }
   .card-label { font-size: 0.9rem; color: #A0A0A0; }
   
