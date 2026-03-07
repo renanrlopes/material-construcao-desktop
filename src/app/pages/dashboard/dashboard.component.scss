@@ -1,70 +1,120 @@
-@import '../sidebar.component.scss'; 
+@import '../sidebar.component.scss';
 
-/* =========================================
-   CARDS DE RESUMO
-========================================= */
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--cor-azul-escuro-01);
+  padding-top: 3rem;
+  transition: background-color 0.3s ease;
+}
+
+.page-body {
+  width: 100%;
+  max-width: 800px;
+  padding: 0 2rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 2.5rem;
+    align-self: flex-start;
+  }
+}
+
+
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 700px; 
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  width: 100%;
+  justify-content: center;
 }
 
 .summary-card {
-  background-color: var(--cor-off-white-01); 
-  border-radius: 8px; padding: 3rem 2rem;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: var(--cor-off-white-01);
+  border-radius: 12px;
+  padding: 3.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  }
 
   .card-icon {
-    width: 45px; height: 45px; margin-bottom: 1rem;
-    background-color: var(--cor-azul-escuro-01); 
-    transition: background-color 0.3s ease; 
-    -webkit-mask-size: contain; -webkit-mask-position: center; -webkit-mask-repeat: no-repeat;
-    mask-size: contain; mask-position: center; mask-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1.2rem;
+    background-color: var(--cor-azul-escuro-01);
+    -webkit-mask-size: contain;
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-size: contain;
+    mask-position: center;
+    mask-repeat: no-repeat;
   }
-  
-  .card-value { font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem; }
-  .card-label { font-size: 0.9rem; }
-  
+
+  .card-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: var(--cor-azul-escuro-01);
+  }
+
+  .card-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--cor-azul-ardosia);
+  }
+
   &.alert-card {
-    .alert-icon { background-color: #4CAF50; } 
-    .alert-text { color: #4CAF50; }
+
+    .alert-icon {
+      background-color: #4CAF50;
+    }
+
+    .alert-text {
+      color: #4CAF50;
+    }
   }
 }
 
-/* =========================================
-   TEMA ESCURO - DASHBOARD E HEADER
-========================================= */
 ::ng-deep .dark-theme {
-  
-
   .page-layout {
-    background-color: var(--cor-azul-escuro-01); 
+    background-color: var(--cor-azul-escuro-01);
   }
 
   .main-content {
     color: var(--cor-perola);
   }
-  
+
   .page-title {
     color: var(--cor-perola) !important;
   }
 
   .summary-card {
-    background-color:var(--cor-azul-escuro-01); 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); 
+    background-color: var(--cor-azul-escuro-02); // Azul mais escuro para o card no dark
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 
-    .card-value, .card-label { 
-      color: var(--cor-perola) !important; 
-    }
-    
-    .card-icon { 
-      background-color: var(--cor-perola) !important; 
+    .card-value,
+    .card-label {
+      color: var(--cor-perola) !important;
     }
 
-    &.alert-card {
-      .alert-icon { background-color: #4CAF50 !important; } 
-      .alert-text { color: #4CAF50 !important; }
+    .card-icon {
+      background-color: var(--cor-perola) !important;
     }
   }
 }
