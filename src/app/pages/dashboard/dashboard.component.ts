@@ -1,7 +1,7 @@
 import { Component, OnInit, Renderer2, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
-import { UserRole } from '../../core/models/user.model';
+import { AppUser, UserRole } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +9,7 @@ import { UserRole } from '../../core/models/user.model';
   styleUrl: './dashboard.component.scss' 
 })
 export class DashboardComponent implements OnInit {
-  
+  usuario: AppUser | null = null;
   userName: string = '';
   userRole: UserRole | null = null;
   loading: boolean = true;
@@ -22,17 +22,10 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // ==========================================
-    // LÓGICA DO TEMA (Executa ao carregar a tela)
-    // ==========================================
     const temaSalvo = localStorage.getItem('theme');
     this.isDarkMode = temaSalvo === 'dark';
     this.applyTheme();
 
-    // ==========================================
-    // LÓGICA  (Intacta)
-    // ==========================================
-    // dados do usuário logado (nome e role)
     this.authService.getUserRole().subscribe({
       next: (userData: any) => {
         if (userData) {
@@ -52,9 +45,6 @@ export class DashboardComponent implements OnInit {
     this.authService.logout();
   }
 
-  // ==========================================
-  // FUNÇÕES DO TEMA
-  // ==========================================
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
     localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
