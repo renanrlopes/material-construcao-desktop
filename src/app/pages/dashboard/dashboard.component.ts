@@ -6,16 +6,13 @@ import { UserRole } from '../../core/models/user.model';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss' // Mudei para styleUrl (sem o 's') conforme o seu original
+  styleUrl: './dashboard.component.scss' 
 })
 export class DashboardComponent implements OnInit {
   
-  // Variáveis do seu colega
   userName: string = '';
   userRole: UserRole | null = null;
   loading: boolean = true;
-
-  // Sua nova variável para o tema
   isDarkMode: boolean = false;
 
   constructor(
@@ -33,7 +30,7 @@ export class DashboardComponent implements OnInit {
     this.applyTheme();
 
     // ==========================================
-    // LÓGICA DO SEU COLEGA (Intacta)
+    // LÓGICA  (Intacta)
     // ==========================================
     // dados do usuário logado (nome e role)
     this.authService.getUserRole().subscribe({
@@ -51,13 +48,12 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  // Lógica do seu colega
   onLogout() {
     this.authService.logout();
   }
 
   // ==========================================
-  // SUAS FUNÇÕES DO TEMA
+  // FUNÇÕES DO TEMA
   // ==========================================
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;

@@ -1,193 +1,256 @@
-/* Importação das variáveis para manter a consistência */
-:root {
-    --fonte-principal: 'Public Sans', sans-serif;
-    --cor-vermelho-tijolo: #AC4430;
-    --cor-off-white-01: #F4F0E5;
-    --cor-off-white-02: #E7DECF;
-    --cor-branco: #FFFFFF;
-    --cor-azul-escuro-02: #172027;
-    --cor-azul-ardosia: #3E505B;
-    --cor-perola: #EAE9E4;
-    --cor-grafite-profundo: #121212;
+@import '../sidebar.component.scss';
+
+
+/* =========================================
+   CARTÃO DE PERFIL CENTRAL
+========================================= */
+.perfil-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem; /* Espaço entre o cartão de perfil e o banner de usuários */
+  width: 100%;
+  height: 100%;
+  padding-top: 49px;
 }
 
-.perfil-container {
-    padding: 3rem 1rem;
-    max-width: 600px;
-    margin: 0 auto;
-    min-height: 100vh;
+.perfil-card-central {
+  width: 100%;
+  max-width: 686px; 
+  min-height: 632px; /* Altura exata do Figma */
+  background-color: var(--cor-off-white-01); 
+  padding: 2.5rem;
+  border-radius: 12px; /* Arredondamento para ficar suave */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribui o espaço vazio entre o topo e os botões */
+  gap: 2rem;
+  transition: all 0.3s ease;
+}
+
+/* --- Cabeçalho Interno do Card --- */
+.perfil-header-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  .avatar-large {
+    width: 80px;
+    height: 80px;
+    background-color: #D9D9D9;
+    color: #333;
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
 
-    .btn-back {
-        align-self: flex-start;
-        background: none;
-        border: none;
-        color: var(--cor-vermelho-tijolo);
-        font-weight: 700;
-        cursor: pointer;
-        margin-bottom: 2rem;
-        transition: transform 0.2s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+  .user-title {
+    font-size: 1.5rem;
+    margin: 0;
+    color: #333;
+  }
 
-        &:hover {
-            transform: translateX(-5px);
-        }
-    }
-
-    /* Cartão de Perfil Estilizado */
-    .perfil-card {
-        background-color: var(--cor-branco);
-        width: 100%;
-        border-radius: 16px;
-        padding: 2.5rem;
-        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.08);
-        border-bottom: 4px solid var(--cor-vermelho-tijolo);
-        text-align: center;
-
-        .perfil-header {
-            margin-bottom: 2.5rem;
-
-            .avatar-circle {
-                width: 100px;
-                height: 100px;
-                background-color: var(--cor-vermelho-tijolo);
-                color: var(--cor-branco);
-                font-size: 2.5rem;
-                font-weight: 700;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 0 auto 1.5rem;
-                box-shadow: 0px 8px 16px rgba(172, 68, 48, 0.3);
-            }
-
-            h2 {
-                color: var(--cor-grafite-profundo);
-                font-size: 1.8rem;
-                margin: 0 0 0.5rem;
-                font-weight: 700;
-            }
-
-            .badge {
-                background-color: var(--cor-off-white-02);
-                color: var(--cor-azul-ardosia);
-                padding: 0.4rem 1.2rem;
-                border-radius: 20px;
-                font-size: 0.85rem;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
-        }
-
-        .perfil-details {
-            text-align: left;
-            margin-bottom: 2.5rem;
-            background-color: var(--cor-off-white-01);
-            padding: 1.5rem;
-            border-radius: 12px;
-
-            .detail-item {
-                display: flex;
-                justify-content: space-between;
-                padding: 1rem 0;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-
-                &:last-child {
-                    border-bottom: none;
-                }
-
-                label {
-                    color: var(--cor-azul-ardosia);
-                    font-weight: 500;
-                    font-size: 0.95rem;
-                }
-
-                span,
-                strong {
-                    color: var(--cor-grafite-profundo);
-                    font-size: 1rem;
-                }
-
-                strong {
-                    color: var(--cor-vermelho-tijolo);
-                }
-
-                /* Status Ativo/Inativo */
-                .active {
-                    color: #28a745;
-                    font-weight: 700;
-
-                    &::before {
-                        content: '● ';
-                        font-size: 0.8rem;
-                    }
-                }
-            }
-        }
-
-        .perfil-actions {
-            .btn-secondary {
-                width: 100%;
-                padding: 1rem;
-                background-color: transparent;
-                color: var(--cor-vermelho-tijolo);
-                border: 2px solid var(--cor-vermelho-tijolo);
-                border-radius: 8px;
-                font-size: 1rem;
-                font-weight: 700;
-                cursor: pointer;
-                transition: all 0.3s ease;
-
-                &:hover {
-                    background-color: var(--cor-vermelho-tijolo);
-                    color: var(--cor-branco);
-                    box-shadow: 0px 4px 12px rgba(172, 68, 48, 0.2);
-                }
-            }
-        }
-    }
-
-    .loader {
-        color: var(--cor-vermelho-tijolo);
-        font-weight: 500;
-        margin-top: 5rem;
-    }
+  .role-badge {
+    font-size: 0.70rem;
+    border: 1px solid #AC4430;
+    color: #AC4430;
+    padding: 2px 12px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
 }
 
-/* Suporte ao Modo Escuro (se a classe estiver no container pai) */
-.dark-theme .perfil-card {
-    background-color: var(--cor-azul-escuro-02);
-    border-bottom-color: var(--cor-vermelho-tijolo);
+/* --- Lista de Dados Pessoais (Formato Pílulas) --- */
+.perfil-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: var(--cor-off-white-02);
+  padding: 1.2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 
-    h2 {
-        color: var(--cor-branco);
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.2rem;
+    background-color: var(--cor-off-white-01);
+    border-radius: 8px;
+    border: none;
+
+    .detail-label {
+      font-weight: 500;
+      color: #333;
+      font-size: 0.9rem;
     }
 
-    .perfil-details {
-        background-color: rgba(255, 255, 255, 0.05);
-
-        label {
-            color: var(--cor-perola);
-        }
-
-        span {
-            color: var(--cor-branco);
-        }
+    .detail-value {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #111;
     }
 
-    .perfil-actions .btn-secondary {
-        color: var(--cor-branco);
-        border-color: var(--cor-branco);
+    .text-brand { color: #AC4430; font-weight: bold; }
+    .status-active { color: #2E7D32; font-weight: bold; }
+    .status-inactive { color: #AC4430; font-weight: bold; }
+  }
+}
 
-        &:hover {
-            background-color: var(--cor-branco);
-            color: var(--cor-azul-escuro-02);
-        }
+/* --- Botões Vazados (Lado a Lado) --- */
+.perfil-action-buttons {
+  display: flex;
+  gap: 1rem;
+  
+  .btn-outline-brand {
+    flex: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem; /* O gap já afasta a imagem do texto */
+    background: transparent;
+    border: 1px solid #AC4430;
+    color: #AC4430;
+    padding: 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba(172, 68, 48, 0.1); 
     }
+
+    /* Classe do ícone de lápis */
+    .custom-btn-icon {
+      width: 18px;
+      height: auto;
+    }
+  }
+}
+
+/* =========================================
+   BANNER DE GERENCIAR USUÁRIOS
+========================================= */
+.manage-users-banner {
+  width: 100%;
+  max-width: 686px; 
+  background-color: var(--cor-off-white-01); 
+  padding: 1.2rem 1.5rem;
+  border-radius: 8px;
+  gap: 16px;
+  border: 1px solid var(--cor-azul-escuro-01); 
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between; /* Isso empurra a seta para a direita */
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    filter: brightness(0.97); 
+  }
+
+  .manage-info {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+
+    .custom-banner-icon {
+      width: 48px;
+      height: auto;
+    }
+
+    .manage-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+
+      strong {
+        font-size: 1rem;
+        color: var(--cor-azul-escuro-01, #333); /* Título escuro */
+      }
+
+      span {
+        font-size: 0.85rem;
+        color: #666; 
+      }
+    }
+  }
+
+  lucide-icon {
+    color: var(--cor-azul-escuro-01, #333); 
+  }
+}
+
+
+/* =========================================
+   TEMA ESCURO (DARK MODE)
+========================================= */
+::ng-deep .dark-theme {
+  
+  /* 1. Fundo Principal e Cabeçalho */
+  .main-content {
+    background-color: var(--cor-azul-escuro-01); /* Fundo geral da página */
+  }
+
+  /* 2. Cartões (Perfil e Banner) */
+  .perfil-card-central,
+  .manage-users-banner {
+    background-color: #222B33; /* Cor dos cartões */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Sombra mais intensa para dar profundiade no escuro */
+  }
+
+  /* Borda específica do banner no modo escuro para não sumir */
+  .manage-users-banner {
+    border-color: #313D48; 
+  }
+
+  /* 3. Textos Principais */
+  .perfil-header-info .user-title {
+    color: #FFFFFF !important; /* Nome do usuário em branco */
+  }
+
+  /* 4. Lista de Dados (Pílulas) */
+  .perfil-details-list {
+    background-color:var(--cor-azul-escuro-02)!important; /* Fundo escuro atrás das pílulas */
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra interna leve */
+
+    .detail-row {
+      background-color:var(--cor-azul-escuro-01) !important; /* Fundo individual de cada pílula */
+
+      .detail-label {
+        color:var(--cor-perola) !important; 
+      }
+
+      .detail-value {
+        color:var(--cor-perola) !important; 
+      }
+      .text-brand { color: #AC4430 !important; font-weight: bold; }
+    .status-active { color: #2E7D32 !important; font-weight: bold; }
+    .status-inactive { color: #AC4430 !important; font-weight: bold; }
+    }
+  }
+
+  /* 5. Textos e Ícones do Banner */
+  .manage-users-banner {
+    .manage-info .manage-text {
+      strong { color: #FFFFFF; } /* Título forte branco */
+      span { color: #A0AAB2; } /* Subtítulo cinza claro */
+    }
+    
+    /* Setinha no modo escuro */
+    lucide-icon {
+      color: #A0AAB2; 
+    }
+  }
 }
