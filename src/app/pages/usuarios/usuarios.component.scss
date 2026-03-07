@@ -1,279 +1,307 @@
+/* Importa os estilos da sidebar para manter a consistência */
+@import '../sidebar.component.scss';
+
 /* =========================================
-   VARIÁVEIS DE CORES (PALETA TIJOLO)
+   LAYOUT E ESTRUTURA GLOBAL
 ========================================= */
-:root {
-    --fonte-principal: 'Public Sans', sans-serif;
-    --cor-vermelho-tijolo: #AC4430;
-    --cor-off-white-01: #F4F0E5;
-    --cor-off-white-02: #E7DECF;
-    --cor-branco: #FFFFFF;
-    --cor-azul-escuro-02: #172027;
-    --cor-azul-ardosia: #3E505B;
-    --cor-perola: #EAE9E4;
-    --cor-grafite-profundo: #121212;
-}
-
-.admin-container {
-    padding: 2.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    font-family: var(--fonte-principal);
-
-    /* CABEÇALHO DA TABELA E BUSCA */
-    .header-table-section {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.5rem;
-        flex-wrap: wrap;
-        gap: 1rem;
-
-        h2 {
-            color: var(--cor-vermelho-tijolo);
-            margin: 0;
-            font-weight: 700;
-            font-size: 1.8rem;
-        }
-    }
-
-    /* BARRA DE PESQUISA */
-    .search-box {
-        position: relative;
-        flex: 1;
-        max-width: 450px;
-
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 0.9rem;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        input {
-            width: 100%;
-            padding: 0.8rem 1rem 0.8rem 2.8rem;
-            border: 1px solid var(--cor-off-white-02);
-            border-radius: 12px;
-            background-color: var(--cor-branco);
-            font-family: var(--fonte-principal);
-            font-size: 0.95rem;
-            color: var(--cor-grafite-profundo);
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-
-            &::placeholder {
-                color: #A0A0A0;
-            }
-
-            &:focus {
-                outline: none;
-                border-color: var(--cor-vermelho-tijolo);
-                box-shadow: 0 4px 12px rgba(172, 68, 48, 0.1);
-            }
-        }
-    }
-
-    /* === TABELA DE USUÁRIOS === */
-    .user-table {
-        width: 100%;
-        border-collapse: collapse;
-        background: var(--cor-branco);
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border: 1px solid var(--cor-off-white-02);
-        margin-top: 1rem;
-
-        thead {
-            background-color: var(--cor-off-white-01);
-
-            th {
-                padding: 1.2rem;
-                text-align: left;
-                color: var(--cor-azul-ardosia);
-                font-weight: 700;
-                text-transform: uppercase;
-                font-size: 0.8rem;
-                letter-spacing: 0.5px;
-                border-bottom: 2px solid var(--cor-off-white-02);
-            }
-        }
-
-        tbody {
-            tr {
-                border-bottom: 1px solid var(--cor-off-white-01);
-                transition: background 0.2s ease;
-
-                &:hover {
-                    background-color: #FAF9F6;
-                }
-
-                td {
-                    padding: 1rem 1.2rem;
-                    color: var(--cor-grafite-profundo);
-                    vertical-align: middle;
-                    font-size: 0.95rem;
-
-                    strong {
-                        color: var(--cor-vermelho-tijolo);
-                        font-family: monospace;
-                        font-size: 1rem;
-                    }
-                }
-            }
-        }
-
-        select {
-            padding: 0.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--cor-off-white-02);
-            background-color: var(--cor-branco);
-            color: var(--cor-azul-ardosia);
-            font-family: var(--fonte-principal);
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s;
-
-            &:focus {
-                outline: none;
-                border-color: var(--cor-vermelho-tijolo);
-            }
-        }
-
-        .btn-delete {
-            padding: 0.6rem 1rem;
-            background-color: transparent;
-            color: var(--cor-vermelho-tijolo);
-            border: 1px solid var(--cor-vermelho-tijolo);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 700;
-            transition: all 0.3s ease;
-
-            &:hover {
-                background-color: var(--cor-vermelho-tijolo);
-                color: var(--cor-branco);
-                box-shadow: 0 4px 8px rgba(172, 68, 48, 0.2);
-            }
-        }
-    }
-}
-
-/* === BOTÃO VOLTAR === */
-.btn-back {
-    background: none;
-    border: 2px solid var(--cor-off-white-02);
-    color: var(--cor-azul-ardosia);
-    padding: 0.6rem 1.2rem;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 700;
-    margin-bottom: 2rem;
+.app-wrapper {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-    &:hover {
-        background-color: var(--cor-branco);
-        border-color: var(--cor-vermelho-tijolo);
+.page-layout {
+    display: flex;
+    flex: 1;
+    background-color: var(--cor-off-white-02);
+    transition: background-color 0.3s ease;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+}
+
+/* =========================================
+   CONTÊINER DE ADMINISTRAÇÃO
+========================================= */
+.admin-container {
+    padding: 0 3rem 3rem 3rem;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+
+    h2 {
         color: var(--cor-vermelho-tijolo);
+        font-weight: 700;
+        font-size: 1.8rem;
+        margin: 0;
     }
 }
 
-/* === SEÇÃO ADICIONAR USUÁRIO === */
+/* CABEÇALHO COM BUSCA */
+.header-table-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+
+    .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.5;
+    }
+
+    input {
+        width: 100%;
+        padding: 0.8rem 1rem 0.8rem 2.8rem;
+        border: 1px solid var(--cor-off-white-02);
+        border-radius: 12px;
+        background-color: var(--cor-branco);
+        transition: all 0.3s ease;
+
+        &:focus {
+            outline: none;
+            border-color: var(--cor-vermelho-tijolo);
+            box-shadow: 0 4px 12px rgba(172, 68, 48, 0.1);
+        }
+    }
+}
+
+/* =========================================
+   SEÇÃO DE ADICIONAR USUÁRIO
+========================================= */
 .add-user-section {
-    background: var(--cor-perola);
-    padding: 2rem;
-    border-radius: 16px;
-    margin-bottom: 3.5rem;
-    border: 1px solid var(--cor-off-white-02);
+    background-color: var(--cor-off-white-01);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
     h3 {
-        margin-bottom: 1.5rem;
-        color: var(--cor-grafite-profundo);
-        font-weight: 700;
-        font-size: 1.3rem;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
-        &::before {
-            content: '👤+';
-            font-size: 1rem;
-            color: var(--cor-vermelho-tijolo);
-        }
+        margin-top: 0;
+        margin-bottom: 1rem;
+        color: var(--cor-azul-escuro-01);
     }
 
     .add-form {
         display: flex;
+        gap: 10px;
         flex-wrap: wrap;
-        gap: 12px;
 
         input,
         select {
-            padding: 0.9rem 1.2rem;
-            border: 1px solid var(--cor-off-white-02);
-            border-radius: 10px;
             flex: 1;
-            min-width: 220px;
-            background-color: var(--cor-branco);
-            font-family: var(--fonte-principal);
-            font-size: 0.95rem;
-            color: var(--cor-grafite-profundo);
-            transition: all 0.3s ease;
-
-            &:focus {
-                outline: none;
-                border-color: var(--cor-vermelho-tijolo);
-                box-shadow: 0 4px 10px rgba(172, 68, 48, 0.1);
-            }
+            min-width: 180px;
+            padding: 0.7rem 1rem;
+            border: 1px solid var(--cor-off-white-02);
+            border-radius: 8px;
         }
 
         .btn-save {
             background-color: var(--cor-vermelho-tijolo);
-            color: var(--cor-branco);
+            color: white;
             border: none;
-            padding: 0.9rem 2rem;
-            border-radius: 10px;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: 700;
-            box-shadow: 0px 4px 12px rgba(172, 68, 48, 0.3);
-            transition: all 0.3s ease;
+            transition: brightness 0.2s;
 
             &:hover {
-                background-color: #8E3625;
-                transform: translateY(-2px);
-                box-shadow: 0px 6px 15px rgba(172, 68, 48, 0.4);
+                filter: brightness(1.1);
             }
         }
     }
 }
 
-/* ESTADO VAZIO / SEM RESULTADOS */
-.empty-results {
-    text-align: center;
-    padding: 4rem;
-    color: var(--cor-azul-ardosia);
-    background: var(--cor-branco);
+/* =========================================
+   TABELA DE USUÁRIOS
+========================================= */
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--cor-branco);
     border-radius: 12px;
-    margin-top: 1.5rem;
-    border: 2px dashed var(--cor-off-white-02);
-    font-weight: 500;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
+    thead {
+        background-color: var(--cor-perola);
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--cor-azul-ardosia);
+        }
+    }
+
+    tbody tr {
+        border-bottom: 1px solid var(--cor-off-white-02);
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        td {
+            padding: 1rem;
+            color: var(--cor-azul-escuro-01);
+
+            strong {
+                color: var(--cor-vermelho-tijolo);
+            }
+
+            select {
+                padding: 0.4rem;
+                border-radius: 6px;
+                border: 1px solid var(--cor-off-white-02);
+            }
+        }
+    }
 }
 
-/* RESPONSIVIDADE */
-@media (max-width: 768px) {
-    .header-table-section {
-        flex-direction: column;
-        align-items: flex-start;
+.btn-delete {
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
 
-        .search-box {
-            max-width: 100%;
+    &:hover {
+        background: #ff4d4d;
+        color: white;
+    }
+}
+
+
+::ng-deep .dark-theme {
+
+    // Fundo da página e Sidebar (que já está no import)
+    .page-layout {
+        background-color: #0f171e !important; // Um tom acima do preto puro
+    }
+
+    .main-content {
+        background-color: #0f171e;
+    }
+
+    // Forçar cor de todos os títulos e textos informativos
+    .admin-container {
+
+        h2,
+        h3,
+        .detail-label,
+        .user-greeting {
+            color: var(--cor-perola) !important;
         }
+
+        .btn-back {
+            color: #A0A0A0;
+
+            &:hover {
+                color: var(--cor-vermelho-tijolo);
+            }
+        }
+    }
+
+    // Seção de Cadastro (Card de cima)
+    .add-user-section {
+        background-color: var(--cor-azul-escuro-02) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+
+        input,
+        select {
+            background-color: #1b252d !important;
+            color: var(--cor-perola) !important;
+            border-color: #3e4b54 !important;
+
+            &::placeholder {
+                color: #666;
+            }
+        }
+    }
+
+    // Barra de busca
+    .search-box {
+        input {
+            background-color: var(--cor-azul-escuro-02) !important;
+            color: white !important;
+            border-color: #3e4b54 !important;
+        }
+
+        .search-icon {
+            color: var(--cor-perola);
+        }
+    }
+
+    // Tabela Premium no Dark Mode
+    .user-table {
+        background-color: var(--cor-azul-escuro-02) !important;
+        border-color: #3e4b54;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+        thead {
+            background-color: #0d141a !important;
+
+            th {
+                color: #7A8B99 !important; // Cinza azulado para os headers
+                border-bottom-color: #3e4b54;
+            }
+        }
+
+        tbody tr {
+            border-bottom-color: #2a353d !important;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.03) !important;
+            }
+
+            td {
+                color: var(--cor-perola) !important;
+
+                select {
+                    background-color: #1b252d;
+                    color: white;
+                    border-color: #3e4b54;
+                }
+            }
+        }
+    }
+
+    // Estado Vazio
+    .empty-results {
+        background-color: transparent;
+        color: #7A8B99;
+        border-color: #3e4b54;
+    }
+}
+
+/* Botão voltar */
+.btn-back {
+    background: none;
+    border: none;
+    color: var(--cor-azul-ardosia);
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 1rem;
+
+    &:hover {
+        color: var(--cor-vermelho-tijolo);
     }
 }

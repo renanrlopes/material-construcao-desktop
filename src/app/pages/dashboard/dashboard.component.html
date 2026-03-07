@@ -1,5 +1,5 @@
 <div class="app-wrapper">
-  
+
   <header class="global-header">
     <div class="brand-section">
       <img src="assets/icons/logo-carriola.png" alt="Logo" class="brand-logo">
@@ -12,7 +12,7 @@
   </header>
 
   <div class="page-layout">
-    
+
     <aside class="sidebar-container">
       <div class="user-profile-card">
         <div class="avatar-circle"></div>
@@ -20,42 +20,57 @@
       </div>
 
       <nav class="nav-menu">
-        <a routerLink="/dashboard" class="menu-item ">
-          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/casa.png'); mask-image: url('assets/icons/casa.png');"></div>
+        <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+          class="menu-item">
+          <div class="menu-icon"
+            style="-webkit-mask-image: url('assets/icons/casa.png'); mask-image: url('assets/icons/casa.png');"></div>
           <span>Home</span>
         </a>
-        
-        <a routerLink="/usuarios" class="menu-item" *ngIf="userRole === 'ADMIN'">
-    <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');"></div>
-    <span>Usuários</span>
-  </a>
 
-        <a routerLink="/perfil" class="menu-item">
-          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');"></div>
-          <span>perfil</span>
+        <a routerLink="/usuarios" routerLinkActive="active" class="menu-item" *ngIf="userRole === 'ADMIN'">
+          <div class="menu-icon"
+            style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');">
+          </div>
+          <span>Usuários</span>
         </a>
-        
-        <a routerLink="/produtos" class="menu-item">
-          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/produtos.png'); mask-image: url('assets/icons/produtos.png');"></div>
+
+        <a routerLink="/perfil" routerLinkActive="active" class="menu-item">
+          <div class="menu-icon"
+            style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');">
+          </div>
+          <span>Perfil</span>
+        </a>
+
+        <a routerLink="/produtos" routerLinkActive="active" class="menu-item">
+          <div class="menu-icon"
+            style="-webkit-mask-image: url('assets/icons/produtos.png'); mask-image: url('assets/icons/produtos.png');">
+          </div>
           <span>Produtos</span>
         </a>
-        
-        <a routerLink="/estoque" class="menu-item">
-          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/estoque.png'); mask-image: url('assets/icons/estoque.png');"></div>
+
+        <a routerLink="/estoque" routerLinkActive="active" class="menu-item">
+          <div class="menu-icon"
+            style="-webkit-mask-image: url('assets/icons/estoque.png'); mask-image: url('assets/icons/estoque.png');">
+          </div>
           <span>Estoque</span>
         </a>
-        
-        <a routerLink="/registros-baixas" class="menu-item">
-          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/grafico.png'); mask-image: url('assets/icons/grafico.png');"></div>
+
+        <a routerLink="/registros-baixas" routerLinkActive="active" class="menu-item">
+          <div class="menu-icon"
+            style="-webkit-mask-image: url('assets/icons/grafico.png'); mask-image: url('assets/icons/grafico.png');">
+          </div>
           <span>Baixas</span>
         </a>
       </nav>
+
       <div class="sidebar-footer">
-    <button class="menu-item logout-item" (click)="onLogout()">
-      <div class="menu-icon logout-icon" style="-webkit-mask-image: url('assets/icons/logout.png'); mask-image: url('assets/icons/logout.png');"></div>
-      <span>Sair do Sistema</span>
-    </button>
-  </div>
+        <button class="menu-item logout-item" (click)="onLogout()">
+          <div class="menu-icon logout-icon"
+            style="-webkit-mask-image: url('assets/icons/logout.png'); mask-image: url('assets/icons/logout.png');">
+          </div>
+          <span>Sair do Sistema</span>
+        </button>
+      </div>
     </aside>
 
     <main class="main-content">
@@ -64,26 +79,34 @@
 
         <div class="cards-grid">
           <div class="summary-card">
-            <div class="card-icon" style="-webkit-mask-image: url('assets/icons/inventory.png'); mask-image: url('assets/icons/inventory.png');"></div>
-            <span class="card-value">1</span>
+            <div class="card-icon"
+              style="-webkit-mask-image: url('assets/icons/inventory.png'); mask-image: url('assets/icons/inventory.png');">
+            </div>
+            <span class="card-value">{{ productCount || 0 }}</span>
             <span class="card-label">Produtos</span>
           </div>
 
           <div class="summary-card">
-            <div class="card-icon" style="-webkit-mask-image: url('assets/icons/estoque.png'); mask-image: url('assets/icons/estoque.png');"></div>
-            <span class="card-value">0</span>
+            <div class="card-icon"
+              style="-webkit-mask-image: url('assets/icons/estoque.png'); mask-image: url('assets/icons/estoque.png');">
+            </div>
+            <span class="card-value">{{ itensEstoque || 0 }}</span>
             <span class="card-label">Lotes</span>
           </div>
 
           <div class="summary-card">
-            <div class="card-icon" style="-webkit-mask-image: url('assets/icons/trending_down.png'); mask-image: url('assets/icons/trending_down.png');"></div>
-            <span class="card-value">0</span>
+            <div class="card-icon"
+              style="-webkit-mask-image: url('assets/icons/trending_down.png'); mask-image: url('assets/icons/trending_down.png');">
+            </div>
+            <span class="card-value">{{ monthLowRegistrations || 0 }}</span>
             <span class="card-label">Baixas</span>
           </div>
 
           <div class="summary-card alert-card">
-            <div class="card-icon alert-icon" style="-webkit-mask-image: url('assets/icons/Vector.png'); mask-image: url('assets/icons/Vector.png');"></div>
-            <span class="card-value alert-text">0</span>
+            <div class="card-icon alert-icon"
+              style="-webkit-mask-image: url('assets/icons/Vector.png'); mask-image: url('assets/icons/Vector.png');">
+            </div>
+            <span class="card-value alert-text">{{ criticalItems || 0 }}</span>
             <span class="card-label alert-text">Alertas</span>
           </div>
         </div>

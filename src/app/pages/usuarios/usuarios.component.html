@@ -1,58 +1,133 @@
-<div class="admin-container">
-    <button routerLink="/dashboard" class="btn-back">← Voltar ao Painel</button>
-
-    <section class="add-user-section">
-        <h3>Novo Funcionário</h3>
-        <form (submit)="adicionarUsuario()" class="add-form">
-            <input type="text" [(ngModel)]="novoUser.name" name="name" placeholder="Nome Completo" required>
-            <input type="email" [(ngModel)]="novoUser.email" name="email" placeholder="E-mail" required>
-            <input type="password" [(ngModel)]="novoUser.password" name="password" placeholder="Senha Provisória"
-                required>
-            <select [(ngModel)]="novoUser.role" name="role">
-                <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
-            </select>
-            <button type="submit" class="btn-save">Cadastrar Funcionário</button>
-        </form>
-    </section>
-
-    <div class="header-table-section">
-        <h2>Gestão de Funcionários</h2>
-
-        <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input type="text" [(ngModel)]="termoBusca" (input)="filtrarUsuarios()"
-                placeholder="Pesquisar por nome, e-mail ou código...">
+<div class="app-wrapper">
+    <header class="global-header">
+        <div class="brand-section">
+            <img src="assets/icons/logo-carriola.png" alt="Logo" class="brand-logo">
+            <h1 class="brand-name">Asi & Obra</h1>
         </div>
-    </div>
 
-    <table class="user-table">
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Cargo/Nível</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let user of usuariosFiltrados">
-                <td><strong>{{ user.employeeCode }}</strong></td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.email }}</td>
-                <td>
-                    <select [(ngModel)]="user.role" (change)="alterarRole(user.uid, $event)">
-                        <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
-                    </select>
-                </td>
-                <td>
-                    <button (click)="desativar(user.uid)" class="btn-delete">Desativar</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        <button class="theme-toggle" (click)="toggleTheme()">
+            <lucide-icon [name]="isDarkMode ? 'sun' : 'moon'" size="28"></lucide-icon>
+        </button>
+    </header>
 
-    <div class="empty-results" *ngIf="usuariosFiltrados.length === 0">
-        Nenhum funcionário encontrado para "{{ termoBusca }}".
+    <div class="page-layout">
+        <aside class="sidebar-container">
+            <div class="user-profile-card">
+                <div class="avatar-circle"></div>
+                <span class="user-greeting">Olá, {{ userName || 'Nome' }}!</span>
+            </div>
+
+            <nav class="nav-menu">
+                <a routerLink="/dashboard" class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/casa.png'); mask-image: url('assets/icons/casa.png');">
+                    </div>
+                    <span>Home</span>
+                </a>
+
+                <a routerLink="/usuarios" class="menu-item active" *ngIf="userRole === 'ADMIN'">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');">
+                    </div>
+                    <span>Usuários</span>
+                </a>
+
+                <a routerLink="/perfil" class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');">
+                    </div>
+                    <span>Perfil</span>
+                </a>
+
+                <a routerLink="/produtos" class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/produtos.png'); mask-image: url('assets/icons/produtos.png');">
+                    </div>
+                    <span>Produtos</span>
+                </a>
+
+                <a routerLink="/estoque" class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/estoque.png'); mask-image: url('assets/icons/estoque.png');">
+                    </div>
+                    <span>Estoque</span>
+                </a>
+
+                <a routerLink="/registros-baixas" class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/grafico.png'); mask-image: url('assets/icons/grafico.png');">
+                    </div>
+                    <span>Baixas</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <div *ngIf="loading" class="loader">Carregando informações...</div>
+
+            <div class="admin-container" *ngIf="!loading">
+
+                <section class="add-user-section">
+                    <h3>Novo Funcionário</h3>
+                    <form (submit)="adicionarUsuario()" class="add-form">
+                        <input type="text" [(ngModel)]="novoUser.name" name="name" placeholder="Nome Completo" required>
+                        <input type="email" [(ngModel)]="novoUser.email" name="email" placeholder="E-mail" required>
+                        <input type="password" [(ngModel)]="novoUser.password" name="password"
+                            placeholder="Senha Provisória" required>
+
+                        <select [(ngModel)]="novoUser.role" name="role">
+                            <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+                        </select>
+
+                        <button type="submit" class="btn-save">Cadastrar Funcionário</button>
+                    </form>
+                </section>
+
+                <hr class="section-divider">
+
+                <div class="header-table-section">
+                    <h2>Gestão de Funcionários</h2>
+
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" [(ngModel)]="termoBusca" (input)="filtrarUsuarios()"
+                            placeholder="Pesquisar por nome, e-mail ou código...">
+                    </div>
+                </div>
+
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Cargo/Nível</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of usuariosFiltrados">
+                            <td><strong>{{ user.employeeCode }}</strong></td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                <select [(ngModel)]="user.role" (change)="alterarRole(user.uid, $event)">
+                                    <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button (click)="desativar(user.uid)" class="btn-delete">Desativar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="empty-results" *ngIf="usuariosFiltrados.length === 0">
+                    Nenhum funcionário encontrado para "{{ termoBusca }}".
+                </div>
+
+            </div>
+        </main>
     </div>
 </div>

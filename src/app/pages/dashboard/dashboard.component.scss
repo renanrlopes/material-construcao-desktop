@@ -105,7 +105,7 @@
   }
 
   .summary-card {
-    background-color: var(--cor-azul-escuro-02); // Azul mais escuro para o card no dark
+    background-color: var(--cor-azul-escuro-02);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 
     .card-value,
@@ -115,6 +115,20 @@
 
     .card-icon {
       background-color: var(--cor-perola) !important;
+    }
+
+    // MANTÉM O VERDE NO ALERTA MESMO NO DARK MODE
+    &.alert-card {
+      .alert-icon {
+        background-color: #4CAF50 !important; // Força o verde no ícone
+      }
+
+      .alert-text {
+        color: #4CAF50 !important; // Força o verde no valor e texto
+      }
+
+      // Detalhe opcional: uma borda sutil verde para destacar no escuro
+      border: 1px solid rgba(76, 175, 80, 0.3);
     }
   }
 }
