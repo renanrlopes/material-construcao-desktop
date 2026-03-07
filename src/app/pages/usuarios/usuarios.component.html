@@ -18,56 +18,64 @@
             </div>
 
             <nav class="nav-menu">
-                <a routerLink="/dashboard" class="menu-item">
+                <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                    class="menu-item">
                     <div class="menu-icon"
                         style="-webkit-mask-image: url('assets/icons/casa.png'); mask-image: url('assets/icons/casa.png');">
                     </div>
                     <span>Home</span>
                 </a>
 
-                <a routerLink="/usuarios" class="menu-item active" *ngIf="userRole === 'ADMIN'">
+                <a routerLink="/usuarios" routerLinkActive="active" class="menu-item" *ngIf="userRole === 'ADMIN'">
                     <div class="menu-icon"
                         style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');">
                     </div>
                     <span>Usuários</span>
                 </a>
 
-                <a routerLink="/perfil" class="menu-item">
+                <a routerLink="/perfil" routerLinkActive="active" class="menu-item">
                     <div class="menu-icon"
                         style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');">
                     </div>
                     <span>Perfil</span>
                 </a>
 
-                <a routerLink="/produtos" class="menu-item">
+                <a routerLink="/produtos" routerLinkActive="active" class="menu-item">
                     <div class="menu-icon"
                         style="-webkit-mask-image: url('assets/icons/produtos.png'); mask-image: url('assets/icons/produtos.png');">
                     </div>
                     <span>Produtos</span>
                 </a>
 
-                <a routerLink="/estoque" class="menu-item">
+                <a routerLink="/estoque" routerLinkActive="active" class="menu-item">
                     <div class="menu-icon"
                         style="-webkit-mask-image: url('assets/icons/estoque.png'); mask-image: url('assets/icons/estoque.png');">
                     </div>
                     <span>Estoque</span>
                 </a>
 
-                <a routerLink="/registros-baixas" class="menu-item">
+                <a routerLink="/registros-baixas" routerLinkActive="active" class="menu-item">
                     <div class="menu-icon"
                         style="-webkit-mask-image: url('assets/icons/grafico.png'); mask-image: url('assets/icons/grafico.png');">
                     </div>
                     <span>Baixas</span>
                 </a>
             </nav>
+
+            <div class="sidebar-footer">
+                <button class="menu-item logout-item" (click)="onLogout()">
+                    <div class="menu-icon logout-icon"
+                        style="-webkit-mask-image: url('assets/icons/logout.png'); mask-image: url('assets/icons/logout.png');">
+                    </div>
+                    <span>Sair do Sistema</span>
+                </button>
+            </div>
         </aside>
 
         <main class="main-content">
-
             <div *ngIf="loading" class="loader">Carregando informações...</div>
 
             <div class="admin-container" *ngIf="!loading">
-
                 <section class="add-user-section">
                     <h3>Novo Funcionário</h3>
                     <form (submit)="adicionarUsuario()" class="add-form">
@@ -126,7 +134,6 @@
                 <div class="empty-results" *ngIf="usuariosFiltrados.length === 0">
                     Nenhum funcionário encontrado para "{{ termoBusca }}".
                 </div>
-
             </div>
         </main>
     </div>

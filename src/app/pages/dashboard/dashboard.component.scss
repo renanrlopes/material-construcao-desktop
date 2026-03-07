@@ -1,6 +1,8 @@
 @import '../sidebar.component.scss';
 
-
+/* =========================================
+   ESTRUTURA PRINCIPAL E LAYOUT
+========================================= */
 .main-content {
   flex: 1;
   display: flex;
@@ -28,7 +30,9 @@
   }
 }
 
-
+/* =========================================
+   GRID E ESTILO DOS CARDS
+========================================= */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -47,10 +51,19 @@
   justify-content: center;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
+  min-height: 250px;
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
   }
 
   .card-icon {
@@ -79,8 +92,16 @@
     color: var(--cor-azul-ardosia);
   }
 
-  &.alert-card {
+  .click-info {
+    font-size: 0.75rem;
+    margin-top: 10px;
+    color: #4CAF50;
+    font-weight: 600;
+    opacity: 0.8;
+  }
 
+  /* ESTILO ESPECÍFICO DO ALERTA */
+  &.alert-card {
     .alert-icon {
       background-color: #4CAF50;
     }
@@ -91,6 +112,90 @@
   }
 }
 
+/* =========================================
+   SISTEMA DE MODAL (POP-UP)
+========================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-card {
+  background: var(--cor-branco);
+  width: 100%;
+  max-width: 500px;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  animation: modalFadeIn 0.3s ease-out;
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--cor-off-white-02);
+    padding-bottom: 1rem;
+
+    h3 {
+      color: #AC4430;
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: var(--cor-azul-ardosia);
+      cursor: pointer;
+      line-height: 1;
+
+      &:hover {
+        color: #AC4430;
+      }
+    }
+  }
+
+  .modal-body {
+    max-height: 60vh;
+    overflow-y: auto;
+
+    .alert-detail-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem;
+      background: var(--cor-off-white-01);
+      margin-bottom: 8px;
+      border-radius: 10px;
+      border-left: 4px solid #4CAF50;
+
+      .item-name {
+        font-weight: 600;
+        color: var(--cor-azul-escuro-01);
+      }
+
+      .item-qty {
+        color: #2e7d32;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+/* =========================================
+   TEMA ESCURO (DARK THEME)
+========================================= */
 ::ng-deep .dark-theme {
   .page-layout {
     background-color: var(--cor-azul-escuro-01);
@@ -117,18 +222,73 @@
       background-color: var(--cor-perola) !important;
     }
 
-    // MANTÉM O VERDE NO ALERTA MESMO NO DARK MODE
     &.alert-card {
-      .alert-icon {
-        background-color: #4CAF50 !important; // Força o verde no ícone
+      border: 1px solid rgba(76, 175, 80, 0.3);
+
+      .alert-icon,
+      .alert-text {
+        color: #4CAF50 !important;
+        background-color: #4CAF50 !important;
       }
 
       .alert-text {
-        color: #4CAF50 !important; // Força o verde no valor e texto
+        background-color: transparent !important;
+      }
+    }
+  }
+
+  /* MODAL NO DARK MODE */
+  .modal-card {
+    background: var(--cor-azul-escuro-02);
+
+    h3 {
+      color: #4CAF50;
+    }
+
+    .alert-detail-item {
+      background: rgba(255, 255, 255, 0.05);
+
+      .item-name {
+        color: var(--cor-perola);
       }
 
-      // Detalhe opcional: uma borda sutil verde para destacar no escuro
-      border: 1px solid rgba(76, 175, 80, 0.3);
+      .item-qty {
+        color: #81c784;
+      }
     }
+
+    .close-btn {
+      color: var(--cor-perola);
+    }
+  }
+
+  /* FIX TEXTO FOOTER SIDEBAR */
+  .sidebar-footer {
+    .menu-item span {
+      color: var(--cor-perola) !important;
+    }
+
+    .logout-icon {
+      background-color: var(--cor-perola) !important;
+    }
+  }
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
   }
 }

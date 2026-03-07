@@ -102,12 +102,29 @@
             <span class="card-label">Baixas</span>
           </div>
 
-          <div class="summary-card alert-card">
+          <div class="summary-card alert-card clickable" (click)="abrirModalAlertas()">
             <div class="card-icon alert-icon"
               style="-webkit-mask-image: url('assets/icons/Vector.png'); mask-image: url('assets/icons/Vector.png');">
             </div>
-            <span class="card-value alert-text">{{ criticalItems || 0 }}</span>
+            <span class="card-value alert-text">{{ criticalItems }}</span>
             <span class="card-label alert-text">Alertas</span>
+            <small class="click-info" *ngIf="criticalItems > 0">Clique para ver detalhes</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-overlay" *ngIf="exibirModal" (click)="exibirModal = false">
+        <div class="modal-card" (click)="$event.stopPropagation()">
+          <div class="modal-header">
+            <h3>Lista de Alertas</h3>
+            <button class="close-btn" (click)="exibirModal = false">×</button>
+          </div>
+          <div class="modal-body">
+            <div *ngFor="let item of produtosCriticos" class="alert-detail-item">
+              <span class="item-name">⚠️ {{ item.productName || 'Produto' }}</span>
+              <span class="item-qty">Restam: <strong>{{ item.currentQuantity }}</strong> un.</span>
+            </div>
+            <p *ngIf="produtosCriticos.length === 0">Nenhum alerta crítico no momento.</p>
           </div>
         </div>
       </div>
