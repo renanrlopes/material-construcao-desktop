@@ -13,16 +13,13 @@ import { AuthService } from '../../core/services/auth.service';
 export class RegistrosBaixasComponent implements OnInit {
   usuario: AppUser | null = null;
   isDarkMode: boolean = false;
-
+  loading: boolean = true; 
 
   baixas: RegistroBaixa[] = [];
   baixasFiltradas: RegistroBaixa[] = [];
 
-  // Filtros conforme o diagrama
   filtroUsuario: string = '';
   filtroData: string = '';
-
-  // Ordenação
   ordemDirecao: 'asc' | 'desc' = 'desc';
 
   constructor(
@@ -36,7 +33,20 @@ export class RegistrosBaixasComponent implements OnInit {
     const temaSalvo = localStorage.getItem('theme');
     this.isDarkMode = temaSalvo === 'dark';
     this.applyTheme();
-    // Escuta a coleção 'registro_baixas' (mesmo nome usado no mobile)
+
+    this.authService.getUserRole().subscribe({
+      next: (userData: any) => {
+        if (userData) {
+          this.usuario = userData;
+        }
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Erro ao carregar permissões', err);
+        this.loading = false;
+      }
+    });
+
     this.firestore.collection<RegistroBaixa>('registro_baixas', ref =>
       ref.orderBy('date', 'desc')
     ).valueChanges({ idField: 'id' }).subscribe(res => {
