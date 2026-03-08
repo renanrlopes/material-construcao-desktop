@@ -21,7 +21,6 @@
 .produtos-wrapper,
 .estoque-wrapper {
     padding: 2.5rem;
-    background-color: var(--cor-perola);
     min-height: 100vh;
     color: var(--cor-grafite-profundo);
     font-family: var(--fonte-principal);
@@ -88,6 +87,8 @@
             display: flex;
             gap: 0.8rem;
             min-width: 300px;
+
+        
 
             select {
                 padding: 0.8rem 1.2rem;
@@ -283,7 +284,7 @@
     
     .produtos-wrapper,
     .estoque-wrapper {
-        background-color: var(--cor-azul-escuro-02) !important; 
+        
         color: var(--cor-perola) !important; 
 
         .header-section h2 {

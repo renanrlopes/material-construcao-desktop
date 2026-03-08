@@ -63,7 +63,6 @@
       
       <div class="estoque-wrapper">
         <div class="header-section">
-            <button routerLink="/dashboard" class="btn-back">← Dashboard</button>
             <h2>Controle de Estoque</h2>
         </div>
 
@@ -78,9 +77,9 @@
 
             <div class="filter-group">
                 <select [(ngModel)]="ordemCampo" (change)="aplicarFiltrosEOrdenacao()">
-                    <option value="updatedAt">Última Movimentação</option>
-                    <option value="currentQuantity">Quantidade</option>
-                    <option value="productName">Nome do Produto</option>
+                    <option  value="updatedAt">Última Movimentação</option>
+                    <option  value="currentQuantity">Quantidade</option>
+                    <option  value="productName">Nome do Produto</option>
                 </select>
 
                 <select [(ngModel)]="ordemDirecao" (change)="aplicarFiltrosEOrdenacao()">
