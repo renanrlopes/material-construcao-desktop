@@ -1,52 +1,129 @@
-<div class="baixas-wrapper">
-    <div class="header-section">
-        <button routerLink="/dashboard" class="btn-back">← Dashboard</button>
-        <h2>Registros de Baixas</h2>
-    </div>
-
-    <div class="toolbar">
-        <div class="search-box">
-            <input type="text" [(ngModel)]="filtroUsuario" (input)="aplicarFiltros()"
-                placeholder="Filtrar por nome do funcionário...">
+<div class="app-wrapper">
+    <header class="global-header">
+        <div class="brand-section">
+            <img src="assets/icons/logo-carriola.png" alt="Logo" class="brand-logo">
+            <h1 class="brand-name">Asi & Obra</h1>
         </div>
 
-        <div class="filter-group">
-            <input type="date" [(ngModel)]="filtroData" (change)="aplicarFiltros()">
+        <button class="theme-toggle" (click)="toggleTheme()">
+            <lucide-icon [name]="isDarkMode ? 'sun' : 'moon'" size="28"></lucide-icon>
+        </button>
+    </header>
 
-            <select [(ngModel)]="ordemDirecao" (change)="aplicarFiltros()">
-                <option value="desc">Mais Recentes Primeiro</option>
-                <option value="asc">Mais Antigas Primeiro</option>
-            </select>
-        </div>
-    </div>
+    <div class="page-layout">
 
-    <div class="baixas-grid" *ngIf="baixasFiltradas.length > 0; else noData">
-        <div class="baixa-card" *ngFor="let b of baixasFiltradas">
-            <div class="baixa-header">
-                <span class="reason-tag">{{ b.reason }}</span>
-                <span class="qty-badge">-{{ b.quantity }} un</span>
+        <aside class="sidebar-container">
+            <div class="user-profile-card">
+                <div class="avatar-circle"></div>
+                <span class="user-greeting">Olá, {{ usuario?.name || 'Nome' }}!</span>
             </div>
 
-            <div class="baixa-body">
-                <h3>{{ b.inventoryItemName }}</h3>
-                <p class="lote-info">Lote: <strong>{{ b.batchNumber }}</strong></p>
-
-                <div class="footer-meta">
-                    <div class="user">
-                        <span class="icon">👤</span>
-                        {{ b.userName }}
+            <nav class="nav-menu">
+                <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                    class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/casa.png'); mask-image: url('assets/icons/casa.png');">
                     </div>
-                    <div class="date">
-                        {{ b.date?.toDate() | date:'dd/MM/yyyy HH:mm' }}
+                    <span>Home</span>
+                </a>
+
+                <a routerLink="/usuarios" routerLinkActive="active" class="menu-item" *ngIf="usuario?.role === 'ADMIN'">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');">
+                    </div>
+                    <span>Usuários</span>
+                </a>
+
+                <a routerLink="/perfil" routerLinkActive="active" class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');">
+                    </div>
+                    <span>Perfil</span>
+                </a>
+
+                <a routerLink="/produtos" routerLinkActive="active" class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/produtos.png'); mask-image: url('assets/icons/produtos.png');">
+                    </div>
+                    <span>Produtos</span>
+                </a>
+
+                <a routerLink="/estoque" routerLinkActive="active" class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/estoque.png'); mask-image: url('assets/icons/estoque.png');">
+                    </div>
+                    <span>Estoque</span>
+                </a>
+
+                <a routerLink="/registros-baixas" routerLinkActive="active" class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/grafico.png'); mask-image: url('assets/icons/grafico.png');">
+                    </div>
+                    <span>Baixas</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="menu-item logout-item" (click)="onLogout()">
+                    <div class="menu-icon logout-icon"
+                        style="-webkit-mask-image: url('assets/icons/logout.png'); mask-image: url('assets/icons/logout.png');">
+                    </div>
+                    <span>Sair do Sistema</span>
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="baixas-wrapper">
+
+                <div class="header-section">
+                    <h2>Registros de Baixas</h2>
+                </div>
+
+                <div class="toolbar">
+                    <div class="search-box">
+                        <input type="text" [(ngModel)]="filtroUsuario" (input)="aplicarFiltros()"
+                            placeholder="Filtrar por nome do funcionário...">
+                    </div>
+
+                    <div class="filter-group">
+                        <input type="date" [(ngModel)]="filtroData" (change)="aplicarFiltros()">
+
+                        <select [(ngModel)]="ordemDirecao" (change)="aplicarFiltros()">
+                            <option value="desc">Mais Recentes Primeiro</option>
+                            <option value="asc">Mais Antigas Primeiro</option>
+                        </select>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <ng-template #noData>
-        <div class="empty-state">
-            <p>Nenhuma movimentação de saída encontrada.</p>
-        </div>
-    </ng-template>
+                <div class="baixas-grid" *ngIf="baixasFiltradas.length > 0; else noData">
+                    <div class="baixa-card" *ngFor="let b of baixasFiltradas">
+                        <div class="card-left">
+                            <span class="item-name">{{ b.inventoryItemName }}</span>
+                            <div class="card-meta">
+                                <span class="meta-chip">👤 {{ b.userName }}</span>
+                                <span class="meta-chip">🕒 {{ b.date?.toDate() | date:'dd/MM/yyyy HH:mm' }}</span>
+                            </div>
+                        </div>
+
+                        <div class="card-right">
+                            <span class="trend-arrow">↓</span>
+                            <div class="qty-info">
+                                <span class="qty-number">{{ b.quantity }}</span>
+                                <span class="qty-label">unidades</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ng-template #noData>
+                    <div class="empty-state">
+                        <p>Nenhuma movimentação de saída encontrada.</p>
+                    </div>
+                </ng-template>
+
+            </div>
+        </main>
+
+    </div>
 </div>

@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { RegistroBaixa } from '../../core/models/registro-baixa.model';
+import { AppUser } from '../../core/models/user.model';
+import { DOCUMENT } from '@angular/common';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-registros-baixas',
@@ -8,6 +11,10 @@ import { RegistroBaixa } from '../../core/models/registro-baixa.model';
   styleUrl: './registros-baixas.component.scss'
 })
 export class RegistrosBaixasComponent implements OnInit {
+  usuario: AppUser | null = null;
+  isDarkMode: boolean = false;
+
+
   baixas: RegistroBaixa[] = [];
   baixasFiltradas: RegistroBaixa[] = [];
 
@@ -18,9 +25,17 @@ export class RegistrosBaixasComponent implements OnInit {
   // Ordenação
   ordemDirecao: 'asc' | 'desc' = 'desc';
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(
+    private firestore: AngularFirestore,
+    private authService: AuthService,
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private document: Document
+  ) { }
 
   ngOnInit(): void {
+    const temaSalvo = localStorage.getItem('theme');
+    this.isDarkMode = temaSalvo === 'dark';
+    this.applyTheme();
     // Escuta a coleção 'registro_baixas' (mesmo nome usado no mobile)
     this.firestore.collection<RegistroBaixa>('registro_baixas', ref =>
       ref.orderBy('date', 'desc')
@@ -53,4 +68,23 @@ export class RegistrosBaixasComponent implements OnInit {
 
     this.baixasFiltradas = res;
   }
+
+  onLogout() {
+    this.authService.logout();
+  } 
+
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+    this.applyTheme();
+  }
+
+  private applyTheme() {
+    if (this.isDarkMode) {
+      this.renderer.addClass(this.document.body, 'dark-theme');
+    } else {
+      this.renderer.removeClass(this.document.body, 'dark-theme');
+    }
+  }
+
 }
