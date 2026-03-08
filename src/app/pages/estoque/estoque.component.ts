@@ -152,7 +152,7 @@ export class EstoqueComponent implements OnInit {
     this.itensFiltrados = res;
   }
 
-  logout() { this.authService.logout(); } 
+  onLogout() { this.authService.logout(); } 
   abrirDetalhes(item: any) { this.itemSelecionado = item; this.exibirModal = true; }
   fecharModal() { this.exibirModal = false; this.itemSelecionado = null; }
 
