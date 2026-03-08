@@ -1,6 +1,21 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { LucideAngularModule, Sun, Moon,Eye, EyeOff, } from 'lucide-angular';
+
+// 1. AQUI ESTÁ A MÁGICA: Adicionamos todos os ícones que você usa no layout!
+import { 
+  LucideAngularModule, 
+  Sun, 
+  Moon,
+  Eye, 
+  EyeOff,
+  LogOut,
+  Search,
+  Plus,
+  ArrowDownCircle,
+  Trash2,
+  Edit,
+  Edit3
+} from 'lucide-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +35,7 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
 import { ProdutosComponent } from './pages/produtos/produtos.component';
 import { EstoqueComponent } from './pages/estoque/estoque.component';
 import { RegistrosBaixasComponent } from './pages/registros-baixas/registros-baixas.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +56,19 @@ import { RegistrosBaixasComponent } from './pages/registros-baixas/registros-bai
     AngularFireAuthModule,
     AngularFirestoreModule,
     FormsModule,
-    LucideAngularModule.pick({ Sun, Moon,Eye, EyeOff, })
+    LucideAngularModule.pick({ 
+      Sun, 
+      Moon,
+      Eye, 
+      EyeOff,
+      LogOut,
+      Search,
+      Plus,
+      ArrowDownCircle,
+      Trash2,
+      Edit, 
+      Edit3
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

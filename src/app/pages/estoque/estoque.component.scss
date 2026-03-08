@@ -1,5 +1,7 @@
+@import '../sidebar.component.scss';
+
 /* ============================================================
-   VARIÁVEIS DE CORES (PALETA TIJOLO - LIGHT MODE)
+   VARIÁVEIS DE CORES E TEMA
    ============================================================ */
 :root {
     --fonte-principal: 'Public Sans', sans-serif;
@@ -13,7 +15,9 @@
     --cor-grafite-profundo: #121212;
 }
 
-/* Seletor flexível para reutilização em Produtos e Estoque */
+/* ============================================================
+   WRAPPER PRINCIPAL
+   ============================================================ */
 .produtos-wrapper,
 .estoque-wrapper {
     padding: 2.5rem;
@@ -21,6 +25,7 @@
     min-height: 100vh;
     color: var(--cor-grafite-profundo);
     font-family: var(--fonte-principal);
+    position: relative;
 
     .header-section {
         display: flex;
@@ -36,32 +41,35 @@
         }
     }
 
-    /* BARRA DE FERRAMENTAS */
+    /* TOOLBAR: BUSCA E FILTROS */
     .toolbar {
         display: flex;
         flex-wrap: wrap;
-        gap: 1rem;
-        margin-bottom: 3rem;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
 
         .search-box {
             flex: 2;
-            position: relative;
             min-width: 300px;
+            position: relative;
+            max-width: 350px;
 
             input {
                 width: 100%;
                 padding: 1rem 1rem 1rem 3.5rem;
-                background: var(--cor-branco);
+                background: var(--cor-off-white-01);
                 border: 1px solid var(--cor-off-white-02);
                 border-radius: 12px;
                 color: var(--cor-grafite-profundo);
-                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+                font-size: 1rem;
                 transition: all 0.3s ease;
 
                 &:focus {
                     border-color: var(--cor-vermelho-tijolo);
-                    box-shadow: 0px 4px 12px rgba(172, 68, 48, 0.15);
+                    background: var(--cor-branco);
                     outline: none;
+                    box-shadow: 0 4px 12px rgba(172, 68, 48, 0.1);
                 }
             }
 
@@ -70,323 +78,309 @@
                 left: 1.2rem;
                 top: 50%;
                 transform: translateY(-50%);
-                color: var(--cor-azul-ardosia);
-                opacity: 0.6;
+                color: var(--cor-vermelho-tijolo);
+                opacity: 0.8;
             }
         }
 
         .filter-group {
+            flex: 1;
             display: flex;
             gap: 0.8rem;
-            flex: 1;
+            min-width: 300px;
 
-            input,
             select {
-                padding: 0.8rem;
-                background: var(--cor-branco);
-                border: 1px solid var(--cor-off-white-02);
+                padding: 0.8rem 1.2rem;
                 border-radius: 10px;
-                color: var(--cor-azul-ardosia);
-                font-weight: 500;
-                cursor: pointer;
-
-                &:focus {
-                    border-color: var(--cor-vermelho-tijolo);
-                    outline: none;
-                }
-            }
-        }
-    }
-
-    /* GRID DE CARDS (PRODUTOS E ESTOQUE) */
-    .product-grid,
-    .stock-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 2rem;
-    }
-
-    /* ESTILO DO CARD "TIJOLO" */
-    .product-card,
-    .stock-card {
-        background: var(--cor-branco);
-        border: 1px solid var(--cor-off-white-02);
-        border-radius: 16px;
-        padding: 1.8rem;
-        cursor: pointer;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        position: relative;
-        overflow: hidden;
-
-        /* Detalhe lateral em vermelho tijolo */
-        &::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 6px;
-            background-color: var(--cor-vermelho-tijolo);
-        }
-
-        &:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(172, 68, 48, 0.12);
-        }
-
-        .card-header,
-        .stock-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.2rem;
-
-            h3 {
-                margin: 0;
-                font-size: 1.3rem;
-                font-weight: 700;
-                color: var(--cor-grafite-profundo);
-            }
-
-            .lote-badge {
-                background: var(--cor-off-white-01);
-                color: var(--cor-vermelho-tijolo);
-                padding: 5px 12px;
-                border-radius: 6px;
-                font-size: 0.75rem;
-                font-weight: 700;
                 border: 1px solid var(--cor-off-white-02);
-            }
+                background: var(--cor-off-white-01);
+                color: var(--cor-azul-ardosia);
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                transition: all 0.2s;
 
-            .qty-display {
-                font-size: 1.4rem;
-                font-weight: 700;
-                color: #28a745;
-
-                &.low-stock {
+                &:hover, &:focus {
+                    border-color: var(--cor-vermelho-tijolo);
                     color: var(--cor-vermelho-tijolo);
                 }
             }
         }
+    }
 
-        .tags {
-            display: flex;
-            gap: 0.6rem;
-            margin-bottom: 1.2rem;
+    /* GRID DE CARDS */
+    .stock-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 1100px;
+    }
 
-            span {
-                font-size: 0.75rem;
-                padding: 0.4rem 0.8rem;
-                border-radius: 20px;
-                font-weight: 600;
-                text-transform: uppercase;
-            }
+    .stock-card {
+        background: var(--cor-off-white-01);
+        border: 1px solid var(--cor-off-white-02);
+        border-radius: 16px;
+        padding: 1.5rem 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
 
-            .tag-type {
-                background: var(--cor-perola);
-                color: var(--cor-azul-ardosia);
-            }
-
-            .tag-brand {
-                background: rgba(172, 68, 48, 0.1);
-                color: var(--cor-vermelho-tijolo);
-            }
+        &:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            border-color: var(--cor-vermelho-tijolo);
         }
 
-        .description,
-        .brand {
-            color: var(--cor-azul-ardosia);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 1.2rem;
-        }
-
-        .card-footer {
+        .card-header-row {
             display: flex;
             justify-content: space-between;
-            margin-top: 1.5rem;
-            padding-top: 1.2rem;
-            border-top: 1px solid var(--cor-off-white-01);
-            font-size: 0.8rem;
-            color: var(--cor-azul-ardosia);
-            font-weight: 500;
+            
+            h3 { margin: 0; font-size: 1.2rem; color: var(--cor-azul-escuro-02); }
+            .lote-info { font-size: 0.85rem; color: var(--cor-azul-ardosia); margin-top: 4px; }
+            
+            .date-info {
+                display: flex;
+                gap: 2rem;
+                text-align: right;
+                .date-label { font-weight: 700; color: var(--cor-azul-ardosia); display: block; font-size: 0.75rem; }
+                span { font-size: 0.85rem; }
+            }
         }
+
+        .stock-progress-bar {
+            height: 6px;
+            background: var(--cor-off-white-02);
+            border-radius: 10px;
+            overflow: hidden;
+            .progress-fill {
+                height: 100%;
+                transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+                &.bg-success { background: #3b902e; }
+                &.bg-warning { background: #d1b52a; }
+                &.bg-danger { background: var(--cor-vermelho-tijolo); }
+            }
+        }
+
+        .info-grid {
+            display: flex;
+            gap: 4rem;
+            .info-item {
+                .label { font-size: 0.8rem; color: var(--cor-azul-ardosia); text-transform: uppercase; letter-spacing: 0.5px; }
+                .value { display: block; font-size: 1.1rem; font-weight: 700; margin-top: 4px; }
+            }
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--cor-off-white-02);
+
+            button {
+                background: none; border: none; cursor: pointer;
+                display: flex; align-items: center; gap: 6px;
+                font-size: 0.85rem; font-weight: 700; color: var(--cor-azul-ardosia);
+                transition: color 0.2s;
+                
+                &:hover { color: var(--cor-vermelho-tijolo); }
+                &.btn-delete:hover { color: #d9534f; }
+            }
+        }
+    }
+
+    .btn-floating-action {
+        position: fixed; bottom: 2.5rem; right: 3rem;
+        background: var(--cor-vermelho-tijolo); color: #fff;
+        border: none; border-radius: 12px; padding: 1rem 2rem;
+        font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 10px;
+        box-shadow: 0 8px 25px rgba(172, 68, 48, 0.4);
+        cursor: pointer; z-index: 99;
+        transition: all 0.3s;
+        &:hover { transform: scale(1.05); background: #8c3625; }
     }
 }
 
 /* ============================================================
-   ESTILOS DO MODAL (POP-UP) - LIGHT THEME GLOBAIS
+   ESTILOS DOS MODAIS (DETALHES E EDIÇÃO)
    ============================================================ */
 .modal-overlay {
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(23, 32, 39, 0.6) !important;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999 !important;
-    backdrop-filter: blur(4px);
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(23, 32, 39, 0.7);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
 }
 
 .modal-content {
-    background: var(--cor-branco) !important;
-    width: 95%;
-    max-width: 550px;
-    border-radius: 24px;
-    padding: 3rem;
-    color: var(--cor-grafite-profundo) !important;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-    position: relative;
-    animation: modalSlideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background: var(--cor-branco);
+    width: 90%; max-width: 550px;
+    border-radius: 28px;
+    padding: 2.5rem;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+    animation: modalFadeIn 0.3s ease-out;
 
     .modal-header {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 2px solid var(--cor-off-white-01);
+        display: flex; justify-content: space-between; align-items: flex-start;
         margin-bottom: 2rem;
-        padding-bottom: 1.2rem;
-
-        .header-title {
-            small {
-                color: var(--cor-vermelho-tijolo);
-                font-weight: 700;
-                font-size: 0.8rem;
-                letter-spacing: 1.5px;
-                text-transform: uppercase;
-            }
-
-            h2 {
-                margin: 8px 0 0;
-                font-size: 1.8rem;
-                font-weight: 700;
-            }
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: var(--cor-azul-ardosia);
-            font-size: 2.8rem;
-            cursor: pointer;
-            line-height: 0.5;
-
-            &:hover {
-                color: var(--cor-vermelho-tijolo);
-            }
-        }
+        h2 { font-size: 1.8rem; margin: 0; color: var(--cor-azul-escuro-02); }
+        .close-btn { background: none; border: none; font-size: 2.5rem; cursor: pointer; color: #bbb; &:hover { color: var(--cor-vermelho-tijolo); } }
     }
 
-    .info-group {
-        margin-bottom: 1.5rem;
-
-        label {
-            color: var(--cor-azul-ardosia);
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            display: block;
-        }
-
-        p {
-            margin: 0;
-            font-size: 1.1rem;
-            color: var(--cor-grafite-profundo);
-            font-weight: 500;
-        }
-
-        .desc-box {
+    /* Estilo específico para inputs do Modal de Edição */
+    .form-group {
+        margin-bottom: 1.2rem;
+        label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--cor-azul-ardosia); text-transform: uppercase; margin-bottom: 6px; }
+        
+        input {
+            width: 100%; padding: 0.8rem 1rem;
+            border-radius: 10px; border: 1px solid var(--cor-off-white-02);
             background: var(--cor-off-white-01);
-            padding: 1.2rem;
-            border-radius: 12px;
-            color: var(--cor-azul-ardosia);
-            font-size: 1rem;
-            line-height: 1.6;
+            font-size: 1rem; font-family: inherit;
+            
+            &:focus { border-color: var(--cor-vermelho-tijolo); outline: none; background: #fff; }
+            &.input-disabled { cursor: not-allowed; opacity: 0.7; }
         }
     }
 
-    .info-row {
-        display: flex;
-        gap: 2.5rem;
-        margin-bottom: 1.5rem;
-    }
+    .form-row { display: flex; gap: 1rem; .form-group { flex: 1; } }
 
-    .timeline-section {
-        display: flex;
-        justify-content: space-between;
-        background: var(--cor-off-white-01);
-        padding: 1.2rem;
-        border-radius: 12px;
-        margin-top: 2.5rem;
-        border-left: 4px solid var(--cor-vermelho-tijolo);
-
-        p {
-            font-size: 0.9rem;
-            color: var(--cor-vermelho-tijolo);
-            font-weight: 700;
-            margin: 0;
+    .edit-actions {
+        display: flex; flex-direction: column; gap: 0.8rem; margin-top: 2rem;
+        
+        .btn-save {
+            background: var(--cor-vermelho-tijolo); color: #fff;
+            border: none; padding: 1rem; border-radius: 12px;
+            font-weight: 700; font-size: 1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            &:hover { background: #8c3625; }
         }
-    }
-
-    .modal-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 2rem;
-        padding-top: 1.2rem;
-        border-top: 1px solid var(--cor-off-white-01);
-
-        .editor-badge .value {
-            color: var(--cor-vermelho-tijolo);
-            font-weight: 700;
-        }
-
-        .uid-info {
-            font-size: 0.65rem;
-            color: var(--cor-azul-ardosia);
+        
+        .btn-cancel {
+            background: none; border: none; padding: 0.5rem;
+            color: var(--cor-azul-ardosia); font-weight: 600; cursor: pointer;
+            &:hover { text-decoration: underline; }
         }
     }
 }
 
-@keyframes modalSlideUp {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
+@keyframes modalFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
 .btn-back {
-    background: transparent;
-    border: 2px solid var(--cor-vermelho-tijolo);
-    color: var(--cor-vermelho-tijolo);
-    padding: 0.6rem 1.4rem;
-    border-radius: 10px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-        background: var(--cor-vermelho-tijolo);
-        color: var(--cor-branco);
-    }
+    background: none; border: 2px solid var(--cor-vermelho-tijolo);
+    color: var(--cor-vermelho-tijolo); padding: 0.6rem 1.2rem;
+    border-radius: 10px; font-weight: 700; cursor: pointer;
+    &:hover { background: var(--cor-vermelho-tijolo); color: #fff; }
 }
 
-.empty-state {
-    text-align: center;
-    padding: 5rem;
-    color: var(--cor-azul-ardosia);
 
-    .empty-icon {
-        font-size: 3.5rem;
-        opacity: 0.3;
-        margin-bottom: 1rem;
+::ng-deep .dark-theme {
+    // Sobrescrita de superfícies principais para o modo escuro
+    .page-layout {
+    background-color: var(--cor-azul-escuro-01) !important;
+  }
+    
+    .produtos-wrapper,
+    .estoque-wrapper {
+        background-color: var(--cor-azul-escuro-02) !important; // Fundo azul profundo do protótipo
+        color: var(--cor-perola) !important; // Texto claro para contraste
+
+        .header-section h2 {
+            color: var(--cor-vermelho-tijolo) !important; // Mantém a cor da marca
+        }
+
+        // Toolbar: Busca e Filtros no Dark Mode
+        .toolbar {
+            .search-box input {
+                background: var(--cor-azul-escuro-01) !important; // Input levemente mais claro que o fundo
+                border-color: var(--cor-azul-ardosia) !important;
+                color: var(--cor-branco) !important;
+
+                &:focus {
+                    background: var(--cor-azul-escuro-02) !important;
+                    border-color: var(--cor-vermelho-tijolo);
+                }
+            }
+
+            .filter-group select {
+                background: var(--cor-azul-escuro-01) !important;
+                border-color: var(--cor-azul-ardosia) !important;
+                color: var(--cor-perola);
+            }
+        }
+
+        // Cards de Estoque no Dark Mode
+        .stock-card {
+            background: var(--cor-azul-escuro-01) !important; // Cor dos cards nas imagens
+            border-color: var(--cor-azul-ardosia) !important;
+            color: var(--cor-perola) !important;
+
+            &:hover {
+                background: #232e36; // Um tom sutilmente mais claro para o hover
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+                border-color: var(--cor-vermelho-tijolo);
+            }
+
+            .card-header-row {
+                h3 { color: var(--cor-branco) !important; }
+                .lote-info, .date-info span { color: var(--cor-perola); opacity: 0.8; }
+                .date-label { color: var(--cor-off-white-02) !important; }
+            }
+
+            .stock-progress-bar {
+                background: var(--cor-azul-ardosia) !important; // Fundo da barra vazio no escuro
+            }
+
+            .info-grid .info-item {
+                .label { color: var(--cor-off-white-02) !important; }
+                .value { color: var(--cor-branco) !important; }
+            }
+
+            .card-actions {
+                border-top-color: var(--cor-azul-ardosia) !important;
+                button {
+                    color: var(--cor-perola) !important;
+                    &:hover { color: var(--cor-vermelho-tijolo) !important; }
+                }
+            }
+        }
+    }
+
+    // Estilos dos Modais no Dark Mode
+    .modal-content {
+        background: var(--cor-azul-escuro-01);
+        color: var(--cor-perola);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+
+        .modal-header {
+            h2 { color: var(--cor-branco); }
+            .close-btn { color: var(--cor-azul-ardosia); }
+        }
+
+        .form-group {
+            label { color: var(--cor-perola); }
+            
+            input {
+                background: var(--cor-azul-escuro-02);
+                border-color: var(--cor-azul-ardosia);
+                color: var(--cor-branco);
+
+                &:focus {
+                    background: var(--cor-azul-escuro-01);
+                    border-color: var(--cor-vermelho-tijolo);
+                }
+            }
+        }
+
+        .edit-actions .btn-cancel {
+            color: var(--cor-perola);
+            &:hover { color: var(--cor-vermelho-tijolo); }
+        }
+    }
+
+    .modal-overlay {
+        background: rgba(0, 0, 0, 0.85); // Overlay mais denso para focar no modal
     }
 }
