@@ -26,7 +26,7 @@
 }
 
 /* =========================================
-   BARRA DE BUSCA (ESTILO DA FOTO)
+   TOOLBAR (BUSCA + FILTROS + ORDENAÇÃO)
 ========================================= */
 .search-toolbar {
     background: #F4F1EA;
@@ -36,10 +36,19 @@
     margin-bottom: 2.5rem;
     border: 1px solid #D1C4B5;
 
+    // Alinhamento horizontal para colocar filtros ao lado da busca
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+
     .search-input-wrapper {
         display: flex;
         align-items: center;
         gap: 12px;
+        flex: 1; // Faz a busca crescer para ocupar o espaço disponível
+        min-width: 250px;
 
         input {
             width: 100%;
@@ -54,6 +63,40 @@
             }
         }
     }
+
+    // Grupo de Filtros e Ordenação
+    .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+
+        input,
+        select {
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            border: 1px solid #D1C4B5;
+            background-color: #FDFDFB;
+            font-size: 0.85rem;
+            color: #555;
+            outline: none;
+            transition: all 0.2s ease;
+
+            &:focus {
+                border-color: #AC4430;
+                box-shadow: 0 0 0 2px rgba(172, 68, 48, 0.1);
+            }
+        }
+
+        input {
+            width: 150px;
+        }
+
+        select {
+            cursor: pointer;
+            min-width: 130px;
+        }
+    }
 }
 
 /* =========================================
@@ -66,7 +109,7 @@
 }
 
 .product-card-horizontal {
-    background: #F4F1EA; // Cor interna do card na foto
+    background: #F4F1EA;
     border-radius: 10px;
     padding: 1.5rem 2rem;
     display: flex;
@@ -97,7 +140,7 @@
             margin-bottom: 1rem;
 
             .tag {
-                background: #DED6CC; // Pílulas cinzas da foto
+                background: #DED6CC;
                 padding: 3px 10px;
                 border-radius: 4px;
                 font-size: 0.75rem;
@@ -120,7 +163,6 @@
         }
     }
 
-    /* BOTÕES DE AÇÃO (LADO DIREITO) */
     .card-actions {
         display: flex;
         flex-direction: column;
@@ -138,7 +180,7 @@
 
         .btn-edit-product {
             background: transparent;
-            border: 1px solid #AC4430; // Vermelho Tijolo
+            border: 1px solid #AC4430;
             color: #AC4430;
 
             &:hover {
@@ -147,7 +189,7 @@
         }
 
         .btn-delete-product {
-            background: #AC4430; // Botão preenchido da foto
+            background: #AC4430;
             border: none;
             color: white;
 
@@ -159,15 +201,35 @@
 }
 
 /* =========================================
-   TEMA ESCURO (BASEADO NO SEU PERFIL)
+   TEMA ESCURO (ESTILO UNIFICADO)
 ========================================= */
 ::ng-deep .dark-theme {
-
     .page-layout {
         background-color: var(--cor-azul-escuro-01) !important;
     }
 
-    /* --- SIDEBAR IGUAL AO SEU PERFIL --- */
+    /* CORREÇÃO DO CABEÇALHO E MARCA */
+    .global-header {
+        background-color: var(--cor-azul-escuro-02) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        
+        .brand-name {
+            color: var(--cor-perola) !important;
+        }
+
+        .theme-toggle {
+            color: var(--cor-perola) !important;
+            
+            lucide-icon, svg {
+                color: currentColor;
+            }
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+        }
+    }
+
     .sidebar-container {
         background-color: var(--cor-azul-escuro-02);
 
@@ -206,14 +268,13 @@
         }
     }
 
-    /* --- CARDS NO DARK MODE --- */
     .main-content {
         background-color: var(--cor-azul-escuro-01);
     }
 
     .product-card-horizontal,
     .search-toolbar {
-        background-color: #222B33; // Cor dos cartões que você usa no perfil
+        background-color: #222B33;
         border-color: #313D48;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 
@@ -227,17 +288,29 @@
             background-color: var(--cor-azul-escuro-01);
         }
 
+        .tag-row .tag {
+            background-color: #1B252D !important; // Fundo escuro para a pílula
+            color: var(--cor-perola) !important;   // Texto branco/pérola
+            border: 1px solid rgba(255, 255, 255, 0.1); // Borda sutil para definir o formato
+        }
+
         .meta-info {
             color: #A0AAB2;
         }
 
-        input {
+        input,
+        select {
+            background-color: #1B252D;
             color: white;
+            border-color: #313D48;
+
+            &::placeholder {
+                color: #666;
+            }
         }
     }
 }
 
-/* Botão de voltar igual ao perfil */
 .btn-back {
     background: none;
     border: none;
