@@ -1,8 +1,5 @@
 @import '../sidebar.component.scss';
 
-/* =========================================
-   ESTRUTURA DE LAYOUT
-========================================= */
 .app-wrapper {
     display: flex;
     flex-direction: column;
@@ -24,9 +21,6 @@
     overflow-y: auto;
 }
 
-/* =========================================
-   WRAPPER INTERNO
-========================================= */
 .baixas-wrapper {
     display: flex;
     flex-direction: column;
@@ -47,9 +41,6 @@
     }
 }
 
-/* =========================================
-   TOOLBAR (BUSCA + FILTROS)
-========================================= */
 .toolbar {
     background: #F4F1EA;
     padding: 1rem 1.5rem;
@@ -115,9 +106,6 @@
     }
 }
 
-/* =========================================
-   GRID DE CARDS DE BAIXAS
-========================================= */
 .baixas-grid {
     display: flex;
     flex-direction: column;
@@ -205,9 +193,6 @@
     }
 }
 
-/* =========================================
-   ESTADO VAZIO
-========================================= */
 .empty-state {
     text-align: center;
     padding: 3rem;
@@ -215,9 +200,6 @@
     font-size: 1rem;
 }
 
-/* =========================================
-   BOTÃO VOLTAR
-========================================= */
 .btn-back {
     background: none;
     border: none;
@@ -232,9 +214,6 @@
     }
 }
 
-/* =========================================
-   DARK THEME
-========================================= */
 ::ng-deep .dark-theme {
     .page-layout {
         background-color: var(--cor-azul-escuro-01) !important;

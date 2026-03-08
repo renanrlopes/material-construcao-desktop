@@ -1,8 +1,5 @@
 @import '../sidebar.component.scss';
 
-/* ============================================================
-   VARIÁVEIS DE CORES E TEMA
-   ============================================================ */
 :root {
     --fonte-principal: 'Public Sans', sans-serif;
     --cor-vermelho-tijolo: #AC4430;
@@ -15,9 +12,7 @@
     --cor-grafite-profundo: #121212;
 }
 
-/* ============================================================
-   WRAPPER PRINCIPAL
-   ============================================================ */
+
 .produtos-wrapper,
 .estoque-wrapper {
     padding: 2.5rem;
@@ -40,7 +35,6 @@
         }
     }
 
-    /* TOOLBAR: BUSCA E FILTROS */
     .toolbar {
         display: flex;
         flex-wrap: wrap;
@@ -55,7 +49,6 @@
         width: 100%;
         box-sizing: border-box;
 
-        // Busca por nome — cresce livremente
         .search-box {
             flex: 1;
             min-width: 180px;
@@ -87,7 +80,6 @@
             }
         }
 
-        // Filtro de lote — caixinha destacada
         .filter-lote {
             display: flex;
             align-items: center;
@@ -125,7 +117,6 @@
             }
         }
 
-        // Wrapper para ícone + input do lote
         .lote-input-wrapper {
             position: relative;
             display: flex;
@@ -166,7 +157,6 @@
             }
         }
 
-        // Separador + filtros de ordenação
         .filter-group {
             display: flex;
             gap: 0.6rem;
@@ -197,7 +187,6 @@
         }
     }
 
-    /* GRID DE CARDS */
     .stock-grid {
         display: flex;
         flex-direction: column;
@@ -357,9 +346,6 @@
     }
 }
 
-/* ============================================================
-   ESTILOS DOS MODAIS
-   ============================================================ */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -585,9 +571,10 @@
     }
 }
 
-/* ============================================================
-   DARK THEME
-   ============================================================ */
+
+
+
+
 ::ng-deep .dark-theme {
     .page-layout {
         background-color: var(--cor-azul-escuro-01) !important;

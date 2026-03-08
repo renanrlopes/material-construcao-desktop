@@ -1,27 +1,27 @@
 @import '../auth-shared';
 
 .auth-container .form-section {
-  justify-content: flex-start; /* Faz os itens começarem do topo em vez do centro */
-  padding: 2rem 5rem 2rem 2rem; /* Diminuí o padding-top de 5rem para 3rem para subir tudo */
+  justify-content: flex-start; 
+  padding: 2rem 5rem 2rem 2rem; 
 
   .logo-container {
-    margin-bottom: 0.5rem; /* Diminui o espaço debaixo da logo */
+    margin-bottom: 0.5rem; 
   }
 
   .welcome-title {
-    margin-top: 0; /* Remove qualquer margem que empurre o título para baixo */
-    margin-bottom: 2rem; /* Mantém um espaço saudável entre o título e o primeiro input */
+    margin-top: 0; 
+    margin-bottom: 2rem; 
   }
 
 }
 
 .login-link-container {
   text-align: center;
-  margin-top: 20px; /* Dá um respiro entre o botão de Criar Conta e o link */
+  margin-top: 20px;
   font-size: 14px;
   
   .texto-normal {
-    color: var(--cor-azul-ardosia); /* Cor do texto "Já possui uma conta?" no modo claro */
+    color: var(--cor-azul-ardosia); 
   }
   
   .link-destaque {
@@ -40,20 +40,13 @@
 
 
 
-/* =========================================
-   MODO ESCURO (Sincronizado com o Body)
-   ========================================= */
+
 :host-context(.dark-theme) {
   .auth-container .form-section {
-    background-color: #172027; // Cor escura da modelagem
+    background-color: #172027; 
   }
 }
 
-/* =========================================
-   MODAIS DE AVISO (POP-UPS CENTRALIZADOS)
-========================================= */
-
-/* Fundo escuro atrás do aviso */
 .overlay {
   position: fixed; 
   top: 0;
@@ -64,17 +57,16 @@
   z-index: 9998; 
 }
 
-/* Caixa do Aviso Centralizada */
 .error-message, .success-message {
   position: fixed; 
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Centraliza perfeitamente nos eixos X e Y */
-  z-index: 9999; /* Fica acima do overlay */
+  transform: translate(-50%, -50%); 
+  z-index: 9999; 
   
   width: 90%;
   max-width: 350px;
-  background-color: #D32F2F; /* Vermelho padrão para erro */
+  background-color: #D32F2F; 
   color: var(--cor-branco, #ffffff);
   padding: 2rem 1.5rem;
   border-radius: 12px;
@@ -93,12 +85,12 @@
   }
 }
 
-/* O modal de sucesso tem a cor verde */
+
 .success-message {
   background-color: #4CAF50 !important;
 }
 
-/* Estilo do botão de Fechar */
+
 .close-btn {
   background-color: transparent;
   color: var(--cor-branco, #ffffff);
@@ -113,8 +105,3 @@
     background-color: rgba(255, 255, 255, 0.2); 
   }
 }
-
-
-
-
-

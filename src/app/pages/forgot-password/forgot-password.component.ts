@@ -62,7 +62,6 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
 
-  // --- LÓGICA DE TEMA SINCRONIZADA (Resolve o erro de cor congelada) ---
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
     localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');

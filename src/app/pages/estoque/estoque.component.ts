@@ -57,17 +57,13 @@ export class EstoqueComponent implements OnInit {
     this.isDarkMode = temaSalvo === 'dark';
     this.applyTheme();
 
-    // 1. Carrega dados do usuário logado e valida permissões
     this.authService.getUserRole().subscribe({
       next: (data) => {
         this.usuario = data as AppUser;
-        // Opcional: Você pode disparar uma lógica aqui caso precise 
-        // esconder elementos que não dependam apenas do *ngIf.
       },
       error: (err) => console.error('Erro ao carregar perfil:', err)
     });
 
-    // 2. BUSCAR PRODUTOS (RESTAURADO)
     const estoque$ = this.firestore.collection('estoque').valueChanges({ idField: 'id' });
     const produtos$ = this.firestore.collection('produtos').valueChanges({ idField: 'id' });
 
@@ -122,7 +118,6 @@ export class EstoqueComponent implements OnInit {
     if (!this.itemEmEdicao.id) return;
 
     try {
-      // Converte a string do input date de volta para objeto Date
       const dataParaSalvar = this.itemEmEdicao.expirationDateInput ? new Date(this.itemEmEdicao.expirationDateInput) : null;
 
       await this.firestore.collection('estoque').doc(this.itemEmEdicao.id).update({
@@ -130,7 +125,7 @@ export class EstoqueComponent implements OnInit {
         initialQuantity: Number(this.itemEmEdicao.initialQuantity),
         expirationDate: dataParaSalvar,
         updatedAt: new Date(),
-        lastEditedBy: this.usuario?.name || 'Sistema' // Auditoria conforme sua modelagem
+        lastEditedBy: this.usuario?.name || 'Sistema' 
       });
 
       this.fecharModalEdicao();
@@ -139,8 +134,6 @@ export class EstoqueComponent implements OnInit {
       alert('Erro ao salvar. Verifique o console.');
     }
   }
-
-  // --- FILTROS, ORDENAÇÃO E TEMA ---
 
   aplicarFiltrosEOrdenacao() {
     let res = [...this.itensEstoque];

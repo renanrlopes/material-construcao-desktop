@@ -34,10 +34,8 @@ export class HomeComponent implements OnInit {
   }
 
   async fazerLogin() {
-    // 1. Limpa o erro para permitir que o pop-up "suba" novamente em um novo clique
     this.erro = '';
 
-    // 2. VALIDAÇÃO MANUAL: Se clicar sem preencher, o pop-up aparece aqui
     if (!this.email || !this.password) {
       this.erro = 'Por favor, preencha todos os campos.';
       return;
@@ -49,7 +47,6 @@ export class HomeComponent implements OnInit {
       await this.authService.login(this.email, this.password);
       this.router.navigate(['/dashboard']);
     } catch (error: any) {
-      // Trata erros vindos do Firebase
       this.erro = 'E-mail ou senha inválidos.';
       console.error(error);
     } finally {
@@ -57,7 +54,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // --- Navegação e Tema ---
   irParaCadastro() {
     this.router.navigate(['/cadastro']);
   }

@@ -1,9 +1,5 @@
-/* Importa os estilos da sidebar para manter a consistência */
 @import '../sidebar.component.scss';
 
-/* =========================================
-   ESTRUTURA DE LAYOUT (SIDEBAR + CONTEÚDO)
-========================================= */
 .app-wrapper {
     display: flex;
     flex-direction: column;
@@ -25,9 +21,7 @@
     overflow-y: auto;
 }
 
-/* =========================================
-   HEADER SECTION
-========================================= */
+
 .header-section {
     display: flex;
     align-items: center;
@@ -42,9 +36,6 @@
     }
 }
 
-/* =========================================
-   TOOLBAR (BUSCA + FILTROS + ORDENAÇÃO)
-========================================= */
 .search-toolbar {
     background: #F4F1EA;
     padding: 1rem 1.5rem;
@@ -122,9 +113,6 @@
     }
 }
 
-/* =========================================
-   LISTAGEM DE PRODUTOS (CARDS HORIZONTAIS)
-========================================= */
 .product-list {
     display: flex;
     flex-direction: column;
@@ -225,9 +213,7 @@
     }
 }
 
-/* =========================================
-   ESTADO VAZIO
-========================================= */
+
 .empty-state {
     text-align: center;
     padding: 3rem;
@@ -235,9 +221,6 @@
     font-size: 1rem;
 }
 
-/* =========================================
-   BOTÃO VOLTAR
-========================================= */
 .btn-back {
     background: none;
     border: none;

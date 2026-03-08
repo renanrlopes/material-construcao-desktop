@@ -1,8 +1,3 @@
-/* =========================================
-   ESTILOS GLOBAIS DE AUTENTICAÇÃO (LOGIN / CADASTRO)
-========================================= */
-
-/* O contêiner principal ocupa 100% da tela */
 .auth-container {
   display: flex;
   height: 100vh;
@@ -11,7 +6,6 @@
   background-color: var(--cor-off-white-02); 
   transition: background-color 0.3s ease-in-out;
 
-  /* === LADO ESQUERDO: Formulário === */
   .form-section {
     flex: 0 0 40%; 
     display: flex;
@@ -42,7 +36,6 @@
       }
     }
 
-    /* === ESTILIZAÇÃO DO FORMULÁRIO === */
     .auth-form {
       display: flex;
       flex-direction: column;
@@ -154,7 +147,6 @@
     }
   }
 
-  /* === LADO DIREITO: Imagem de Tijolos === */
   .image-section {
     flex: 1; 
     position: relative;
@@ -174,9 +166,6 @@
   }
 }
 
-/* =========================================
-   MODO ESCURO
-========================================= */
 .auth-container.dark-theme {
   background-color: #172027; 
   transition: background-color 0.3s ease-in-out;
@@ -228,9 +217,7 @@
   }
 }
 }
-/* =========================================
-   BOTÃO DE TEMA (DARK/LIGHT MODE)
-========================================= */
+
 .theme-toggle-btn {
   position: absolute;
   top: 2rem;

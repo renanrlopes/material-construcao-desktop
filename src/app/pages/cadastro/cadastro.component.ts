@@ -58,18 +58,16 @@ export class CadastroComponent implements OnInit {
     }
   }
 
-  // MÉTODO QUE RESOLVE O CONGELAMENTO DA COR PRETA
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
     localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
-    this.applyTheme(); // Atualiza a classe global no body
+    this.applyTheme(); 
   }
 
   private applyTheme() {
     if (this.isDarkMode) {
       this.renderer.addClass(this.document.body, 'dark-theme');
     } else {
-      // Remove a classe do body, fazendo o degradê e o fundo voltarem ao claro
       this.renderer.removeClass(this.document.body, 'dark-theme');
     }
   }

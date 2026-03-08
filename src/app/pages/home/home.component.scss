@@ -1,6 +1,5 @@
 @import '../auth-shared';
 
-// 1. Estrutura da Seção de Formulário
 .auth-container .form-section {
   display: flex;
   flex-direction: column;
@@ -9,26 +8,23 @@
   transition: background-color 0.3s ease;
 }
 
-// === NOVO: ESTILO DO BOTÃO DE MOSTRAR SENHA ===
 .input-group {
   position: relative;
   display: flex;
   align-items: center;
 
   input {
-    // Aumentamos o padding para o texto não esconder atrás dos dois ícones
     padding-right: 4.8rem !important; 
   }
 
 
   .input-icon {
     position: absolute;
-    right: 1.2rem; // Posição fixa do cadeado conforme sua modelagem
+    right: 1.2rem;
     pointer-events: none;
   }
 }
 
-// 2. Link de Esqueci a Senha
 .forgot-password {
   display: block; 
   text-align: center;
@@ -46,15 +42,11 @@
   }
 }
 
-/* =========================================
-   MODO ESCURO (Sincronizado com o Body)
-   ========================================= */
 :host-context(.dark-theme) {
   .auth-container .form-section {
     background-color: #172027;
   }
 
-  // Ajuste de cor do olho para o modo escuro
   .toggle-password-btn {
     color: #7A8B99;
     &:hover {
@@ -70,9 +62,6 @@
   }
 }
 
-/* =========================================
-   ESTILOS DO POP-UP (MODAIS)
-   ========================================= */
 .overlay {
   position: fixed;
   top: 0; left: 0;

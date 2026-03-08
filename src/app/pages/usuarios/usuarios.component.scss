@@ -1,9 +1,6 @@
-/* Importa os estilos da sidebar para manter a consistência */
 @import '../sidebar.component.scss';
 
-/* =========================================
-    LAYOUT E ESTRUTURA GLOBAL
-========================================= */
+
 .app-wrapper {
     display: flex;
     flex-direction: column;
@@ -24,9 +21,6 @@
     padding-top: 2rem;
 }
 
-/* =========================================
-    CONTÊINER DE ADMINISTRAÇÃO
-========================================= */
 .admin-container {
     padding: 0 3rem 3rem 3rem;
     max-width: 1200px;
@@ -80,9 +74,7 @@
     }
 }
 
-/* =========================================
-    SEÇÃO DE ADICIONAR USUÁRIO
-========================================= */
+
 .add-user-section {
     background-color: var(--cor-off-white-01);
     padding: 1.5rem;
@@ -127,9 +119,7 @@
     }
 }
 
-/* =========================================
-    TABELA DE USUÁRIOS
-========================================= */
+
 .user-table {
     width: 100%;
     border-collapse: collapse;
@@ -189,9 +179,6 @@
     }
 }
 
-/* =========================================
-    TEMA ESCURO (DARK MODE)
-========================================= */
 ::ng-deep .dark-theme {
 
     .page-layout {
@@ -202,7 +189,6 @@
         background-color: #0f171e;
     }
 
-    /* FORÇAR TEXTO CLARO NA SIDEBAR */
     .sidebar-container {
         background-color: var(--cor-azul-escuro-02);
 
@@ -225,7 +211,6 @@
         }
     }
 
-    /* CORREÇÃO DO FOOTER DA SIDEBAR */
     .sidebar-footer {
         border-top-color: rgba(255, 255, 255, 0.1) !important;
 
@@ -328,7 +313,6 @@
     }
 }
 
-/* Botão voltar */
 .btn-back {
     background: none;
     border: none;

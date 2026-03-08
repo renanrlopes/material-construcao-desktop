@@ -38,7 +38,6 @@ export class ProdutosComponent implements OnInit {
     this.isDarkMode = temaSalvo === 'dark';
     this.applyTheme();
 
-    // AJUSTE: Carrega os dados do usuário para habilitar a Sidebar corretamente
     this.authService.getUserRole().subscribe({
       next: (userData: any) => {
         if (userData) {

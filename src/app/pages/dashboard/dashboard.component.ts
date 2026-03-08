@@ -31,19 +31,15 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // 1. Configuração do Tema
     const temaSalvo = localStorage.getItem('theme');
     this.isDarkMode = temaSalvo === 'dark';
     this.applyTheme();
 
-    // 2. Carregar Dados do Usuário e Iniciar Monitoramento do Estoque
     this.authService.getUserRole().subscribe({
       next: (userData: any) => {
         if (userData) {
           this.userName = userData.name;
           this.userRole = userData.role;
-
-          // Só iniciamos a escuta do banco quando o usuário está validado
           this.carregarDadosReais();
         }
         this.loading = false;

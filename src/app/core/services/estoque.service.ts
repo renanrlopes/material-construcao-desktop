@@ -24,7 +24,7 @@ export class EstoqueService {
     );
   }
 
-  // Conta baixas realizadas (exemplo: filtrando as do mês atual)
+  // Conta baixas realizadas 
   getContagemBaixasMes(): Observable<number> {
     // Aqui você pode adicionar um filtro de data se desejar
     return this.firestore.collection('registro_baixas').valueChanges().pipe(
