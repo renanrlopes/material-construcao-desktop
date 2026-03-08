@@ -54,8 +54,16 @@ export class RegistrosBaixasComponent implements OnInit {
 
     if (this.filtroData) {
       res = res.filter(b => {
-        const dataBaixa = b.date?.toDate().toISOString().split('T')[0];
-        return dataBaixa === this.filtroData;
+        const dataBaixa = b.date?.toDate();
+        if (!dataBaixa) return false;
+
+        // Usa fuso local em vez de UTC
+        const ano = dataBaixa.getFullYear();
+        const mes = String(dataBaixa.getMonth() + 1).padStart(2, '0');
+        const dia = String(dataBaixa.getDate()).padStart(2, '0');
+        const dataFormatada = `${ano}-${mes}-${dia}`;
+
+        return dataFormatada === this.filtroData;
       });
     }
 
@@ -71,7 +79,7 @@ export class RegistrosBaixasComponent implements OnInit {
 
   onLogout() {
     this.authService.logout();
-  } 
+  }
 
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
