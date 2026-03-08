@@ -1,10 +1,10 @@
-import { Component, Inject, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Produto } from '../../core/models/produto.model';
 import { AuthService } from '../../core/services/auth.service';
 import { DOCUMENT } from '@angular/common';
 import { AppUser, UserRole } from '../../core/models/user.model';
-
+import { Search } from 'lucide-angular';
 @Component({
   selector: 'app-produtos',
   templateUrl: './produtos.component.html',
@@ -19,6 +19,7 @@ export class ProdutosComponent implements OnInit {
   usuario: AppUser | null = null; // Objeto que o HTML usa para o *ngIf
   loading: boolean = true;
   isDarkMode: boolean = false;
+  readonly Search = Search;
 
   filtroNome: string = '';
   filtroTipo: string = '';

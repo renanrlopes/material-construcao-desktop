@@ -91,19 +91,18 @@
   .click-info {
     font-size: 0.75rem;
     margin-top: 10px;
-    color: #4CAF50;
+    color: #AC4430;
     font-weight: 600;
     opacity: 0.8;
   }
 
-  /* ESTILO ESPECÍFICO DO ALERTA */
   &.alert-card {
     .alert-icon {
-      background-color: #4CAF50;
+      background-color: #AC4430;
     }
 
     .alert-text {
-      color: #4CAF50;
+      color: #AC4430;
     }
   }
 }
@@ -174,7 +173,7 @@
       background: var(--cor-off-white-01);
       margin-bottom: 8px;
       border-radius: 10px;
-      border-left: 4px solid #4CAF50;
+      border-left: 4px solid #AC4430;
 
       .item-name {
         font-weight: 600;
@@ -182,7 +181,7 @@
       }
 
       .item-qty {
-        color: #2e7d32;
+        color: #AC4430;
         font-weight: 700;
       }
     }
@@ -219,46 +218,48 @@
     }
 
     &.alert-card {
-      border: 1px solid rgba(76, 175, 80, 0.3);
+      border: 1px solid rgba(172, 68, 48, 0.3);
 
-      .alert-icon,
-      .alert-text {
-        color: #4CAF50 !important;
-        background-color: #4CAF50 !important;
+      .alert-icon {
+        background-color: #AC4430 !important;
       }
 
       .alert-text {
+        color: #AC4430 !important;
         background-color: transparent !important;
       }
     }
   }
 
-  /* MODAL NO DARK MODE */
   .modal-card {
     background: var(--cor-azul-escuro-02);
 
     h3 {
-      color: #4CAF50;
+      color: #AC4430;
+    }
+
+    .modal-header {
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+
+      .close-btn {
+        color: var(--cor-perola);
+      }
     }
 
     .alert-detail-item {
       background: rgba(255, 255, 255, 0.05);
+      border-left-color: #AC4430;
 
       .item-name {
         color: var(--cor-perola);
       }
 
       .item-qty {
-        color: #81c784;
+        color: #E07060 !important;
       }
-    }
-
-    .close-btn {
-      color: var(--cor-perola);
     }
   }
 
-  /* FIX TEXTO FOOTER SIDEBAR */
   .sidebar-footer {
     .menu-item span {
       color: var(--cor-perola) !important;
@@ -282,7 +283,6 @@
   }
 }
 
-/* Responsividade */
 @media (max-width: 600px) {
   .cards-grid {
     grid-template-columns: 1fr;

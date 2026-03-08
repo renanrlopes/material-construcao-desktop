@@ -45,36 +45,41 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: 1.5rem;
+        gap: 0;
         margin-bottom: 2rem;
+        background: var(--cor-off-white-01);
+        border: 1px solid var(--cor-off-white-02);
+        border-radius: 8px;
+        padding: 0.8rem 1.2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        box-sizing: border-box;
 
+        // Busca por nome — cresce livremente
         .search-box {
-            flex: 2;
-            min-width: 300px;
+            flex: 1;
+            min-width: 180px;
             position: relative;
-            max-width: 350px;
+            display: flex;
+            align-items: center;
 
             input {
                 width: 100%;
-                padding: 1rem 1rem 1rem 3.5rem;
-                background: var(--cor-off-white-01);
-                border: 1px solid var(--cor-off-white-02);
-                border-radius: 12px;
+                padding: 0.5rem 0.5rem 0.5rem 2.6rem;
+                background: transparent;
+                border: none;
                 color: var(--cor-grafite-profundo);
                 font-size: 1rem;
-                transition: all 0.3s ease;
+                outline: none;
 
-                &:focus {
-                    border-color: var(--cor-vermelho-tijolo);
-                    background: var(--cor-branco);
-                    outline: none;
-                    box-shadow: 0 4px 12px rgba(172, 68, 48, 0.1);
+                &::placeholder {
+                    color: #A59A8E;
                 }
             }
 
             .search-icon {
                 position: absolute;
-                left: 1.2rem;
+                left: 0.5rem;
                 top: 50%;
                 transform: translateY(-50%);
                 color: var(--cor-vermelho-tijolo);
@@ -82,24 +87,106 @@
             }
         }
 
-        .filter-group {
-            flex: 1;
+        // Filtro de lote — caixinha destacada
+        .filter-lote {
             display: flex;
-            gap: 0.8rem;
-            min-width: 300px;
+            align-items: center;
+            gap: 0.5rem;
+            border-left: 1px solid var(--cor-off-white-02);
+            padding-left: 1rem;
+            margin-left: 0.8rem;
 
+            input {
+                padding: 0.5rem 0.8rem 0.5rem 2.2rem;
+                border-radius: 8px;
+                border: 1px solid var(--cor-off-white-02);
+                background: #FDFDFB;
+                font-size: 0.85rem;
+                color: #555;
+                outline: none;
+                width: 160px;
+                transition: all 0.2s ease;
+                position: relative;
 
+                &::placeholder {
+                    color: #A59A8E;
+                }
+
+                &:focus {
+                    border-color: var(--cor-vermelho-tijolo);
+                    box-shadow: 0 0 0 2px rgba(172, 68, 48, 0.1);
+                }
+            }
+
+            .lote-icon {
+                position: absolute;
+                color: var(--cor-vermelho-tijolo);
+                opacity: 0.8;
+            }
+        }
+
+        // Wrapper para ícone + input do lote
+        .lote-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            border-left: 1px solid var(--cor-off-white-02);
+            padding-left: 1rem;
+            margin-left: 0.8rem;
+
+            .lote-icon {
+                position: absolute;
+                left: 0.5rem;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--cor-vermelho-tijolo);
+                opacity: 0.8;
+                pointer-events: none;
+            }
+
+            input {
+                padding: 0.5rem 0.8rem 0.5rem 2.2rem;
+                border-radius: 8px;
+                border: 1px solid var(--cor-off-white-02);
+                background: #FDFDFB;
+                font-size: 0.85rem;
+                color: #555;
+                outline: none;
+                width: 160px;
+                transition: all 0.2s ease;
+
+                &::placeholder {
+                    color: #A59A8E;
+                }
+
+                &:focus {
+                    border-color: var(--cor-vermelho-tijolo);
+                    box-shadow: 0 0 0 2px rgba(172, 68, 48, 0.1);
+                }
+            }
+        }
+
+        // Separador + filtros de ordenação
+        .filter-group {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            border-left: 1px solid var(--cor-off-white-02);
+            padding-left: 1rem;
+            margin-left: 0.8rem;
 
             select {
-                padding: 0.8rem 1.2rem;
-                border-radius: 10px;
+                padding: 0.5rem 0.9rem;
+                border-radius: 8px;
                 border: 1px solid var(--cor-off-white-02);
-                background: var(--cor-off-white-01);
+                background: #FDFDFB;
                 color: var(--cor-azul-ardosia);
                 font-weight: 600;
                 cursor: pointer;
                 outline: none;
                 transition: all 0.2s;
+                font-size: 0.85rem;
+                min-width: 0;
 
                 &:hover,
                 &:focus {
@@ -271,7 +358,7 @@
 }
 
 /* ============================================================
-   ESTILOS DOS MODAIS (DETALHES E EDIÇÃO)
+   ESTILOS DOS MODAIS
    ============================================================ */
 .modal-overlay {
     position: fixed;
@@ -387,7 +474,6 @@
         }
     }
 
-    /* Estilo específico para inputs do Modal de Edição */
     .form-group {
         margin-bottom: 1.2rem;
 
@@ -499,7 +585,9 @@
     }
 }
 
-
+/* ============================================================
+   DARK THEME
+   ============================================================ */
 ::ng-deep .dark-theme {
     .page-layout {
         background-color: var(--cor-azul-escuro-01) !important;
@@ -507,30 +595,64 @@
 
     .produtos-wrapper,
     .estoque-wrapper {
-
         color: var(--cor-perola) !important;
 
         .header-section h2 {
             color: var(--cor-vermelho-tijolo) !important;
         }
 
-
         .toolbar {
+            background: #222B33 !important;
+            border-color: #313D48 !important;
+
             .search-box input {
-                background: var(--cor-azul-escuro-01) !important;
-                border-color: var(--cor-azul-ardosia) !important;
                 color: var(--cor-branco) !important;
 
-                &:focus {
-                    background: var(--cor-azul-escuro-02) !important;
-                    border-color: var(--cor-vermelho-tijolo);
+                &::placeholder {
+                    color: #555 !important;
                 }
             }
 
-            .filter-group select {
-                background: var(--cor-azul-escuro-01) !important;
-                border-color: var(--cor-azul-ardosia) !important;
-                color: var(--cor-perola);
+            .search-icon {
+                color: #E07060 !important;
+                opacity: 1 !important;
+            }
+
+            // Divisores
+            .filter-group,
+            .lote-input-wrapper {
+                border-left-color: #313D48 !important;
+            }
+
+            // Input do lote
+            .lote-input-wrapper input {
+                background: #1B252D !important;
+                border-color: #313D48 !important;
+                color: var(--cor-perola) !important;
+
+                &::placeholder {
+                    color: #555 !important;
+                }
+
+                &:focus {
+                    border-color: #AC4430 !important;
+                }
+            }
+
+            .filter-group {
+                border-left-color: #313D48 !important;
+
+                select {
+                    background: #1B252D !important;
+                    border-color: #313D48 !important;
+                    color: var(--cor-perola) !important;
+
+                    &:hover,
+                    &:focus {
+                        border-color: var(--cor-vermelho-tijolo) !important;
+                        color: var(--cor-vermelho-tijolo) !important;
+                    }
+                }
             }
         }
 

@@ -264,6 +264,20 @@
 
   .manage-users-banner {
     border-color: #313D48;
+
+    .manage-info .manage-text {
+      strong {
+        color: var(--cor-perola) !important;
+      }
+
+      span {
+        color: #A0AAB2 !important;
+      }
+    }
+
+    lucide-icon {
+      color: #A0AAB2 !important;
+    }
   }
 
   .perfil-header-info {

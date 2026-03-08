@@ -24,12 +24,12 @@
                     <div class="menu-icon"
                         style="-webkit-mask-image: url('assets/icons/casa.png'); mask-image: url('assets/icons/casa.png');">
                     </div>
-                    <span>Home</span>
+                    <span>Início</span>
                 </a>
 
                 <a routerLink="/usuarios" class="menu-item" *ngIf="usuario?.role === 'ADMIN'">
                     <div class="menu-icon"
-                        style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');">
+                        style="-webkit-mask-image: url('assets/icons/group.png'); mask-image: url('assets/icons/group.png');">
                     </div>
                     <span>Usuários</span>
                 </a>
@@ -84,10 +84,16 @@
                     <div class="search-box">
                         <lucide-icon [img]="Search" size="20" class="search-icon"></lucide-icon>
                         <input type="text" [(ngModel)]="filtroNome" (input)="aplicarFiltrosEOrdenacao()"
-                            placeholder="Filtrar por...">
+                            placeholder="Filtrar por nome...">
                     </div>
 
-
+                    <div class="search-box">
+                        <div class="lote-input-wrapper">
+                            <lucide-icon [name]="'layers'" size="20" class="lote-icon"></lucide-icon>
+                            <input type="text" [(ngModel)]="filtroLote" (input)="aplicarFiltrosEOrdenacao()"
+                                placeholder="Filtrar por lote...">
+                        </div>
+                    </div>
 
                     <div class="filter-group">
                         <select [(ngModel)]="ordemCampo" (change)="aplicarFiltrosEOrdenacao()">
@@ -154,7 +160,9 @@
                         </div>
 
                         <div class="card-actions">
-                            <button class="btn-action" (click)="abrirModalEdicao(item, $event)">
+                            <button class="btn-action"
+                                *ngIf="usuario?.role === 'ADMIN' || usuario?.role === 'ESTOQUISTA'"
+                                (click)="abrirModalEdicao(item, $event)">
                                 <lucide-icon [img]="Edit3" size="18"></lucide-icon> Editar
                             </button>
                         </div>

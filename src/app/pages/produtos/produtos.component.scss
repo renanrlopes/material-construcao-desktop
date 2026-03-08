@@ -13,7 +13,7 @@
 .page-layout {
     display: flex;
     flex: 1;
-    background-color: #E6D8C8; // Fundo bege da foto
+    background-color: #E6D8C8;
     transition: background-color 0.3s ease;
 }
 
@@ -26,6 +26,23 @@
 }
 
 /* =========================================
+   HEADER SECTION
+========================================= */
+.header-section {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+
+    h2 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #AC4430;
+    }
+}
+
+/* =========================================
    TOOLBAR (BUSCA + FILTROS + ORDENAÇÃO)
 ========================================= */
 .search-toolbar {
@@ -35,9 +52,9 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     margin-bottom: 2.5rem;
     border: 1px solid #D1C4B5;
-    width: 100%;          // <-- adiciona isso
-    box-sizing: border-box; // <-- e isso
-    
+    width: 100%;
+    box-sizing: border-box;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,7 +65,7 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        flex: 1; // Faz a busca crescer para ocupar o espaço disponível
+        flex: 1;
         min-width: 250px;
 
         input {
@@ -63,9 +80,14 @@
                 color: #A59A8E;
             }
         }
+
+        .search-icon {
+            color: #AC4430;
+            opacity: 0.8;
+            flex-shrink: 0;
+        }
     }
 
-    // Grupo de Filtros e Ordenação
     .filter-group {
         display: flex;
         align-items: center;
@@ -107,8 +129,8 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    width: 100%;          // <-- adiciona isso
-    box-sizing: border-box; // <-- e isso
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .product-card-horizontal {
@@ -203,25 +225,53 @@
     }
 }
 
+/* =========================================
+   ESTADO VAZIO
+========================================= */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #999;
+    font-size: 1rem;
+}
 
+/* =========================================
+   BOTÃO VOLTAR
+========================================= */
+.btn-back {
+    background: none;
+    border: none;
+    color: var(--cor-azul-ardosia);
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 1rem;
+
+    &:hover {
+        color: var(--cor-vermelho-tijolo);
+    }
+}
+
+/* =========================================
+   DARK THEME
+========================================= */
 ::ng-deep .dark-theme {
     .page-layout {
         background-color: var(--cor-azul-escuro-01) !important;
     }
 
-    /* CORREÇÃO DO CABEÇALHO E MARCA */
     .global-header {
         background-color: var(--cor-azul-escuro-02) !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        
+
         .brand-name {
             color: var(--cor-perola) !important;
         }
 
         .theme-toggle {
             color: var(--cor-perola) !important;
-            
-            lucide-icon, svg {
+
+            lucide-icon,
+            svg {
                 color: currentColor;
             }
 
@@ -273,6 +323,10 @@
         background-color: var(--cor-azul-escuro-01);
     }
 
+    .header-section h2 {
+        color: var(--cor-vermelho-tijolo) !important;
+    }
+
     .product-card-horizontal,
     .search-toolbar {
         background-color: #222B33;
@@ -280,19 +334,14 @@
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 
         .product-name,
-        .product-desc,
-        .tag {
+        .product-desc {
             color: var(--cor-perola) !important;
         }
 
-        .tag {
-            background-color: var(--cor-azul-escuro-01);
-        }
-
         .tag-row .tag {
-            background-color: #1B252D !important; // Fundo escuro para a pílula
-            color: var(--cor-perola) !important;   // Texto branco/pérola
-            border: 1px solid rgba(255, 255, 255, 0.1); // Borda sutil para definir o formato
+            background-color: #1B252D !important;
+            color: var(--cor-perola) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .meta-info {
@@ -309,18 +358,5 @@
                 color: #666;
             }
         }
-    }
-}
-
-.btn-back {
-    background: none;
-    border: none;
-    color: var(--cor-azul-ardosia);
-    font-weight: 600;
-    cursor: pointer;
-    margin-bottom: 1rem;
-
-    &:hover {
-        color: var(--cor-vermelho-tijolo);
     }
 }

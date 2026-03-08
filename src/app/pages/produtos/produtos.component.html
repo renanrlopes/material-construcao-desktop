@@ -24,12 +24,12 @@
                     <div class="menu-icon"
                         style="-webkit-mask-image: url('assets/icons/casa.png'); mask-image: url('assets/icons/casa.png');">
                     </div>
-                    <span>Home</span>
+                    <span>Início</span>
                 </a>
 
                 <a routerLink="/usuarios" routerLinkActive="active" class="menu-item" *ngIf="usuario?.role === 'ADMIN'">
                     <div class="menu-icon"
-                        style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');">
+                        style="-webkit-mask-image: url('assets/icons/group.png'); mask-image: url('assets/icons/group.png');">
                     </div>
                     <span>Usuários</span>
                 </a>
@@ -76,9 +76,13 @@
         <main class="main-content">
             <div class="produtos-container">
 
+                <div class="header-section">
+                    <h2>Controle de Produtos</h2>
+                </div>
+
                 <div class="search-toolbar">
                     <div class="search-input-wrapper">
-                        <span class="search-icon">🔍</span>
+                        <lucide-icon [img]="Search" size="20" class="search-icon"></lucide-icon>
                         <input type="text" [(ngModel)]="filtroNome" (input)="aplicarFiltrosEOrdenacao()"
                             placeholder="Pesquisar por nome...">
                     </div>

@@ -5,6 +5,7 @@ import { AppUser } from '../../core/models/user.model';
 import { DOCUMENT } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
 import { LogOut } from 'lucide-angular';
+import { Search } from 'lucide-angular';
 
 @Component({
   selector: 'app-registros-baixas',
@@ -16,6 +17,7 @@ export class RegistrosBaixasComponent implements OnInit {
   isDarkMode: boolean = false;
   readonly LogOut = LogOut;
   loading: boolean = true; 
+  readonly Search = Search;
 
   baixas: RegistroBaixa[] = [];
   baixasFiltradas: RegistroBaixa[] = [];

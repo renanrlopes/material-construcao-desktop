@@ -7,8 +7,8 @@ import { DOCUMENT } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
 
 // ÍCONES REGISTRADOS (Garante que parem os erros de "not provided" no console)
-import { 
-  Search, Plus, LogOut, Edit3, Trash2, Save, X, 
+import {
+  Search, Plus, LogOut, Edit3, Trash2, Save, X,
 } from 'lucide-angular';
 
 @Component({
@@ -29,12 +29,12 @@ export class EstoqueComponent implements OnInit {
   itensFiltrados: any[] = [];
   usuario: AppUser | null = null;
   isDarkMode: boolean = false;
-  
+
   // Modais e Edição
-  exibirModal: boolean = false;        
-  exibirModalEdicao: boolean = false;  
+  exibirModal: boolean = false;
+  exibirModalEdicao: boolean = false;
   itemSelecionado: any = null;
-  itemEmEdicao: any = {};              
+  itemEmEdicao: any = {};
 
   // Filtros
   filtroNome: string = '';
@@ -57,14 +57,17 @@ export class EstoqueComponent implements OnInit {
     this.isDarkMode = temaSalvo === 'dark';
     this.applyTheme();
 
-    // Carrega dados do usuário logado (necessário para a sidebar e auditoria)
+    // 1. Carrega dados do usuário logado e valida permissões
     this.authService.getUserRole().subscribe({
-      next: (data) => { this.usuario = data as AppUser; },
+      next: (data) => {
+        this.usuario = data as AppUser;
+        // Opcional: Você pode disparar uma lógica aqui caso precise 
+        // esconder elementos que não dependam apenas do *ngIf.
+      },
       error: (err) => console.error('Erro ao carregar perfil:', err)
     });
 
-    // === BUSCAR PRODUTOS (RESTAURADO) ===
-    // Une a coleção de estoque com a de produtos para pegar os nomes das tintas
+    // 2. BUSCAR PRODUTOS (RESTAURADO)
     const estoque$ = this.firestore.collection('estoque').valueChanges({ idField: 'id' });
     const produtos$ = this.firestore.collection('produtos').valueChanges({ idField: 'id' });
 
@@ -86,22 +89,27 @@ export class EstoqueComponent implements OnInit {
     });
   }
 
-  // --- LÓGICA DE EDIÇÃO (CORRIGIDA COM $EVENT E DATAS) ---
-  
   abrirModalEdicao(item: any, event: Event) {
-    event.stopPropagation(); // Resolve o erro do $event e impede abrir detalhes
-    
-    // Converte a data do Firebase para o formato do input HTML (yyyy-mm-dd)
+    event.stopPropagation();
+
+    // Verifica se o usuário tem permissão antes de abrir o modal
+    const podeEditar = this.usuario?.role === 'ADMIN' || this.usuario?.role === 'ESTOQUISTA';
+
+    if (!podeEditar) {
+      console.warn('Acesso negado: Usuário sem permissão para editar estoque.');
+      return;
+    }
+
     let dataFormatada = '';
     if (item.expirationDate) {
       const d = item.expirationDate.toDate ? item.expirationDate.toDate() : new Date(item.expirationDate);
       dataFormatada = d.toISOString().split('T')[0];
     }
 
-    this.itemEmEdicao = { 
-      ...item, 
-      expirationDateInput: dataFormatada 
-    }; 
+    this.itemEmEdicao = {
+      ...item,
+      expirationDateInput: dataFormatada
+    };
     this.exibirModalEdicao = true;
   }
 
@@ -124,7 +132,7 @@ export class EstoqueComponent implements OnInit {
         updatedAt: new Date(),
         lastEditedBy: this.usuario?.name || 'Sistema' // Auditoria conforme sua modelagem
       });
-      
+
       this.fecharModalEdicao();
     } catch (error) {
       console.error('Erro ao atualizar lote:', error);
@@ -152,7 +160,7 @@ export class EstoqueComponent implements OnInit {
     this.itensFiltrados = res;
   }
 
-  onLogout() { this.authService.logout(); } 
+  onLogout() { this.authService.logout(); }
   abrirDetalhes(item: any) { this.itemSelecionado = item; this.exibirModal = true; }
   fecharModal() { this.exibirModal = false; this.itemSelecionado = null; }
 
