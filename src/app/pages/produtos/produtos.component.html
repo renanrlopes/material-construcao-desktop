@@ -113,15 +113,14 @@
                             <p class="product-desc">Descrição: {{ p.description }}</p>
 
                             <div class="meta-info">
-                                <span>Editado: {{ p.updatedAt?.toDate() | date:'dd/MM/yy' }}<br>Por: {{
-                                    p.lastEditedByName }}</span>
-                                <span>Cadastrado: {{ p.createdAt?.toDate() | date:'dd/MM/yy' }}</span>
+                                <span>
+                                    Editado: {{ p.updatedAt?.toDate() | date:'dd/MM/yyyy HH:mm' }}<br>
+                                    Por: {{ p.lastEditedByName }}
+                                </span>
+                                <span>
+                                    Cadastrado: {{ p.createdAt?.toDate() | date:'dd/MM/yyyy HH:mm' }}
+                                </span>
                             </div>
-                        </div>
-
-                        <div class="card-actions">
-                            <button class="btn-edit-product">Editar</button>
-                            <button class="btn-delete-product" (click)="$event.stopPropagation();">Excluir</button>
                         </div>
                     </div>
                 </div>
