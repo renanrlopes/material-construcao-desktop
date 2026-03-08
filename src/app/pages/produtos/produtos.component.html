@@ -76,38 +76,29 @@
         <main class="main-content">
             <div class="produtos-container">
 
-                <main class="main-content">
-                    <div class="produtos-container">
-
-                        <div class="search-toolbar">
-                            <div class="search-input-wrapper">
-                                <span class="search-icon">🔍</span>
-                                <input type="text" [(ngModel)]="filtroNome" (input)="aplicarFiltrosEOrdenacao()"
-                                    placeholder="Pesquisar por nome...">
-                            </div>
-
-                            <div class="filter-group">
-                                <input type="text" [(ngModel)]="filtroTipo" (input)="aplicarFiltrosEOrdenacao()"
-                                    placeholder="Tipo (ex: tinta)">
-
-                                <select [(ngModel)]="ordemCampo" (change)="aplicarFiltrosEOrdenacao()">
-                                    <option value="updatedAt">🕒 Última Edição</option>
-                                    <option value="name">🔤 Nome do Produto</option>
-                                    <option value="createdAt">🆕 Data de Cadastro</option>
-                                </select>
-
-                                <select [(ngModel)]="ordemDirecao" (change)="aplicarFiltrosEOrdenacao()">
-                                    <option value="desc">Decrescente</option>
-                                    <option value="asc">Crescente</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="product-list" *ngIf="produtosFiltrados.length > 0; else noData">
-                        </div>
-
+                <div class="search-toolbar">
+                    <div class="search-input-wrapper">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" [(ngModel)]="filtroNome" (input)="aplicarFiltrosEOrdenacao()"
+                            placeholder="Pesquisar por nome...">
                     </div>
-                </main>
+
+                    <div class="filter-group">
+                        <input type="text" [(ngModel)]="filtroTipo" (input)="aplicarFiltrosEOrdenacao()"
+                            placeholder="Tipo (ex: tinta)">
+
+                        <select [(ngModel)]="ordemCampo" (change)="aplicarFiltrosEOrdenacao()">
+                            <option value="updatedAt">🕒 Última Edição</option>
+                            <option value="name">🔤 Nome do Produto</option>
+                            <option value="createdAt">🆕 Data de Cadastro</option>
+                        </select>
+
+                        <select [(ngModel)]="ordemDirecao" (change)="aplicarFiltrosEOrdenacao()">
+                            <option value="desc">Decrescente</option>
+                            <option value="asc">Crescente</option>
+                        </select>
+                    </div>
+                </div>
 
                 <div class="product-list" *ngIf="produtosFiltrados.length > 0; else noData">
                     <div class="product-card-horizontal" *ngFor="let p of produtosFiltrados" (click)="abrirDetalhes(p)">
@@ -138,7 +129,9 @@
                 <ng-template #noData>
                     <div class="empty-state">📦 Nenhum produto encontrado.</div>
                 </ng-template>
+
             </div>
         </main>
+
     </div>
 </div>
