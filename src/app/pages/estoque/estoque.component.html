@@ -1,127 +1,233 @@
-<div class="estoque-wrapper">
-    <div class="header-section">
-        <button routerLink="/dashboard" class="btn-back">← Dashboard</button>
-        <h2>Controle de Estoque</h2>
+<div class="app-wrapper">
+  
+  <header class="global-header">
+    <div class="brand-section">
+      <img src="assets/icons/logo-carriola.png" alt="Logo" class="brand-logo">
+      <h1 class="brand-name">Asi & Obra</h1>
     </div>
 
-    <div class="toolbar">
-        <div class="search-box">
-            <input type="text" [(ngModel)]="filtroNome" (input)="aplicarFiltrosEOrdenacao()"
-                placeholder="Buscar por produto...">
+    <button class="theme-toggle" (click)="toggleTheme()">
+      <lucide-icon [name]="isDarkMode ? 'sun' : 'moon'" size="28"></lucide-icon>
+      </button>
+  </header>
+
+  <div class="page-layout">
+    
+    <aside class="sidebar-container">
+      <div class="user-profile-card">
+        <div class="avatar-circle"></div>
+        <span class="user-greeting">Olá, {{ usuario?.name || 'Nome' }}!</span>
+      </div>
+
+      <nav class="nav-menu">
+        <a routerLink="/dashboard" class="menu-item">
+          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/casa.png'); mask-image: url('assets/icons/casa.png');"></div>
+          <span>Home</span>
+        </a>
+        
+        <a routerLink="/usuarios" class="menu-item" *ngIf="usuario?.role === 'ADMIN'">
+          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');"></div>
+          <span>Usuários</span>
+        </a>
+
+        <a routerLink="/perfil" class="menu-item">
+          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');"></div>
+          <span>Perfil</span>
+        </a>
+        
+        <a routerLink="/produtos" class="menu-item">
+          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/produtos.png'); mask-image: url('assets/icons/produtos.png');"></div>
+          <span>Produtos</span>
+        </a>
+        
+        <a routerLink="/estoque" class="menu-item">
+          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/estoque.png'); mask-image: url('assets/icons/estoque.png');"></div>
+          <span>Estoque</span>
+        </a>
+        
+        <a routerLink="/registros-baixas" class="menu-item">
+          <div class="menu-icon" style="-webkit-mask-image: url('assets/icons/grafico.png'); mask-image: url('assets/icons/grafico.png');"></div>
+          <span>Baixas</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="menu-item logout-item" (click)="logout()">
+          <lucide-icon [img]="LogOut" size="22" class="menu-icon"></lucide-icon>
+          <span>Sair</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content page-body">
+      
+      <div class="estoque-wrapper">
+        <div class="header-section">
+            <button routerLink="/dashboard" class="btn-back">← Dashboard</button>
+            <h2>Controle de Estoque</h2>
         </div>
 
-        <div class="filter-group">
-            <input type="text" [(ngModel)]="filtroLote" (input)="aplicarFiltrosEOrdenacao()" placeholder="Filtrar Lote">
+        <div class="toolbar">
+            <div class="search-box">
+                <lucide-icon [img]="Search" size="20" class="search-icon"></lucide-icon>
+                <input type="text" [(ngModel)]="filtroNome" (input)="aplicarFiltrosEOrdenacao()"
+                    placeholder="Filtrar por...">
+            </div>
 
-            <select [(ngModel)]="ordemCampo" (change)="aplicarFiltrosEOrdenacao()">
-                <option value="updatedAt">Última Movimentação</option>
-                <option value="currentQuantity">Quantidade</option>
-                <option value="productName">Nome do Produto</option>
-            </select>
 
-            <select [(ngModel)]="ordemDirecao" (change)="aplicarFiltrosEOrdenacao()">
-                <option value="desc">Maior/Novo</option>
-                <option value="asc">Menor/Antigo</option>
-            </select>
+
+            <div class="filter-group">
+                <select [(ngModel)]="ordemCampo" (change)="aplicarFiltrosEOrdenacao()">
+                    <option value="updatedAt">Última Movimentação</option>
+                    <option value="currentQuantity">Quantidade</option>
+                    <option value="productName">Nome do Produto</option>
+                </select>
+
+                <select [(ngModel)]="ordemDirecao" (change)="aplicarFiltrosEOrdenacao()">
+                    <option value="desc">Maior/Novo</option>
+                    <option value="asc">Menor/Antigo</option>
+                </select>
+            </div>
         </div>
-    </div>
 
-    <div class="stock-grid">
-        <div class="stock-card" *ngFor="let item of itensFiltrados" (click)="abrirDetalhes(item)">
-            <div class="card-content">
-                <div class="stock-header">
-                    <span class="lote-badge">Lote: {{ item.batchNumber }}</span>
-                    <div class="qty-display" [class.low-stock]="item.currentQuantity < 5">
-                        {{ item.currentQuantity }} un
+        <div class="stock-grid">
+            <div class="stock-card" *ngFor="let item of itensFiltrados" (click)="abrirDetalhes(item)">
+                
+                <div class="card-header-row">
+                    <div class="title-block">
+                        <h3>{{ item.productName }}</h3>
+                        <div class="lote-info">Lote: {{ item.batchNumber }} • {{ item.productBrand }} | {{ item.productType }}</div>
+                    </div>
+                    
+                    <div class="date-info">
+                        <div class="date-block">
+                            <span class="date-label">Editado</span>
+                            <span>{{ item.updatedAt?.toDate() | date:'dd/MM/yy' }}</span>
+                        </div>
+                        <div class="date-block">
+                            <span class="date-label">Cadastrado</span>
+                            <span>{{ item.createdAt?.toDate() | date:'dd/MM/yy' }}</span>
+                        </div>
                     </div>
                 </div>
 
-                <h3>{{ item.productName }}</h3>
-                <small class="brand">{{ item.productBrand }} | {{ item.productType }}</small>
-
-                <div class="card-info">
-                    <p><strong>Cadastrado em:</strong> {{ item.createdAt?.toDate() | date:'dd/MM/yyyy' }}</p>
-                    <p *ngIf="item.expirationDate">
-                        <strong>Vencimento:</strong> {{ item.expirationDate?.toDate() | date:'dd/MM/yyyy' }}
-                    </p>
+                <div class="stock-progress-bar">
+                    <div class="progress-fill" 
+                         [ngClass]="{
+                            'bg-danger': item.currentQuantity < 5, 
+                            'bg-warning': item.currentQuantity >= 5 && item.currentQuantity <= 15, 
+                            'bg-success': item.currentQuantity > 15
+                         }"
+                         [style.width.%]="(item.currentQuantity / (item.initialQuantity || 1)) * 100">
+                    </div>
                 </div>
 
-                <div class="card-footer">
-                    <small>Atualizado em: {{ item.updatedAt?.toDate() | date:'dd/MM/yy HH:mm' }}</small>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="label">Quantidade Atual</span>
+                        <span class="value" [style.color]="item.currentQuantity < 5 ? 'var(--cor-vermelho-tijolo)' : 'var(--cor-grafite-profundo)'">
+                            {{ item.currentQuantity }} un
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Quantidade Inicial</span>
+                        <span class="value text-dark">{{ item.initialQuantity }} un</span>
+                    </div>
+                    <div class="info-item" *ngIf="item.expirationDate">
+                        <span class="label">Validade</span>
+                        <span class="value text-dark">{{ item.expirationDate?.toDate() | date:'dd/MM/yyyy' }}</span>
+                    </div>
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn-action" (click)="abrirModalEdicao(item, $event)">
+                        <lucide-icon [img]="Edit3" size="18"></lucide-icon> Editar
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal-overlay" *ngIf="exibirModal" (click)="fecharModal()">
+            <div class="modal-content" (click)="$event.stopPropagation()">
+                <div class="modal-header">
+                    <div class="header-title">
+                        <small>DETALHES TÉCNICOS DO LOTE</small>
+                        <h2>{{ itemSelecionado?.productName }}</h2>
+                    </div>
+                    <button class="close-btn" (click)="fecharModal()">&times;</button>
+                </div>
+                <div class="modal-body" *ngIf="itemSelecionado">
+                    <div class="info-row">
+                        <div class="info-group">
+                            <label>Quantidade Atual</label>
+                            <p class="highlight-qty" [style.color]="itemSelecionado.currentQuantity < 5 ? 'var(--cor-vermelho-tijolo)' : ''">
+                                {{ itemSelecionado.currentQuantity }} unidades
+                            </p>
+                        </div>
+                        <div class="info-group">
+                            <label>Quantidade Inicial</label>
+                            <p>{{ itemSelecionado.initialQuantity }} unidades</p>
+                        </div>
+                    </div>
+                    <div class="info-group">
+                        <label>Dados do Produto</label>
+                        <div class="desc-box">
+                            <strong>Marca:</strong> {{ itemSelecionado.productBrand }} <br>
+                            <strong>Categoria:</strong> {{ itemSelecionado.productType }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal-overlay" *ngIf="exibirModal" (click)="fecharModal()">
-        <div class="modal-content" (click)="$event.stopPropagation()">
-
-            <div class="modal-header">
-                <div class="header-title">
-                    <small>DETALHES TÉCNICOS DO LOTE</small>
-                    <h2>{{ itemSelecionado?.productName }}</h2>
-                </div>
-                <button class="close-btn" (click)="fecharModal()">&times;</button>
-            </div>
-
-            <div class="modal-body" *ngIf="itemSelecionado">
-
-                <div class="info-row">
-                    <div class="info-group">
-                        <label>Quantidade Atual</label>
-                        <p class="highlight-qty" [class.low-stock]="itemSelecionado.currentQuantity < 5">
-                            {{ itemSelecionado.currentQuantity }} unidades
-                        </p>
-                    </div>
-                    <div class="info-group">
-                        <label>Quantidade Inicial</label>
-                        <p>{{ itemSelecionado.initialQuantity }} unidades</p>
-                    </div>
+        <div class="modal-overlay" *ngIf="exibirModalEdicao" (click)="fecharModalEdicao()">
+            <div class="modal-content edit-modal" (click)="$event.stopPropagation()">
+                <div class="modal-header">
+                    <h2 class="edit-title">Editar Lote</h2>
+                    <button class="close-btn" (click)="fecharModalEdicao()">&times;</button>
                 </div>
 
-                <div class="info-row">
-                    <div class="info-group">
-                        <label>Número do Lote (Batch)</label>
-                        <p>{{ itemSelecionado.batchNumber }}</p>
+                <div class="modal-body" *ngIf="itemEmEdicao">
+                    <div class="form-group">
+                        <label>Produto:</label>
+                        <input type="text" [value]="itemEmEdicao.productName" disabled class="input-disabled">
                     </div>
-                    <div class="info-group">
-                        <label>ID do Produto</label>
-                        <p style="font-size: 0.7rem; color: #8899a6;">{{ itemSelecionado.productId }}</p>
+
+                    <div class="form-group">
+                        <label>Número do lote:</label>
+                        <input type="text" [(ngModel)]="itemEmEdicao.batchNumber">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Quantidade inicial:</label>
+                            <input type="number" [(ngModel)]="itemEmEdicao.initialQuantity">
+                        </div>
+                        <div class="form-group">
+                            <label>Quantidade atual:</label>
+                            <input type="number" [(ngModel)]="itemEmEdicao.currentQuantity">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Data de validade:</label>
+                        <div class="input-with-icon">
+                            <input type="date" [(ngModel)]="itemEmEdicao.expirationDateInput">
+                        </div>
+                    </div>
+
+                    <div class="edit-actions">
+                        <button class="btn-save" (click)="salvarAlteracoesLote()">
+                            <lucide-icon [img]="Save" size="18"></lucide-icon> Salvar alterações
+                        </button>
+                        <button class="btn-cancel" (click)="fecharModalEdicao()">Cancelar</button>
                     </div>
                 </div>
-
-                <div class="info-group">
-                    <label>Dados do Produto</label>
-                    <div class="desc-box">
-                        <strong>Marca:</strong> {{ itemSelecionado.productBrand }} <br>
-                        <strong>Categoria:</strong> {{ itemSelecionado.productType }}
-                    </div>
-                </div>
-
-                <div class="timeline-section">
-                    <div class="timeline-item">
-                        <label>Criação do Lote:</label>
-                        <p>{{ itemSelecionado.createdAt?.toDate() | date:'dd/MM/yyyy HH:mm' }}</p>
-                    </div>
-                    <div class="timeline-item" *ngIf="itemSelecionado.expirationDate">
-                        <label>Data de Validade:</label>
-                        <p style="color: #ff7043;">
-                            {{ itemSelecionado.expirationDate?.toDate() | date:'dd/MM/yyyy' }}
-                        </p>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <div class="editor-info">
-                        <span class="label">Última edição por:</span>
-                        <span class="value"><strong>{{ itemSelecionado.lastEditedByName }}</strong></span>
-                        <br>
-                        <small>em {{ itemSelecionado.updatedAt?.toDate() | date:'dd/MM/yyyy HH:mm' }}</small>
-                    </div>
-                    <small class="uid-info">Ref: {{ itemSelecionado.id }}</small>
-                </div>
-
             </div>
         </div>
-    </div>
+
+      </div>
+    </main>
+  </div>
 </div>
