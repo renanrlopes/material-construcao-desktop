@@ -277,24 +277,23 @@
 
 
 ::ng-deep .dark-theme {
-    // Sobrescrita de superfícies principais para o modo escuro
     .page-layout {
     background-color: var(--cor-azul-escuro-01) !important;
   }
     
     .produtos-wrapper,
     .estoque-wrapper {
-        background-color: var(--cor-azul-escuro-02) !important; // Fundo azul profundo do protótipo
-        color: var(--cor-perola) !important; // Texto claro para contraste
+        background-color: var(--cor-azul-escuro-02) !important; 
+        color: var(--cor-perola) !important; 
 
         .header-section h2 {
-            color: var(--cor-vermelho-tijolo) !important; // Mantém a cor da marca
+            color: var(--cor-vermelho-tijolo) !important; 
         }
 
-        // Toolbar: Busca e Filtros no Dark Mode
+        
         .toolbar {
             .search-box input {
-                background: var(--cor-azul-escuro-01) !important; // Input levemente mais claro que o fundo
+                background: var(--cor-azul-escuro-01) !important; 
                 border-color: var(--cor-azul-ardosia) !important;
                 color: var(--cor-branco) !important;
 
@@ -311,16 +310,15 @@
             }
         }
 
-        // Cards de Estoque no Dark Mode
         .stock-card {
-            background: var(--cor-azul-escuro-01) !important; // Cor dos cards nas imagens
+            background: var(--cor-azul-escuro-01) !important; 
             border-color: var(--cor-azul-ardosia) !important;
             color: var(--cor-perola) !important;
 
             &:hover {
-                background: #232e36; // Um tom sutilmente mais claro para o hover
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-                border-color: var(--cor-vermelho-tijolo);
+                background: #232e36 !important; 
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5) !important;
+                border-color: var(--cor-vermelho-tijolo) !important;
             }
 
             .card-header-row {
@@ -330,7 +328,7 @@
             }
 
             .stock-progress-bar {
-                background: var(--cor-azul-ardosia) !important; // Fundo da barra vazio no escuro
+                background: var(--cor-azul-ardosia) !important; 
             }
 
             .info-grid .info-item {
@@ -348,39 +346,38 @@
         }
     }
 
-    // Estilos dos Modais no Dark Mode
     .modal-content {
-        background: var(--cor-azul-escuro-01);
-        color: var(--cor-perola);
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+        background: var(--cor-azul-escuro-01) !important;
+        color: var(--cor-perola) !important;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7) !important;
 
         .modal-header {
-            h2 { color: var(--cor-branco); }
-            .close-btn { color: var(--cor-azul-ardosia); }
+            h2 { color: var(--cor-branco) !important; }
+            .close-btn { color: var(--cor-azul-ardosia) !important; }
         }
 
         .form-group {
-            label { color: var(--cor-perola); }
+            label { color: var(--cor-perola) !important; }
             
             input {
-                background: var(--cor-azul-escuro-02);
-                border-color: var(--cor-azul-ardosia);
-                color: var(--cor-branco);
+                background: var(--cor-azul-escuro-02) !important;
+                border-color: var(--cor-azul-ardosia) !important;
+                color: var(--cor-branco) !important;
 
                 &:focus {
-                    background: var(--cor-azul-escuro-01);
-                    border-color: var(--cor-vermelho-tijolo);
+                    background: var(--cor-azul-escuro-01) !important;
+                    border-color: var(--cor-vermelho-tijolo) !important;
                 }
             }
         }
 
         .edit-actions .btn-cancel {
-            color: var(--cor-perola);
-            &:hover { color: var(--cor-vermelho-tijolo); }
+            color: var(--cor-perola) !important;
+            &:hover { color: var(--cor-vermelho-tijolo) !important; }
         }
     }
 
     .modal-overlay {
-        background: rgba(0, 0, 0, 0.85); // Overlay mais denso para focar no modal
+        background: rgba(0, 0, 0, 0.85) !important; 
     }
 }
