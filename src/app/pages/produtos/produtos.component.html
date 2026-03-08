@@ -1,119 +1,119 @@
-<div class="produtos-wrapper">
-    <div class="header-section">
-        <button routerLink="/dashboard" class="btn-back">
-            <span class="icon">←</span> Dashboard
+<div class="app-wrapper">
+    <header class="global-header">
+        <div class="brand-section">
+            <img src="assets/icons/logo-carriola.png" alt="Logo" class="brand-logo">
+            <h1 class="brand-name">Asi & Obra</h1>
+        </div>
+
+        <button class="theme-toggle" (click)="toggleTheme()">
+            <lucide-icon [name]="isDarkMode ? 'sun' : 'moon'" size="28"></lucide-icon>
         </button>
-        <h2>Produtos</h2>
-    </div>
+    </header>
 
-    <div class="toolbar">
-        <div class="search-box">
-            <i class="search-icon">🔍</i>
-            <input type="text" [(ngModel)]="filtroNome" (input)="aplicarFiltrosEOrdenacao()"
-                placeholder="Buscar por nome do produto...">
-        </div>
+    <div class="page-layout">
 
-        <div class="filter-group">
-            <input type="text" [(ngModel)]="filtroTipo" (input)="aplicarFiltrosEOrdenacao()"
-                placeholder="Filtrar tipo (ex: tinta)">
-
-            <select [(ngModel)]="ordemCampo" (change)="aplicarFiltrosEOrdenacao()">
-                <option value="updatedAt">📅 Data de Edição</option>
-                <option value="name">🔤 Ordem Alfabética</option>
-                <option value="createdAt">🆕 Data de Cadastro</option>
-            </select>
-
-            <select [(ngModel)]="ordemDirecao" (change)="aplicarFiltrosEOrdenacao()">
-                <option value="desc">Decrescente (Z-A / Novo)</option>
-                <option value="asc">Crescente (A-Z / Antigo)</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="product-grid" *ngIf="produtosFiltrados.length > 0; else noData">
-        <div class="product-card" *ngFor="let p of produtosFiltrados" (click)="abrirDetalhes(p)">
-
-            <div class="card-content">
-                <div class="card-header">
-                    <h3>{{ p.name }}</h3>
-                </div>
-
-                <div class="tags">
-                    <span class="tag-type">{{ p.type }}</span>
-                    <span class="tag-brand">{{ p.brand }}</span>
-                </div>
-
-                <p class="description">{{ p.description }}</p>
-
-                <div class="card-footer">
-                    <div class="user-info">
-                        <span class="user-icon">👤</span>
-                        <small>{{ p.lastEditedByName }}</small>
-                    </div>
-                    <small class="date-info">{{ p.updatedAt?.toDate() | date:'dd/MM/yy HH:mm' }}</small>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <ng-template #noData>
-        <div class="empty-state">
-            <div class="empty-icon">📦</div>
-            <p>Nenhum produto encontrado com os filtros aplicados.</p>
-        </div>
-    </ng-template>
-
-    <div class="modal-overlay" *ngIf="exibirModal" (click)="fecharModal()">
-        <div class="modal-content" (click)="$event.stopPropagation()">
-
-            <div class="modal-header">
-                <div class="header-title">
-                    <small>DETALHES DO ITEM</small>
-                    <h2>{{ produtoSelecionado?.name }}</h2>
-                </div>
-                <button class="close-btn" (click)="fecharModal()">&times;</button>
+        <aside class="sidebar-container">
+            <div class="user-profile-card">
+                <div class="avatar-circle"></div>
+                <span class="user-greeting">Olá, {{ usuario?.name || 'Nome' }}!</span>
             </div>
 
-            <div class="modal-body" *ngIf="produtoSelecionado">
+            <nav class="nav-menu">
+                <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                    class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/casa.png'); mask-image: url('assets/icons/casa.png');">
+                    </div>
+                    <span>Home</span>
+                </a>
 
-                <div class="info-row">
-                    <div class="info-group">
-                        <label>Marca</label>
-                        <p>{{ produtoSelecionado.brand }}</p>
+                <a routerLink="/usuarios" routerLinkActive="active" class="menu-item" *ngIf="usuario?.role === 'ADMIN'">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');">
                     </div>
-                    <div class="info-group">
-                        <label>Tipo de Produto</label>
-                        <p>{{ produtoSelecionado.type }}</p>
-                    </div>
-                </div>
+                    <span>Usuários</span>
+                </a>
 
-                <div class="info-group">
-                    <label>Descrição Técnica</label>
-                    <div class="desc-box">
-                        {{ produtoSelecionado.description }}
+                <a routerLink="/perfil" routerLinkActive="active" class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/perfil.png'); mask-image: url('assets/icons/perfil.png');">
                     </div>
-                </div>
+                    <span>Perfil</span>
+                </a>
 
-                <div class="timeline-section">
-                    <div class="timeline-item">
-                        <label>Cadastrado em:</label>
-                        <p>{{ produtoSelecionado.createdAt?.toDate() | date:'dd/MM/yyyy HH:mm' }}</p>
+                <a routerLink="/produtos" routerLinkActive="active" class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/produtos.png'); mask-image: url('assets/icons/produtos.png');">
                     </div>
-                    <div class="timeline-item">
-                        <label>Última atualização:</label>
-                        <p>{{ produtoSelecionado.updatedAt?.toDate() | date:'dd/MM/yyyy HH:mm' }}</p>
-                    </div>
-                </div>
+                    <span>Produtos</span>
+                </a>
 
-                <div class="modal-footer">
-                    <div class="editor-badge">
-                        <span class="label">Editado por:</span>
-                        <span class="value">{{ produtoSelecionado.lastEditedByName }}</span>
+                <a routerLink="/estoque" routerLinkActive="active" class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/estoque.png'); mask-image: url('assets/icons/estoque.png');">
                     </div>
-                    <small class="uid-info">ID: {{ produtoSelecionado.id }}</small>
-                </div>
+                    <span>Estoque</span>
+                </a>
 
+                <a routerLink="/registros-baixas" routerLinkActive="active" class="menu-item">
+                    <div class="menu-icon"
+                        style="-webkit-mask-image: url('assets/icons/grafico.png'); mask-image: url('assets/icons/grafico.png');">
+                    </div>
+                    <span>Baixas</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="menu-item logout-item" (click)="onLogout()">
+                    <div class="menu-icon logout-icon"
+                        style="-webkit-mask-image: url('assets/icons/logout.png'); mask-image: url('assets/icons/logout.png');">
+                    </div>
+                    <span>Sair do Sistema</span>
+                </button>
             </div>
-        </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="produtos-container">
+
+                <div class="search-toolbar">
+                    <div class="search-input-wrapper">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" [(ngModel)]="filtroNome" (input)="aplicarFiltrosEOrdenacao()"
+                            placeholder="Buscar...">
+                    </div>
+                </div>
+
+                <div class="product-list" *ngIf="produtosFiltrados.length > 0; else noData">
+                    <div class="product-card-horizontal" *ngFor="let p of produtosFiltrados" (click)="abrirDetalhes(p)">
+                        <div class="card-info">
+                            <h3 class="product-name">Nome: {{ p.name }}</h3>
+
+                            <div class="tag-row">
+                                <span class="tag">{{ p.type }}</span>
+                                <span class="tag">{{ p.brand }}</span>
+                            </div>
+
+                            <p class="product-desc">Descrição: {{ p.description }}</p>
+
+                            <div class="meta-info">
+                                <span>Editado: {{ p.updatedAt?.toDate() | date:'dd/MM/yy' }}<br>Por: {{
+                                    p.lastEditedByName }}</span>
+                                <span>Cadastrado: {{ p.createdAt?.toDate() | date:'dd/MM/yy' }}</span>
+                            </div>
+                        </div>
+
+                        <div class="card-actions">
+                            <button class="btn-edit-product">Editar</button>
+                            <button class="btn-delete-product" (click)="$event.stopPropagation();">Excluir</button>
+                        </div>
+                    </div>
+                </div>
+
+                <ng-template #noData>
+                    <div class="empty-state">📦 Nenhum produto encontrado.</div>
+                </ng-template>
+            </div>
+        </main>
     </div>
 </div>

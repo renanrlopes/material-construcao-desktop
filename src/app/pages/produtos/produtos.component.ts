@@ -1,29 +1,59 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Produto } from '../../core/models/produto.model';
+import { AuthService } from '../../core/services/auth.service';
+import { DOCUMENT } from '@angular/common';
+import { AppUser, UserRole } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-produtos',
   templateUrl: './produtos.component.html',
   styleUrl: './produtos.component.scss',
-  encapsulation: ViewEncapsulation.None
 })
+
 export class ProdutosComponent implements OnInit {
   produtos: Produto[] = [];
   produtosFiltrados: Produto[] = [];
+  userName: string = '';
+  userRole: UserRole | null = null;
+  usuario: AppUser | null = null; // Objeto que o HTML usa para o *ngIf
+  loading: boolean = true;
+  isDarkMode: boolean = false;
 
-  // Filtros
   filtroNome: string = '';
   filtroTipo: string = '';
-
-  // Ordenação
   ordemCampo: string = 'updatedAt';
   ordemDirecao: 'asc' | 'desc' = 'desc';
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(
+    private firestore: AngularFirestore,
+    private authService: AuthService,
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private document: Document
+  ) { }
 
   ngOnInit(): void {
-    // Escuta a coleção 'produtos' em tempo real
+    const temaSalvo = localStorage.getItem('theme');
+    this.isDarkMode = temaSalvo === 'dark';
+    this.applyTheme();
+
+    // AJUSTE: Carrega os dados do usuário para habilitar a Sidebar corretamente
+    this.authService.getUserRole().subscribe({
+      next: (userData: any) => {
+        if (userData) {
+          this.usuario = userData;
+          this.userName = userData.name;
+          this.userRole = userData.role;
+        }
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Erro ao carregar dados do usuário', err);
+        this.loading = false;
+      }
+    });
+
+    // Carrega os produtos
     this.firestore.collection<Produto>('produtos').valueChanges({ idField: 'id' })
       .subscribe(res => {
         this.produtos = res;
@@ -78,5 +108,23 @@ export class ProdutosComponent implements OnInit {
   fecharModal() {
     this.exibirModal = false;
     this.produtoSelecionado = null;
+  }
+
+  onLogout() {
+    this.authService.logout();
+  }
+
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+    this.applyTheme();
+  }
+
+  private applyTheme() {
+    if (this.isDarkMode) {
+      this.renderer.addClass(this.document.body, 'dark-theme');
+    } else {
+      this.renderer.removeClass(this.document.body, 'dark-theme');
+    }
   }
 }

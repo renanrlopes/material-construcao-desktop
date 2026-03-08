@@ -2,7 +2,7 @@
 @import '../sidebar.component.scss';
 
 /* =========================================
-   LAYOUT E ESTRUTURA GLOBAL
+    LAYOUT E ESTRUTURA GLOBAL
 ========================================= */
 .app-wrapper {
     display: flex;
@@ -25,7 +25,7 @@
 }
 
 /* =========================================
-   CONTÊINER DE ADMINISTRAÇÃO
+    CONTÊINER DE ADMINISTRAÇÃO
 ========================================= */
 .admin-container {
     padding: 0 3rem 3rem 3rem;
@@ -81,7 +81,7 @@
 }
 
 /* =========================================
-   SEÇÃO DE ADICIONAR USUÁRIO
+    SEÇÃO DE ADICIONAR USUÁRIO
 ========================================= */
 .add-user-section {
     background-color: var(--cor-off-white-01);
@@ -128,7 +128,7 @@
 }
 
 /* =========================================
-   TABELA DE USUÁRIOS
+    TABELA DE USUÁRIOS
 ========================================= */
 .user-table {
     width: 100%;
@@ -189,19 +189,59 @@
     }
 }
 
-
+/* =========================================
+    TEMA ESCURO (DARK MODE)
+========================================= */
 ::ng-deep .dark-theme {
 
-    // Fundo da página e Sidebar (que já está no import)
     .page-layout {
-        background-color: #0f171e !important; // Um tom acima do preto puro
+        background-color: #0f171e !important;
     }
 
     .main-content {
         background-color: #0f171e;
     }
 
-    // Forçar cor de todos os títulos e textos informativos
+    /* FORÇAR TEXTO CLARO NA SIDEBAR */
+    .sidebar-container {
+        background-color: var(--cor-azul-escuro-02);
+
+        .user-greeting {
+            color: var(--cor-perola) !important;
+        }
+
+        .nav-menu .menu-item {
+            color: rgba(255, 255, 255, 0.7) !important;
+
+            span {
+                color: inherit;
+            }
+
+            &:hover,
+            &.active {
+                color: var(--cor-perola) !important;
+                background-color: rgba(255, 255, 255, 0.05);
+            }
+        }
+    }
+
+    /* CORREÇÃO DO FOOTER DA SIDEBAR */
+    .sidebar-footer {
+        border-top-color: rgba(255, 255, 255, 0.1) !important;
+
+        .menu-item span {
+            color: var(--cor-perola) !important;
+        }
+
+        .logout-icon {
+            background-color: var(--cor-perola) !important;
+        }
+
+        &:hover .menu-item span {
+            color: var(--cor-vermelho-tijolo) !important;
+        }
+    }
+
     .admin-container {
 
         h2,
@@ -220,7 +260,6 @@
         }
     }
 
-    // Seção de Cadastro (Card de cima)
     .add-user-section {
         background-color: var(--cor-azul-escuro-02) !important;
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -237,7 +276,6 @@
         }
     }
 
-    // Barra de busca
     .search-box {
         input {
             background-color: var(--cor-azul-escuro-02) !important;
@@ -250,7 +288,6 @@
         }
     }
 
-    // Tabela Premium no Dark Mode
     .user-table {
         background-color: var(--cor-azul-escuro-02) !important;
         border-color: #3e4b54;
@@ -260,7 +297,7 @@
             background-color: #0d141a !important;
 
             th {
-                color: #7A8B99 !important; // Cinza azulado para os headers
+                color: #7A8B99 !important;
                 border-bottom-color: #3e4b54;
             }
         }
@@ -284,7 +321,6 @@
         }
     }
 
-    // Estado Vazio
     .empty-results {
         background-color: transparent;
         color: #7A8B99;

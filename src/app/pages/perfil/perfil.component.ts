@@ -47,6 +47,10 @@ export class PerfilComponent implements OnInit {
     }
   }
 
+  onLogout() {
+    this.authService.logout();
+  } 
+
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
     localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');

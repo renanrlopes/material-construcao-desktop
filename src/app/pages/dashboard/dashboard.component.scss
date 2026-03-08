@@ -1,8 +1,6 @@
 @import '../sidebar.component.scss';
 
-/* =========================================
-   ESTRUTURA PRINCIPAL E LAYOUT
-========================================= */
+
 .main-content {
   flex: 1;
   display: flex;
@@ -30,9 +28,7 @@
   }
 }
 
-/* =========================================
-   GRID E ESTILO DOS CARDS
-========================================= */
+
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
