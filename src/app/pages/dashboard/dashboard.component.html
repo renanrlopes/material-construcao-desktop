@@ -102,29 +102,80 @@
             <span class="card-label">Baixas</span>
           </div>
 
-          <div class="summary-card alert-card clickable" (click)="abrirModalAlertas()">
+          <!-- Card de Alertas com lógica de cores -->
+          <div class="summary-card alert-card clickable" [ngClass]="getAlertCardColor()" (click)="abrirModalAlertas()"
+            [attr.data-alerts]="criticalItems">
             <div class="card-icon alert-icon"
               style="-webkit-mask-image: url('assets/icons/Vector.png'); mask-image: url('assets/icons/Vector.png');">
             </div>
             <span class="card-value alert-text">{{ criticalItems }}</span>
             <span class="card-label alert-text">Alertas</span>
             <small class="click-info" *ngIf="criticalItems > 0">Clique para ver detalhes</small>
+            <small class="click-info success" *ngIf="criticalItems === 0">✓ Tudo bem!</small>
           </div>
         </div>
       </div>
 
-      <div class="modal-overlay" *ngIf="exibirModal" (click)="exibirModal = false">
+      <!-- Modal Agrupado de Alertas -->
+      <div class="modal-overlay" *ngIf="exibirModalAgrupado" (click)="fecharModal()">
         <div class="modal-card" (click)="$event.stopPropagation()">
           <div class="modal-header">
-            <h3>Lista de Alertas</h3>
-            <button class="close-btn" (click)="exibirModal = false">×</button>
+            <h3>🚨 Lista de Alertas</h3>
+            <button class="close-btn" (click)="fecharModal()">×</button>
           </div>
           <div class="modal-body">
-            <div *ngFor="let item of produtosCriticos" class="alert-detail-item">
-              <span class="item-name">⚠️ {{ item.productName || 'Produto' }}</span>
-              <span class="item-qty">Restam: <strong>{{ item.currentQuantity }}</strong> un.</span>
+            <!-- Alertas Vazios -->
+            <div *ngIf="alertasAgrupados.vazio.length > 0" class="alert-group">
+              <h4 class="alert-group-title">📦 Estoque Vazio</h4>
+              <div *ngFor="let item of alertasAgrupados.vazio" class="alert-detail-item vazio">
+                <div class="alert-info">
+                  <span class="item-name">{{ item.productName }}</span>
+                  <span class="item-batch">Lote: {{ item.batchNumber }}</span>
+                </div>
+                <span class="item-status">Quantidade: <strong>{{ item.currentQuantity }}</strong> un.</span>
+              </div>
             </div>
-            <p *ngIf="produtosCriticos.length === 0">Nenhum alerta crítico no momento.</p>
+
+            <!-- Alertas Expirados -->
+            <div *ngIf="alertasAgrupados.expirado.length > 0" class="alert-group">
+              <h4 class="alert-group-title">❌ Produtos Expirados</h4>
+              <div *ngFor="let item of alertasAgrupados.expirado" class="alert-detail-item expirado">
+                <div class="alert-info">
+                  <span class="item-name">{{ item.productName }}</span>
+                  <span class="item-batch">Lote: {{ item.batchNumber }}</span>
+                </div>
+                <span class="item-status">Válidade: <strong>{{ item.expirationDate | date: 'dd/MM/yyyy'
+                    }}</strong></span>
+              </div>
+            </div>
+
+            <!-- Alertas Vence em Breve -->
+            <div *ngIf="alertasAgrupados.venceBreve.length > 0" class="alert-group">
+              <h4 class="alert-group-title">⏰ Vence em Breve</h4>
+              <div *ngFor="let item of alertasAgrupados.venceBreve" class="alert-detail-item vence-breve">
+                <div class="alert-info">
+                  <span class="item-name">{{ item.productName }}</span>
+                  <span class="item-batch">Lote: {{ item.batchNumber }}</span>
+                </div>
+                <span class="item-status">Vence: <strong>{{ item.expirationDate | date: 'dd/MM/yyyy' }}</strong></span>
+              </div>
+            </div>
+
+            <!-- Alertas Baixo Estoque -->
+            <div *ngIf="alertasAgrupados.baixo.length > 0" class="alert-group">
+              <h4 class="alert-group-title">⚠️ Estoque Baixo</h4>
+              <div *ngFor="let item of alertasAgrupados.baixo" class="alert-detail-item baixo">
+                <div class="alert-info">
+                  <span class="item-name">{{ item.productName }}</span>
+                  <span class="item-batch">Lote: {{ item.batchNumber }}</span>
+                </div>
+                <span class="item-status">Restam: <strong>{{ item.currentQuantity }}</strong> / {{ item.initialQuantity
+                  }} un.</span>
+              </div>
+            </div>
+
+            <!-- Sem alertas -->
+            <p *ngIf="criticalItems === 0" class="no-alerts">✓ Nenhum alerta crítico no momento.</p>
           </div>
         </div>
       </div>

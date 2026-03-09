@@ -2,7 +2,7 @@ import { Component, OnInit, Renderer2, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
 import { UserRole } from '../../core/models/user.model';
-import { EstoqueService } from '../../core/services/estoque.service';
+import { EstoqueService, EstoqueComAlerta } from '../../core/services/estoque.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,13 +15,22 @@ export class DashboardComponent implements OnInit {
   loading: boolean = true;
   isDarkMode: boolean = false;
 
-  productCount: number = 0; // Total de produtos cadastrados
-  itensEstoque: number = 0; // Total de lotes/itens no estoque
-  monthLowRegistrations: number = 0; // Total de baixas realizadas no mês
-  criticalItems: number = 0; // Total de itens com quantidade crítica (menos de 5 unidades)
-  produtosCriticos: any[] = []; // Guarda a lista de produtos críticos para mostrar os nomes no HTML
+  productCount: number = 0;
+  itensEstoque: number = 0;
+  monthLowRegistrations: number = 0;
+  criticalItems: number = 0;
 
-  exibirModal: boolean = false; // Controla a exibição do modal de itens críticos
+  // Alertas detalhados
+  produtosCriticos: EstoqueComAlerta[] = [];
+  alertasAgrupados: {
+    vazio: EstoqueComAlerta[],
+    expirado: EstoqueComAlerta[],
+    venceBreve: EstoqueComAlerta[],
+    baixo: EstoqueComAlerta[]
+  } = { vazio: [], expirado: [], venceBreve: [], baixo: [] };
+
+  exibirModal: boolean = false;
+  exibirModalAgrupado: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -64,16 +73,63 @@ export class DashboardComponent implements OnInit {
       this.monthLowRegistrations = total;
     });
 
+    // Carregar alertas com lógica completa
     this.estoqueService.getItensCriticos().subscribe(lista => {
-      this.produtosCriticos = lista;      // Guarda a lista para mostrar os nomes no HTML
-      this.criticalItems = lista.length; // Continua atualizando o número no card
+      this.produtosCriticos = lista;
+      this.criticalItems = lista.length;
     });
+
+    // Carregar alertas agrupados
+    this.estoqueService.getItensCriticosAgrupados().subscribe(agrupados => {
+      this.alertasAgrupados = agrupados;
+    });
+  }
+
+  // Retorna cor do card de alertas baseado na quantidade
+  getAlertCardColor(): string {
+    return this.criticalItems > 0 ? 'alert-danger' : 'alert-success';
+  }
+
+  // Retorna ícone/emoji baseado no tipo de alerta
+  getAlertIcon(status: string): string {
+    switch (status) {
+      case 'vazio':
+        return '📦';
+      case 'expirado':
+        return '❌';
+      case 'vence-breve':
+        return '⏰';
+      case 'baixo':
+        return '⚠️';
+      default:
+        return '✅';
+    }
+  }
+
+  // Retorna descrição do alerta
+  getAlertDescription(status: string): string {
+    switch (status) {
+      case 'vazio':
+        return 'Estoque vazio';
+      case 'expirado':
+        return 'Produto expirado';
+      case 'vence-breve':
+        return 'Vence em breve (até 30 dias)';
+      case 'baixo':
+        return 'Estoque baixo (20% ou menos)';
+      default:
+        return 'Sem alertas';
+    }
   }
 
   abrirModalAlertas() {
     if (this.criticalItems > 0) {
-      this.exibirModal = true;
+      this.exibirModalAgrupado = true;
     }
+  }
+
+  fecharModal() {
+    this.exibirModalAgrupado = false;
   }
 
   onLogout() {
