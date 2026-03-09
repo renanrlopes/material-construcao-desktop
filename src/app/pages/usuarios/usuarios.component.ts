@@ -71,7 +71,7 @@ export class UsuariosComponent implements OnInit {
 
     this.usuariosFiltrados = this.usuarios.filter(user =>
       user.name.toLowerCase().includes(termo) ||
-      user.email.toLowerCase().includes(termo))
+      user.email.toLowerCase().includes(termo)) 
   }
 
   alterarRole(uid: string, event: any) {

@@ -118,14 +118,20 @@ export class EstoqueComponent implements OnInit {
     if (!this.itemEmEdicao.id) return;
 
     try {
-      const dataParaSalvar = this.itemEmEdicao.expirationDateInput ? new Date(this.itemEmEdicao.expirationDateInput) : null;
+      let dataParaSalvar = null;
+
+      if (this.itemEmEdicao.expirationDateInput) {
+        // Parse the date string to handle timezone properly
+        const [year, month, day] = this.itemEmEdicao.expirationDateInput.split('-');
+        dataParaSalvar = new Date(Number(year), Number(month) - 1, Number(day));
+      }
 
       await this.firestore.collection('estoque').doc(this.itemEmEdicao.id).update({
         currentQuantity: Number(this.itemEmEdicao.currentQuantity),
         initialQuantity: Number(this.itemEmEdicao.initialQuantity),
         expirationDate: dataParaSalvar,
         updatedAt: new Date(),
-        lastEditedBy: this.usuario?.name || 'Sistema' 
+        lastEditedBy: this.usuario?.name || 'Sistema'
       });
 
       this.fecharModalEdicao();
