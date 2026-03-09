@@ -125,6 +125,10 @@
                                     <span>{{ item.updatedAt?.toDate() | date:'dd/MM/yy' }}</span>
                                 </div>
                                 <div class="date-block">
+                                    <span class="date-label">Editado Por</span>
+                                    <span>{{ item.lastEditedBy || 'Sistema' }}</span>
+                                </div>
+                                <div class="date-block">
                                     <span class="date-label">Cadastrado</span>
                                     <span>{{ item.createdAt?.toDate() | date:'dd/MM/yy' }}</span>
                                 </div>
