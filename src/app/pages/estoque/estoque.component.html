@@ -87,25 +87,25 @@
                             placeholder="Filtrar por nome...">
                     </div>
 
-                    <div class="search-box">
+                    <div class="right-filters">
                         <div class="lote-input-wrapper">
                             <lucide-icon [name]="'layers'" size="20" class="lote-icon"></lucide-icon>
                             <input type="text" [(ngModel)]="filtroLote" (input)="aplicarFiltrosEOrdenacao()"
                                 placeholder="Filtrar por lote...">
                         </div>
-                    </div>
 
-                    <div class="filter-group">
-                        <select [(ngModel)]="ordemCampo" (change)="aplicarFiltrosEOrdenacao()">
-                            <option value="updatedAt">Última Movimentação</option>
-                            <option value="currentQuantity">Quantidade</option>
-                            <option value="productName">Nome do Produto</option>
-                        </select>
+                        <div class="filter-group">
+                            <select [(ngModel)]="ordemCampo" (change)="aplicarFiltrosEOrdenacao()">
+                                <option value="updatedAt">Última Movimentação</option>
+                                <option value="currentQuantity">Quantidade</option>
+                                <option value="productName">Nome do Produto</option>
+                            </select>
 
-                        <select [(ngModel)]="ordemDirecao" (change)="aplicarFiltrosEOrdenacao()">
-                            <option value="desc">Maior/Novo</option>
-                            <option value="asc">Menor/Antigo</option>
-                        </select>
+                            <select [(ngModel)]="ordemDirecao" (change)="aplicarFiltrosEOrdenacao()">
+                                <option value="desc">Maior/Novo</option>
+                                <option value="asc">Menor/Antigo</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -190,7 +190,7 @@
                                 </div>
                                 <div class="info-group">
                                     <label>Quantidade Inicial</label>
-                                    <p>{{ itemSelecionado.initialQuantity }} unidades</p>
+                                    <p class="highlight-qty">{{ itemSelecionado.initialQuantity }} unidades</p>
                                 </div>
                             </div>
                             <div class="info-group">
