@@ -1,6 +1,5 @@
 @import '../sidebar.component.scss';
 
-
 .main-content {
   flex: 1;
   display: flex;
@@ -28,7 +27,6 @@
   }
 }
 
-
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -48,6 +46,7 @@
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
   min-height: 250px;
+  border: 2px solid transparent;
 
   &.clickable {
     cursor: pointer;
@@ -94,19 +93,54 @@
     color: #AC4430;
     font-weight: 600;
     opacity: 0.8;
+
+    &.success {
+      color: #28a745;
+      opacity: 1;
+    }
   }
 
+  // Estados de alerta
   &.alert-card {
-    .alert-icon {
-      background-color: #AC4430;
+    &.alert-danger {
+      border-color: #dc3545;
+      background: linear-gradient(135deg, rgba(220, 53, 69, 0.08), rgba(220, 53, 69, 0.03));
+
+      .card-icon.alert-icon {
+        background-color: #dc3545;
+      }
+
+      .card-value.alert-text {
+        color: #dc3545;
+      }
+
+      .card-label.alert-text {
+        color: #dc3545;
+      }
     }
 
-    .alert-text {
-      color: #AC4430;
+    &.alert-success {
+      border-color: #28a745;
+      background: linear-gradient(135deg, rgba(40, 167, 69, 0.08), rgba(40, 167, 69, 0.03));
+
+      .card-icon.alert-icon {
+        background-color: #28a745;
+      }
+
+      .card-value.alert-text {
+        color: #28a745;
+      }
+
+      .card-label.alert-text {
+        color: #28a745;
+      }
     }
   }
 }
 
+// ========================================= 
+// MODAL STYLES
+// ========================================= 
 
 .modal-overlay {
   position: fixed;
@@ -114,36 +148,43 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 20px;
+  animation: overlayFadeIn 0.2s ease-out;
 }
 
 .modal-card {
   background: var(--cor-branco);
   width: 100%;
-  max-width: 500px;
+  max-width: 550px;
   border-radius: 20px;
   padding: 2rem;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  animation: modalFadeIn 0.3s ease-out;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  animation: modalSlideIn 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
 
   .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.5rem;
-    border-bottom: 1px solid var(--cor-off-white-02);
+    border-bottom: 2px solid var(--cor-off-white-02);
     padding-bottom: 1rem;
 
     h3 {
-      color: #AC4430;
+      color: #dc3545;
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
     }
 
     .close-btn {
@@ -153,34 +194,195 @@
       color: var(--cor-azul-ardosia);
       cursor: pointer;
       line-height: 1;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: all 0.2s ease;
 
       &:hover {
-        color: #AC4430;
+        background-color: rgba(172, 68, 48, 0.1);
+        color: #dc3545;
+      }
+
+      &:active {
+        transform: scale(0.95);
       }
     }
   }
 
   .modal-body {
-    max-height: 60vh;
+    flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0.5rem;
 
-    .alert-detail-item {
+    // Scrollbar customizado
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(172, 68, 48, 0.3);
+      border-radius: 4px;
+
+      &:hover {
+        background: rgba(172, 68, 48, 0.5);
+      }
+    }
+  }
+
+  .no-alerts {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #28a745;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+}
+
+// ========================================= 
+// ALERT GROUPS
+// ========================================= 
+
+.alert-group {
+  margin-bottom: 1.8rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .alert-group-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid;
+    color: var(--cor-azul-escuro-01);
+    letter-spacing: 0.5px;
+  }
+
+  // Estilos por tipo de alerta
+  &.vazio .alert-group-title {
+    border-bottom-color: #6c757d;
+    color: #6c757d;
+  }
+
+  &.expirado .alert-group-title {
+    border-bottom-color: #dc3545;
+    color: #dc3545;
+  }
+
+  &.vence-breve .alert-group-title {
+    border-bottom-color: #ffc107;
+    color: #ff9800;
+  }
+
+  &.baixo .alert-group-title {
+    border-bottom-color: #ff9800;
+    color: #ff9800;
+  }
+
+  .alert-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1.2rem;
+    margin-bottom: 0.8rem;
+    border-radius: 12px;
+    border-left: 5px solid;
+    transition: all 0.2s ease;
+    background-color: var(--cor-off-white-01);
+
+    &:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .alert-info {
       display: flex;
-      justify-content: space-between;
-      padding: 1rem;
-      background: var(--cor-off-white-01);
-      margin-bottom: 8px;
-      border-radius: 10px;
-      border-left: 4px solid #AC4430;
+      flex-direction: column;
+      gap: 0.4rem;
 
       .item-name {
-        font-weight: 600;
+        font-weight: 700;
+        font-size: 1rem;
         color: var(--cor-azul-escuro-01);
+        word-break: break-word;
       }
 
-      .item-qty {
-        color: #AC4430;
+      .item-batch {
+        font-size: 0.85rem;
+        color: var(--cor-azul-ardosia);
+        font-weight: 500;
+      }
+    }
+
+    .item-status {
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      strong {
+        font-size: 1rem;
         font-weight: 700;
+      }
+    }
+
+    // Estados específicos
+    &.vazio {
+      border-left-color: #6c757d;
+      background-color: rgba(108, 117, 125, 0.08);
+
+      .item-status {
+        color: #6c757d;
+      }
+    }
+
+    &.expirado {
+      border-left-color: #dc3545;
+      background-color: rgba(220, 53, 69, 0.08);
+
+      .item-name {
+        color: #dc3545;
+      }
+
+      .item-status {
+        color: #dc3545;
+      }
+    }
+
+    &.vence-breve {
+      border-left-color: #ff9800;
+      background-color: rgba(255, 152, 0, 0.08);
+
+      .item-name {
+        color: #ff9800;
+      }
+
+      .item-status {
+        color: #ff9800;
+      }
+    }
+
+    &.baixo {
+      border-left-color: #ff9800;
+      background-color: rgba(255, 152, 0, 0.08);
+
+      .item-name {
+        color: #ff9800;
+      }
+
+      .item-status {
+        color: #ff9800;
       }
     }
   }
@@ -189,6 +391,7 @@
 /* =========================================
    TEMA ESCURO (DARK THEME)
 ========================================= */
+
 ::ng-deep .dark-theme {
   .page-layout {
     background-color: var(--cor-azul-escuro-01);
@@ -216,73 +419,309 @@
     }
 
     &.alert-card {
-      border: 1px solid rgba(172, 68, 48, 0.3);
+      &.alert-danger {
+        border-color: #E07060;
+        background: var(--cor-azul-escuro-02);
 
-      .alert-icon {
-        background-color: #AC4430 !important;
+        .card-icon.alert-icon {
+          background-color: #E07060 !important;
+        }
+
+        .card-value.alert-text {
+          color: #E07060 !important;
+        }
+
+        .card-label.alert-text {
+          color: #E07060 !important;
+        }
       }
 
-      .alert-text {
-        color: #AC4430 !important;
-        background-color: transparent !important;
+      &.alert-success {
+        border-color: #4CAF50;
+        background: var(--cor-azul-escuro-02);
+
+        .card-icon.alert-icon {
+          background-color: #4CAF50 !important;
+        }
+
+        .card-value.alert-text {
+          color: #4CAF50 !important;
+        }
+
+        .card-label.alert-text {
+          color: #4CAF50 !important;
+        }
       }
     }
+  }
+
+  .modal-overlay {
+    background: rgba(0, 0, 0, 0.85);
   }
 
   .modal-card {
     background: var(--cor-azul-escuro-02);
-
-    h3 {
-      color: #AC4430;
-    }
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
 
     .modal-header {
-      border-bottom-color: rgba(255, 255, 255, 0.08);
+      border-bottom-color: rgba(224, 112, 96, 0.3);
+
+      h3 {
+        color: #E07060 !important;
+      }
 
       .close-btn {
-        color: var(--cor-perola);
+        color: var(--cor-perola) !important;
+
+        &:hover {
+          background-color: rgba(224, 112, 96, 0.15);
+          color: #E07060 !important;
+        }
       }
     }
 
-    .alert-detail-item {
-      background: rgba(255, 255, 255, 0.05);
-      border-left-color: #AC4430;
+    .modal-body {
+      &::-webkit-scrollbar-thumb {
+        background: rgba(224, 112, 96, 0.4);
 
-      .item-name {
-        color: var(--cor-perola);
+        &:hover {
+          background: rgba(224, 112, 96, 0.6);
+        }
       }
+    }
 
-      .item-qty {
-        color: #E07060 !important;
-      }
+    .no-alerts {
+      color: #4CAF50 !important;
     }
   }
 
-  .sidebar-footer {
-    .menu-item span {
-      color: var(--cor-perola) !important;
+  .alert-group {
+    .alert-group-title {
+      color: #FFFFFF !important;
+      font-weight: 700 !important;
     }
 
-    .logout-icon {
-      background-color: var(--cor-perola) !important;
+    &.vazio .alert-group-title {
+      border-bottom-color: #999999 !important;
+      color: #DDDDDD !important;
+    }
+
+    &.expirado .alert-group-title {
+      border-bottom-color: #E07060 !important;
+      color: #FF9999 !important;
+    }
+
+    &.vence-breve .alert-group-title {
+      border-bottom-color: #FFB74D !important;
+      color: #FFD699 !important;
+    }
+
+    &.baixo .alert-group-title {
+      border-bottom-color: #FFB74D !important;
+      color: #FFD699 !important;
+    }
+
+    .alert-detail-item {
+      background-color: rgba(255, 255, 255, 0.06);
+      border-left-color: inherit;
+      border-radius: 12px;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      }
+
+      .alert-info {
+        .item-name {
+          color: #FFFFFF !important;
+          font-weight: 700 !important;
+        }
+
+        .item-batch {
+          color: #CCCCCC !important;
+        }
+      }
+
+      .item-status {
+        color: #FFFFFF !important;
+
+        strong {
+          font-weight: 700 !important;
+          color: #FFFFFF !important;
+        }
+      }
+
+      &.vazio {
+        border-left-color: #999999 !important;
+        background-color: rgba(153, 153, 153, 0.1) !important;
+
+        .item-name {
+          color: #DDDDDD !important;
+        }
+
+        .item-status {
+          color: #BBBBBB !important;
+
+          strong {
+            color: #DDDDDD !important;
+          }
+        }
+      }
+
+      &.expirado {
+        border-left-color: #E07060 !important;
+        background-color: rgba(224, 112, 96, 0.15) !important;
+
+        .item-name {
+          color: #FF9999 !important;
+        }
+
+        .item-status {
+          color: #FF9999 !important;
+
+          strong {
+            color: #FFB3B3 !important;
+          }
+        }
+      }
+
+      &.vence-breve {
+        border-left-color: #FFB74D !important;
+        background-color: rgba(255, 183, 77, 0.15) !important;
+
+        .item-name {
+          color: #FFD699 !important;
+        }
+
+        .item-status {
+          color: #FFD699 !important;
+
+          strong {
+            color: #FFEB99 !important;
+          }
+        }
+      }
+
+      &.baixo {
+        border-left-color: #FFB74D !important;
+        background-color: rgba(255, 183, 77, 0.15) !important;
+
+        .item-name {
+          color: #FFD699 !important;
+        }
+
+        .item-status {
+          color: #FFD699 !important;
+
+          strong {
+            color: #FFEB99 !important;
+          }
+        }
+      }
     }
   }
 }
 
-@keyframes modalFadeIn {
+
+@keyframes overlayFadeIn {
   from {
     opacity: 0;
-    transform: translateY(-20px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .modal-card {
+    max-width: 95%;
+    padding: 1.5rem;
+    max-height: 90vh;
+
+    .modal-header {
+      h3 {
+        font-size: 1.1rem;
+      }
+
+      .close-btn {
+        font-size: 1.8rem;
+      }
+    }
+  }
+
+  .alert-group {
+    .alert-detail-item {
+      padding: 1rem;
+
+      .alert-info {
+        .item-name {
+          font-size: 0.95rem;
+        }
+
+        .item-batch {
+          font-size: 0.8rem;
+        }
+      }
+
+      .item-status {
+        font-size: 0.85rem;
+
+        strong {
+          font-size: 0.95rem;
+        }
+      }
+    }
   }
 }
 
 @media (max-width: 600px) {
   .cards-grid {
     grid-template-columns: 1fr;
+  }
+
+  .modal-card {
+    max-width: 100%;
+    padding: 1.2rem;
+
+    .modal-header {
+      h3 {
+        font-size: 1rem;
+      }
+
+      .close-btn {
+        font-size: 1.5rem;
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+
+  .alert-group {
+    margin-bottom: 1.2rem;
+
+    .alert-detail-item {
+      padding: 0.9rem;
+      border-radius: 8px;
+
+      .alert-info {
+        .item-name {
+          font-size: 0.9rem;
+        }
+      }
+    }
   }
 }
